@@ -11,8 +11,8 @@ const SectionBackgroundImage = ({ src, children, style}) =>{
         ...style, // Merge with additional styles passed via props
     }
     return (
-<section style={{ ...defaultStyle, ...style}}>
-    <div
+<section className="py-20 px-16 " style={{ ...defaultStyle, ...style}}>
+    <div className=""
     style={{
         backgroundColor: 'rgba(255, 103, 103, 0.7)', // Use rgba for transparency
         position: 'absolute',
@@ -22,7 +22,7 @@ const SectionBackgroundImage = ({ src, children, style}) =>{
         bottom: 0,
         zIndex: 1,
       }} />
-    <div style={{ position: 'relative', zIndex: 2, padding: '40px' }}>
+    <div className="" style={{ position: 'relative', zIndex: 2, }}>
     {children}
     </div>
     
