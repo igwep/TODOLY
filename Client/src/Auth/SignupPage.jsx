@@ -6,35 +6,47 @@ import Username from '../components/svgs/UserName';
 import Email from '../components/svgs/Email';
 import Password from '../components/svgs/Password';
 import ConfirmPassword from '../components/svgs/ConfirmPassword';
+import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
-export const SignupPage = () => {
+ const SignupPage = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName:'',
         userName:'',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        terms: false
     });
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, type, checked, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: type === 'checkbox' ? checked : value, // Handle checkbox separately
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(!formData.terms){
+          alert('you must agree to the terms adn conditions to proceed');
+          return;
+        }
         console.log(formData);
+        
     };
 
     return (
-  <section className='h-auto bg-white w-full rounded-md'>
+  <section className='h-full bg-white w-full rounded-md'>
           <div className='w-full h-full flex justify-between'>
-          <div className='w-[40%] md:flex hidden'>
+          <div className='w-[50%] md:flex hidden'>
           <LottieAnimation />
           </div>
-                <div className="w-[50%] flex items-center justify-center">
                 {/* Form */}
-                        <form onSubmit={handleSubmit} className="p-8 rounded-md w-full max-w-md">
+                <div className="md:w-[60%] w-[100%]  flex items-center justify-center">
+                        <form onSubmit={handleSubmit} className="p-8   rounded-md w-full  max-w-2xl">
                         <div className='w-full flex justify-start'>
                         <h2 className="text-4xl font-bold mb-6 text-center">Sign Up</h2>
                         </div>
@@ -50,7 +62,7 @@ export const SignupPage = () => {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="w-full pl-16 py-3 border border-black rounded-md"
+                        className="w-full pl-16 py-3  border border-black rounded-md"
                         placeholder="Enter your First name"
                         required
                         />
@@ -141,8 +153,8 @@ export const SignupPage = () => {
                           <input type="checkbox" id="terms" className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer" />
                           
                         
-                          <label itemID="terms" className="text-gray-700 text-sm cursor-pointer">
-                            I agree to the terms and conditions
+                          <label htmlFor="terms" className="text-gray-700 text-sm cursor-pointer">
+                            I agree to all terms
                           </label>
                       </div>
 
@@ -152,9 +164,15 @@ export const SignupPage = () => {
                         >
                         Register
                         </button>
+                       <div className='block mt-4'>
+                       <Typography variant="h9">
+                          Already have an account? <Link to="/login-page" className='text-blue-500'>Sign in</Link>
+                          </Typography>
+                       </div>
                         </form>
                 </div>
           </div>
   </section>
     );
 };
+ export default SignupPage

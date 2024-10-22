@@ -9,6 +9,9 @@ export default {
       colors:{
         customColor: '#FF6767',
         lighterCustomColor: '#FF9494'
+      },
+      fontFamily:{
+        Mons: 'Montserrat',
       }
     },
   },
