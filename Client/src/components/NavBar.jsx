@@ -11,7 +11,12 @@ import React from 'react'
       </p>
       </div>
       <div>{/* search */}
+      <div>
       <input type="text" />
+      <div>
+        
+      </div>
+      </div>
       </div>
       <div>{/* side icons */}
 

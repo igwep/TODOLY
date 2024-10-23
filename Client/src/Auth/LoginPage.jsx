@@ -1,12 +1,8 @@
 import React, {useState}from 'react';
 import { Link } from 'react-router-dom';
-import Password from '../components/svgs/Password';
-import Username from '../components/svgs/UserName';
-import LoginLottie from '../components/LoginLottie'
+import LoginLottie from '../components/LoginLottie';
+import { Password, Username, GoogleIcon, FacebookIcon, TwitterXIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
-import GoogleIcon from '../components/svgs/GoogleIcon'
-import FacebookIcon from '../components/svgs/FacebookIcon';
-import TwitterXIcon from '../components/svgs/TwitterXIcon';
 
  const LoginPage = () => {
     const [formData, setFormData] = useState({

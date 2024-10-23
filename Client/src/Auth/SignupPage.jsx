@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import LottieAnimation from '../components/LottieAnimation';
-import FirstName from '../components/svgs/firstName';
-import LastName from '../components/svgs/LastName';
-import Username from '../components/svgs/UserName';
-import Email from '../components/svgs/Email';
-import Password from '../components/svgs/Password';
-import ConfirmPassword from '../components/svgs/ConfirmPassword';
+import { FirstName, LastName, Username, Email, Password, ConfirmPassword } from '../svgs';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 
