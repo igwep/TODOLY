@@ -14,7 +14,7 @@ const SectionBackgroundImage = ({ src, children, style}) =>{
 <section className=" p-4 md:py-20  md:px-16 h-[110vh] lg:h-[110vh] " style={{ ...defaultStyle, ...style}}>
     <div className=""
     style={{
-        backgroundColor: 'rgba(255, 103, 103, 0.7)', // Use rgba for transparency
+        backgroundColor: 'rgba(255, 103, 103, 0.8)', // Use rgba for transparency
         position: 'absolute',
         top: 0,
         left: 0,
