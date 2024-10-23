@@ -7,3 +7,4 @@ export { default as ConfirmPassword } from './ConfirmPassword';
 export { default as GoogleIcon } from './GoogleIcon';
 export { default as FacebookIcon } from './FacebookIcon';
 export { default as TwitterXIcon } from './TwitterXIcon';
+export { default as SearchIcon } from './SearchIcon';

@@ -1,4 +1,5 @@
 import React from 'react'
+import { SearchIcon } from '../svgs'
 
  const NavBar = () => {
   return (
@@ -13,8 +14,9 @@ import React from 'react'
       <div>{/* search */}
       <div>
       <input type="text" />
-      <div>
-        
+      <div className='bg-red-300'>
+        <SearchIcon />
+
       </div>
       </div>
       </div>
