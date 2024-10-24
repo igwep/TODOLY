@@ -45,7 +45,7 @@ import { Dashboard } from './pages/Dashboard';
         </SectionBackgroundImages>
       )}
 
-      <div>
+      <div className='font-Inter'>
         {shouldHaveNavBars && <NavBar />} {/* Conditionally render NavBar */}
         <Routes>
           <Route path="/Dashboard" element={<Dashboard />} />
