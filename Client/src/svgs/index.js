@@ -9,4 +9,8 @@ export { default as FacebookIcon } from './FacebookIcon';
 export { default as TwitterXIcon } from './TwitterXIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as NotificationIcon } from './NotificationIcon';
-export { default as CalenderIcon } from './CalendarIcon'
+export { default as CalenderIcon } from './CalendarIcon';
+export { default as ExclamationMarkIcon } from './ExclamationMarkIcon';
+export { default as ClipboardCheckedIcon } from './ClipboardCheckedIcon';
+export { default as BulletPointIcon } from './BulletPointIcon'
+   

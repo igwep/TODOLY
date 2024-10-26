@@ -5,6 +5,7 @@ import  LoginPage  from './Auth/LoginPage';
 import NavBar from './components/NavBar';
 import SectionBackgroundImages from './components/SectionBackgroundImage';
 import { Dashboard } from './pages/Dashboard';
+import Sidebar from './components/SideBar';
 
 
  const AppContent = () => {
@@ -45,8 +46,11 @@ import { Dashboard } from './pages/Dashboard';
         </SectionBackgroundImages>
       )}
 
-      <div className='font-Inter'>
-        {shouldHaveNavBars && <NavBar />} {/* Conditionally render NavBar */}
+      <div className='font-Inter bg-gray-200'>
+        {shouldHaveNavBars && (
+          <>
+          <NavBar /><Sidebar /></>
+        )} {/* Conditionally render NavBar */}
         <Routes>
           <Route path="/Dashboard" element={<Dashboard />} />
         </Routes>

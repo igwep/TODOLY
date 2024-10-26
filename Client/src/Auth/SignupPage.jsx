@@ -22,14 +22,24 @@ import { Link } from 'react-router-dom';
           [name]: type === 'checkbox' ? checked : value, // Handle checkbox separately
         });
     };
+    function validateEmail(email){
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!formData.terms){
+        /* if(!formData.terms){
           alert('you must agree to the terms adn conditions to proceed');
           return;
+        } */
+        if(formData.password !== formData.confirmPassword){
+          alert('passwords do not match');
         }
-        console.log(formData);
+        else{
+          console.log(formData);
+        }
+     
         
     };
 

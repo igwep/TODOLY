@@ -27,12 +27,12 @@ import { SearchIcon , NotificationIcon, CalenderIcon } from '../svgs'
   </div>
 </div>
      
-      <div className='flex justify-between w-[15%]'>{/* side icons */}
+      <div className='flex justify-between w-[13%] '>{/* side icons */}
       <div className='flex  gap-2'>{/* two icons */}
-       <div className='bg-customColor p-3 rounded-lg flex items-center'>
+       <div className='bg-customColor p-3 rounded-lg flex items-center cursor-pointer'>
        <NotificationIcon />
        </div>
-       <div className='bg-customColor p-3 rounded-lg flex items-center'>
+       <div className='bg-customColor p-3 rounded-lg flex items-center cursor-pointer'>
         <CalenderIcon />
        </div>
 
