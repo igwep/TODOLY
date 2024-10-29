@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, usecontext, useContext} from 'react';
+import { LoadingContext } from '../context/LoadingContext';
 import LottieAnimation from '../components/LottieAnimation';
 import { FirstName, LastName, Username, Email, Password, ConfirmPassword } from '../svgs';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useFetcher } from 'react-router-dom';
+import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefault';
 
  const SignupPage = () => {
     const [formData, setFormData] = useState({
@@ -14,7 +16,12 @@ import { Link } from 'react-router-dom';
         confirmPassword: '',
         terms: false
     });
-
+    
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [formErrors, setFormErrors] = useState({password:'', confirmPassword:''});
+    const [errorShake, setErrorShake] = useState(false);
+    const {loading, setLoading} = useContext(LoadingContext);
+ 
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
         setFormData({
@@ -22,27 +29,61 @@ import { Link } from 'react-router-dom';
           [name]: type === 'checkbox' ? checked : value, // Handle checkbox separately
         });
     };
-    function validateEmail(email){
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
+ ///add a global state to toggle loading state
+    //real-time validattion with useEffect 
+useEffect(()=>{
+  if(formData.password.length < 6 && formData.password.length > 0){
+    setFormErrors((prevErrors)=>({
+      ...prevErrors,
+      password:'Passwords must be at leaast 6 characters long'
+    }));
+  
+   
+  }
+    else{
+      setFormErrors((prevErrors) => ({...prevErrors, password:''}))
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        /* if(!formData.terms){
-          alert('you must agree to the terms adn conditions to proceed');
-          return;
-        } */
-        if(formData.password !== formData.confirmPassword){
-          alert('passwords do not match');
-        }
-        else{
-          console.log(formData);
-        }
-     
-        
-    };
+ if(formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword){
+  setFormErrors((prevErrors)=>({
+    ...prevErrors,
+    confirmPassword:'passwords do not match',
+  }))
+ }
+ else {
+  setFormErrors((prevErrors) => ({
+    ...prevErrors,
+    confirmPassword: '',
+  }));
+}  /* console.log("Current formErrors:", formErrors); */
+},[formData.confirmPassword, formData.password,])
 
+
+const handleSubmit = (e) => {
+e.preventDefault();
+     
+if (!formErrors.password && !formErrors.confirmPassword) {
+  setLoading(true) 
+      // Proceed with form submission logic here
+      console.log("Form submitted successfully:", formData);
+      SignupAndSetDefaultData(formData.email, formData.password, formData, setLoading);
+      
+      console.log(loading);
+    console.log("Form data submitted:", formData);
+    console.log(formData);
+    return;
+          }  
+          else{
+            setErrorShake(true);
+          }
+          
+    };
+    useEffect(() => {
+      if (errorShake) {
+        const timer = setTimeout(() => setErrorShake(false), 300);
+        return () => clearTimeout(timer);
+      }
+    }, [errorShake]);
     return (
   <section className='h-full bg-white w-full rounded-md'>
           <div className='w-full h-full flex justify-between'>
@@ -121,9 +162,9 @@ import { Link } from 'react-router-dom';
                         </div>
 
                         {/* Password Input */}
-                        <div className="mb-4 relative">
-                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                        <Password className="w-6 h-6" /> 
+                        <div className="mb-4 relative flex flex-col">
+                        <span className={`absolute left-3 top-1/2 transform  ${formErrors.password ? '-translate-y-6' : '-translate-y-1/2'} `}>
+                        <Password className="w-6 h-6 " /> 
                         </span>
                         <input
                         type="password"
@@ -135,10 +176,12 @@ import { Link } from 'react-router-dom';
                         placeholder="Enter your password"
                         required
                         />
+                        {formErrors.password && <p className='text-red-600'>{formErrors.password}</p>}
+                        
                         </div>
 
                         {/* Confirm Password Input */}
-                        <div className="mb-6 relative">
+                        <div className='relative '>
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
                         <ConfirmPassword className="w-6 h-6" /> 
                         </span>
@@ -148,12 +191,14 @@ import { Link } from 'react-router-dom';
                         name="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleChange}
-                        className="w-full pl-16 py-3 border border-black rounded-md"
+                        className={`w-full pl-16 py-3 border border-black rounded-md ${errorShake ? 'animate-shake border-red-500' :''}`}
                         placeholder="Confirm your password"
                         required
                         />
                         </div>
-                        <div className="flex mb-4 items-center space-x-2">
+                        {/* remember to add a animation shake when user still tries to sign up with error */}
+                        {formErrors.confirmPassword && <p className='text-red-600'>{formErrors.confirmPassword}</p>}
+                        <div className={`flex mb-6  items-center space-x-2 ${formErrors.confirmPassword ? 'mt-3' : 'mt-6'}`}>
     
                           <input type="checkbox" id="terms" className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer" />
                           
