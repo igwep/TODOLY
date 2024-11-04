@@ -1,12 +1,17 @@
 import React, {useState}from 'react';
 import { Link } from 'react-router-dom';
 import LoginLottie from '../components/LoginLottie';
-import { Password, Username, GoogleIcon, FacebookIcon, TwitterXIcon } from '../svgs';
+import { Password, Username, GoogleIcon, FacebookIcon, TwitterXIcon, Email } from '../svgs';
 import Typography from '@mui/material/Typography';
+import { LoginUser } from '../FirebaseFunctions/LoginUser';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { GoogleSignIn } from '../FirebaseFunctions/LoginUser';
+
 
  const LoginPage = () => {
+  const navigate = useNavigate()
     const [formData, setFormData] = useState({
-        userName:'',
+        email:'',
         password: ''
     });
     const handleChange = (e) => {
@@ -16,6 +21,9 @@ import Typography from '@mui/material/Typography';
     }
     const handleSubmit = (e) => {
       e.preventDefault();
+      LoginUser(formData.email, formData.password, navigate)
+
+
       console.log(formData)
     }
   return (
@@ -31,13 +39,13 @@ import Typography from '@mui/material/Typography';
                         <Username className="w-6 h-6" /> {/* FirstName icon */}
                         </span>
                         <input
-                        type="text"
-                        id="userName"
-                        name="userName"
-                        value={formData.userName}
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
                         onChange={handleChange}
                         className="w-full pl-16 py-3  border border-black rounded-md"
-                        placeholder="Enter your Username"
+                        placeholder="Enter your Email"
                         required
                         />
                         </div>
@@ -74,13 +82,13 @@ import Typography from '@mui/material/Typography';
                         <div className='block mt-8'>
                        <Typography variant="h9">
                           <div className='flex items-center'>
-                          <p>Or, Login with </p><FacebookIcon /><GoogleIcon/> <TwitterXIcon />
+                          <span>Or, Login with </span> <span><FacebookIcon /></span><span className='cursor-pointer' onClick={ ()=> GoogleSignIn(navigate)}><GoogleIcon/></span> <span><TwitterXIcon /></span>
                           </div>
                           </Typography>
                        </div>
                        <div className='block mt-4'>
                        <Typography variant="h9">
-                          Don't have an account? <Link to="/" className='text-blue-500'>Create one</Link>
+                          Don't have an account? <Link to="/signup-page" className='text-blue-500'>Create one</Link>
                           </Typography>
                        </div>
 

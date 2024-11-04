@@ -4,8 +4,8 @@ import LottieAnimation from '../components/LottieAnimation';
 import { FirstName, LastName, Username, Email, Password, ConfirmPassword } from '../svgs';
 import Typography from '@mui/material/Typography';
 import { Link, useFetcher } from 'react-router-dom';
-import VerificationPopup from '../verifcation/VerificationPopup';
-import Loader from '../Loader/Loader';
+import VerificationPopup from '../components/verifcation/VerificationPopup';
+import Loader from '../components/Loader/Loader';
 import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefault';
 
  const SignupPage = () => {
@@ -274,7 +274,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
                         </button>
                        <div className='block mt-4'>
                        <Typography variant="h9">
-                          Already have an account? <Link to="/login-page" className='text-blue-500'>Sign in</Link>
+                          Already have an account? <Link to="/" className='text-blue-500'>Sign in</Link>
                           </Typography>
                        </div>
                         </form>

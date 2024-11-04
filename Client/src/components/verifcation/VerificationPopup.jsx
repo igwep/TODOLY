@@ -12,7 +12,7 @@ const VerificationPopup = ({setSuccess, email, handleSubmit }) => {
         </p>
         <div className="flex justify-center">
           <Link
-          to="/login-page"
+          to="/"
           onClick={ () => setSuccess(false)}
         
             className="bg-customColor hover:bg-lighterCustomColor text-white py-2 px-4 rounded-md shadow-md transition duration-300"

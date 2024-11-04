@@ -22,11 +22,11 @@ import Sidebar from './components/SideBar';
   },[location]);
   const routeBackgrounds = {
     '/': '/assets/images/Frame14.jpg',
-    '/login-page': '/assets/images/Frame14.jpg',
+    '/signup-page': '/assets/images/Frame14.jpg',
     '/Dashboard': null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
-  const noNavBars = ['/', '/login-page'];
+  const noNavBars = ['/', '/signup-page'];
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
 
   return (
@@ -40,8 +40,8 @@ import Sidebar from './components/SideBar';
           }`}
         >
           <Routes location={location}>
-            <Route path="/" element={<SignupPage />} />
-            <Route path="/login-page" element={<LoginPage />} />
+            <Route path="/signup-page" element={<SignupPage />} />
+            <Route path="/" element={<LoginPage />} />
           </Routes>
         </SectionBackgroundImages>
       )}
