@@ -4,6 +4,8 @@ import LottieAnimation from '../components/LottieAnimation';
 import { FirstName, LastName, Username, Email, Password, ConfirmPassword } from '../svgs';
 import Typography from '@mui/material/Typography';
 import { Link, useFetcher } from 'react-router-dom';
+import VerificationPopup from '../verifcation/VerificationPopup';
+import Loader from '../Loader/Loader';
 import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefault';
 
  const SignupPage = () => {
@@ -18,18 +20,21 @@ import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefaul
     });
     
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [formErrors, setFormErrors] = useState({password:'', confirmPassword:''});
+    const [formErrors, setFormErrors] = useState({password:'', confirmPassword:'', terms:''});
     const [errorShake, setErrorShake] = useState(false);
     const {loading, setLoading} = useContext(LoadingContext);
+    const {success, setSuccess} = useContext(LoadingContext)
  
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
         setFormData({
           ...formData,
           [name]: type === 'checkbox' ? checked : value, // Handle checkbox separately
+          
         });
+        console.log(formData.terms)
     };
- ///add a global state to toggle loading state
+
     //real-time validattion with useEffect 
 useEffect(()=>{
   if(formData.password.length < 6 && formData.password.length > 0){
@@ -55,29 +60,72 @@ useEffect(()=>{
     ...prevErrors,
     confirmPassword: '',
   }));
-}  /* console.log("Current formErrors:", formErrors); */
-},[formData.confirmPassword, formData.password,])
+
+} 
+
+if(formData.terms){
+  setFormErrors((prevErrors) => ({
+    ...prevErrors,
+    terms: '',
+  }));
+}
+
+/* console.log("Current formErrors:", formErrors); */
+/* if(!formData.terms){
+  setFormErrors((prevErrors)=>({
+    ...prevErrors,
+    terms:'You must agree to the terms to proceed.'
+  }));
+
+}
+else{
+  setFormErrors((prevErrors) => ({
+    ...prevErrors,
+    terms: '',
+  }));
+
+} */
+},[formData.confirmPassword, formData.password, formData.terms])
 
 
 const handleSubmit = (e) => {
 e.preventDefault();
+if(!formData.terms){
+  setFormErrors((prevErrors) => ({
+    ...prevErrors,
+    terms: 'You must agree to the terms to proceed.',
+  }));
+  return;
+}
+else{
+  setFormErrors((prevErrors) => ({
+    ...prevErrors,
+    terms: '',
+  }));
+}
      
 if (!formErrors.password && !formErrors.confirmPassword) {
   setLoading(true) 
       // Proceed with form submission logic here
       console.log("Form submitted successfully:", formData);
-      SignupAndSetDefaultData(formData.email, formData.password, formData, setLoading);
+      SignupAndSetDefaultData(formData.email, formData.password, formData, setLoading, setSuccess, success);
+      
       
       console.log(loading);
     console.log("Form data submitted:", formData);
     console.log(formData);
     return;
           }  
-          else{
-            setErrorShake(true);
-          }
+    else{
+      setErrorShake(true);
+    }
           
     };
+    useEffect(() => {
+      if (success) {
+        console.log('The state was successful:', success);
+      }
+    }, [success]);
     useEffect(() => {
       if (errorShake) {
         const timer = setTimeout(() => setErrorShake(false), 300);
@@ -85,14 +133,17 @@ if (!formErrors.password && !formErrors.confirmPassword) {
       }
     }, [errorShake]);
     return (
+      
   <section className='h-full bg-white w-full rounded-md'>
+    {success && (<VerificationPopup setSuccess={setSuccess} email={formData.email} handleSubmit={handleSubmit}/> )}
           <div className='w-full h-full flex justify-between'>
-          <div className='w-[50%] md:flex hidden'>
+          <div className={`w-[50%]  md:flex ${loading ? 'hidden' : 'flex'} hidden`}>
           <LottieAnimation />
           </div>
                 {/* Form */}
-                <div className="md:w-[60%] w-[100%]  flex items-center justify-center">
-                        <form onSubmit={handleSubmit} className="p-8   rounded-md w-full  max-w-2xl">
+                
+              {loading ? ( <Loader /> ) :  (<div className="md:w-[60%] w-[100%]  flex items-center justify-center">
+                      <form onSubmit={handleSubmit} className="p-8   rounded-md w-full  max-w-2xl">
                         <div className='w-full flex justify-start'>
                         <h2 className="text-4xl font-bold mb-6 text-center">Sign Up</h2>
                         </div>
@@ -172,7 +223,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="w-full pl-16 py-3 border border-black rounded-md"
+                        className={`w-full pl-16 py-3 border border-black rounded-md ${errorShake ? 'animate-shake border-red-500' :''}`}
                         placeholder="Enter your password"
                         required
                         />
@@ -198,15 +249,22 @@ if (!formErrors.password && !formErrors.confirmPassword) {
                         </div>
                         {/* remember to add a animation shake when user still tries to sign up with error */}
                         {formErrors.confirmPassword && <p className='text-red-600'>{formErrors.confirmPassword}</p>}
-                        <div className={`flex mb-6  items-center space-x-2 ${formErrors.confirmPassword ? 'mt-3' : 'mt-6'}`}>
-    
-                          <input type="checkbox" id="terms" className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer" />
-                          
+                        <div className={`flex ${formErrors.terms ? 'mb-0' : 'mb-6'}  items-center space-x-2 ${formErrors.confirmPassword ? 'mt-3' : 'mt-6'}`}>
+                        <input
+                          type="checkbox"
+                          id="terms"
+                          name="terms" // Add this line to set the name
+                          checked={formData.terms} // Bind it to formData
+                          onChange={handleChange} // Use handleChange to update formData
+                          className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                        />
                         
-                          <label htmlFor="terms" className="text-gray-700 text-sm cursor-pointer">
-                            I agree to all terms
-                          </label>
+                        <label htmlFor="terms" className="text-gray-700 text-sm cursor-pointer">
+                          I agree to all terms
+                        </label>
                       </div>
+
+                      {formErrors.terms && <p className='text-red-600 mb-2 text-sm'>{formErrors.terms}</p>}
 
                         <button
                         type="submit"
@@ -220,7 +278,8 @@ if (!formErrors.password && !formErrors.confirmPassword) {
                           </Typography>
                        </div>
                         </form>
-                </div>
+              </div>)}
+                
           </div>
   </section>
     );
