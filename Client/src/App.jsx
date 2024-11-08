@@ -6,10 +6,18 @@ import NavBar from './components/NavBar';
 import SectionBackgroundImages from './components/SectionBackgroundImage';
 import { Dashboard } from './pages/Dashboard';
 import Sidebar from './components/SideBar';
+import AdditionalInfo from './components/AdditionalInfo';
+import { auth } from './firebase';
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Loader from './components/Loader/Loader';
+
 
 
  const AppContent = () => {
   const [fade, setFade] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   useEffect(()=>{
     setFade(true)
@@ -23,11 +31,22 @@ import Sidebar from './components/SideBar';
   const routeBackgrounds = {
     '/': '/assets/images/Frame14.jpg',
     '/signup-page': '/assets/images/Frame14.jpg',
+    '/additional-info': '/assets/images/Frame14.jpg',
     '/Dashboard': null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
-  const noNavBars = ['/', '/signup-page'];
+  const noNavBars = ['/', '/signup-page', '/additional-info'];
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+  if (loading) return <div><Loader /></div>;
 
   return (
 <>
@@ -42,6 +61,7 @@ import Sidebar from './components/SideBar';
           <Routes location={location}>
             <Route path="/signup-page" element={<SignupPage />} />
             <Route path="/" element={<LoginPage />} />
+            <Route path="/additional-info" element={<AdditionalInfo user={user} />} />
           </Routes>
         </SectionBackgroundImages>
       )}
