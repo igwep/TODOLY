@@ -2,12 +2,12 @@
 import React, {useState}from 'react';
 import { Link } from 'react-router-dom';
 import LoginLottie from '../components/LoginLottie';
-import { Password, Username, GoogleIcon, FacebookIcon, TwitterXIcon, Email } from '../svgs';
+import { Password, Username, GoogleIcon, FacebookIcon, TwitterXIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
 import { LoginUser } from '../FirebaseFunctions/LoginUser';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { GoogleSignIn } from '../FirebaseFunctions/LoginUser';
-import Loader from '../components/Loader/Loader';
+import Loader from '../components/Loader';
 import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
 
 
@@ -104,7 +104,7 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
                          </div>
                          <div className='block mt-4'>
                          <Typography variant="h9">
-                            Don't have an account? <Link to="/signup-page" className='text-blue-500'>Create one</Link>
+                            Don&apos;t have an account? <Link to="/signup-page" className='text-blue-500'>Create one</Link>
                             </Typography>
                          </div>
   

@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
 
 export const Dashboard = () => {
+  
   return (
     <div className='ml-96 py-8 h-screen '>
         <div>{/* heading */}

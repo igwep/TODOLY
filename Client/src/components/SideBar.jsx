@@ -1,12 +1,34 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HelpIcon from '@mui/icons-material/Help';
 import { ExclamationMarkIcon, ClipboardCheckedIcon, BulletPointIcon  } from '../svgs';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutModal from './LogoutModel';
+import { useAuthContext } from '../context/UseAuth';
+import Loader from './Loader'; 
 
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const { userData } = useAuthContext();
+  if (!userData) {
+    return (
+      <Loader />
+    ); // Or a loading spinner if you want to display one
+  }
+ /*  const userInfo =  Object.values(userData);
+  console.log('userInfo:', userInfo) */
+
+  const handleOpenLogoutModal = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -27,10 +49,10 @@ const Sidebar = () => {
 
           <div className='flex flex-col items-center text-white'>{/* profile details */}
            <span className='font-semibold'>
-            Igwe Precous
+           {userData.userDetails?.lastName || 'Last Name Not Found'}    {userData.userDetails?.firstName || 'First Name Not Found'} 
            </span>
             <span className='text-xs'>
-            igwep5537@gmail.com
+           {userData.userDetails.email || 'Email was not Found'}
             </span>
           </div>
 
@@ -63,7 +85,13 @@ const Sidebar = () => {
             {isOpen && <span className="text-lg">Help</span>}
           </div>
         </div>
+        <button onClick={handleOpenLogoutModal} className="text-gray-200 flex absolute bottom-0 items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+            <LogoutIcon style={{ fontSize: 34 }}   />
+            {isOpen && <span className="text-lg">Logout</span>}
+          </button>
       </div>
+      <LogoutModal open={isLogoutModalOpen} handleClose={handleCloseLogoutModal}/>
+      
 
      
     </div>

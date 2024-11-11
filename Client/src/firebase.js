@@ -22,13 +22,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-setPersistence(auth, browserLocalPersistence)
+/* setPersistence(auth, browserLocalPersistence)
   .then(() => {
     console.log("Persistence set to local");
   })
   .catch((error) => {
     console.error("Error setting persistence:", error);
   });
-
+ */
 
 export { db, auth, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, FacebookAuthProvider};

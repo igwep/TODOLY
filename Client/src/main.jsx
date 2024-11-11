@@ -3,11 +3,15 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { LoadingProvider } from './context/LoadingContext.jsx'
+import { AuthProvider } from './context/AuthProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 <LoadingProvider>
-  <App />
+<AuthProvider >
+<App />
+</AuthProvider>
+  
 </LoadingProvider>
   </StrictMode>,
 )

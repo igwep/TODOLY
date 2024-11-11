@@ -1,11 +1,12 @@
-import React, { useState, useEffect, usecontext, useContext} from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect,  useContext} from 'react';
 import { LoadingContext } from '../context/LoadingContext';
 import LottieAnimation from '../components/LottieAnimation';
 import { FirstName, LastName, Username, Email, Password, ConfirmPassword } from '../svgs';
 import Typography from '@mui/material/Typography';
-import { Link, useFetcher } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import VerificationPopup from '../components/verifcation/VerificationPopup';
-import Loader from '../components/Loader/Loader';
+import Loader from '../components/Loader';
 import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefault';
 
  const SignupPage = () => {
@@ -19,7 +20,6 @@ import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefaul
         terms: false
     });
     
-    const [formSubmitted, setFormSubmitted] = useState(false);
     const [formErrors, setFormErrors] = useState({password:'', confirmPassword:'', terms:''});
     const [errorShake, setErrorShake] = useState(false);
     const {loading, setLoading} = useContext(LoadingContext);

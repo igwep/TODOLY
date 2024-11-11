@@ -16,6 +16,7 @@ try{
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,
         userName:userDetails.userName,
+        email:userDetails.email
             },
             task:[],
             categories: {

@@ -1,4 +1,5 @@
-import React,{useState, useEffect} from 'react'
+// eslint-disable-next-line no-unused-vars
+import React,{useState, useEffect, useContext} from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import  SignupPage  from './Auth/SignupPage';
 import  LoginPage  from './Auth/LoginPage';
@@ -7,17 +8,13 @@ import SectionBackgroundImages from './components/SectionBackgroundImage';
 import { Dashboard } from './pages/Dashboard';
 import Sidebar from './components/SideBar';
 import AdditionalInfo from './components/AdditionalInfo';
-import { auth } from './firebase';
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import Loader from './components/Loader/Loader';
-
+import { useAuthContext } from './context/UseAuth';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 
  const AppContent = () => {
   const [fade, setFade] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const {user, userData} = useAuthContext();
   const location = useLocation();
   useEffect(()=>{
     setFade(true)
@@ -38,16 +35,6 @@ import Loader from './components/Loader/Loader';
   const noNavBars = ['/', '/signup-page', '/additional-info'];
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-  if (loading) return <div><Loader /></div>;
-
   return (
 <>
       {/* Conditionally render SectionBackgroundImages only if backgroundImage exists */}
@@ -61,7 +48,7 @@ import Loader from './components/Loader/Loader';
           <Routes location={location}>
             <Route path="/signup-page" element={<SignupPage />} />
             <Route path="/" element={<LoginPage />} />
-            <Route path="/additional-info" element={<AdditionalInfo user={user} />} />
+            <Route path="/additional-info" element={<AdditionalInfo user={user}  />} />
           </Routes>
         </SectionBackgroundImages>
       )}
@@ -69,10 +56,12 @@ import Loader from './components/Loader/Loader';
       <div className='font-Inter bg-gray-200'>
         {shouldHaveNavBars && (
           <>
-          <NavBar /><Sidebar /></>
+          <NavBar /><Sidebar userData={userData} /></>
         )} {/* Conditionally render NavBar */}
         <Routes>
-          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Dashboard" element={<ProtectedRoute>
+            <Dashboard  userData={userData}/>
+          </ProtectedRoute>} />
         </Routes>
       </div>
     </>

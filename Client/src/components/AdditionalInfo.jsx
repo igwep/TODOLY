@@ -1,8 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 
+// eslint-disable-next-line react/prop-types
 const AdditionalInfo = ({ user }) => {
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,6 +16,7 @@ const AdditionalInfo = ({ user }) => {
 
     try {
       // Save the additional user info in Firestore
+      // eslint-disable-next-line react/prop-types
       await setDoc(doc(db, 'user', user.uid), { userDetails: { userName } }, { merge: true });
       console.log('User data saved successfully!');
 
