@@ -19,7 +19,6 @@ import ProtectedRoute from './routes/ProtectedRoute';
   useEffect(()=>{
     setFade(true)
   
-
     return () => {
       setFade(false);
       setTimeout(() => setFade(true), 700); // Timeout should match CSS transition duration
@@ -53,7 +52,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
         </SectionBackgroundImages>
       )}
 
-      <div className='font-Inter bg-gray-200'>
+      <div className='font-Inter bg-gray-100'>
         {shouldHaveNavBars && (
           <>
           <NavBar /><Sidebar userData={userData} /></>

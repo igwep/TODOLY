@@ -1,8 +1,13 @@
 import React from 'react'
-import { SearchIcon , NotificationIcon, CalenderIcon } from '../svgs'
+import { SearchIcon , NotificationIcon, CalenderIcon } from '../svgs';
+import moment from 'moment';
 
 
  const NavBar = () => {
+  const dateNumber = moment().format('DD/MM/YYYY'); // Example output: "2024-11-09"
+const dayOfWeek = moment().format('dddd');        // Example output: "Saturday"
+
+console.log('Date:', dateNumber, 'day of the week', dayOfWeek);
   return (
   <>
   <div className='w-[100%] shadow-md' style={{
@@ -39,8 +44,8 @@ import { SearchIcon , NotificationIcon, CalenderIcon } from '../svgs'
       </div>
 
       <div className='text-sm'>{/* date */}
-        <p className='font-semibold'>Tuesday</p>
-        <p className='text-textColor '>24/24/2044</p>
+        <p className='font-semibold'>{dayOfWeek}</p>
+        <p className='text-textColor '>{dateNumber}</p>
 
       </div>
       </div>

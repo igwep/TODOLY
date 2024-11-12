@@ -1,3 +1,4 @@
+
 export { default as FirstName } from './firstName';
 export { default as LastName } from './LastName';
 export { default as Username } from './UserName';
@@ -13,4 +14,7 @@ export { default as CalenderIcon } from './CalendarIcon';
 export { default as ExclamationMarkIcon } from './ExclamationMarkIcon';
 export { default as ClipboardCheckedIcon } from './ClipboardCheckedIcon';
 export { default as BulletPointIcon } from './BulletPointIcon'
+export{ default as ClipboardWithTimerIcon } from './ClipboardCheckedIcon';
+export { default as CircleIcon  } from './CircleIcon';
+export { default as UploadFileIcon }  from './UploadFileIcon'
    

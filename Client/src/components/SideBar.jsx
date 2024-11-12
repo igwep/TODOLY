@@ -35,10 +35,10 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="absolute h-screen top-32">
+    <div className="absolute h-screen  top-32">
       {/* Sidebar */}
       <div
-        className={`bg-customColor h-screen p-8 rounded-r-lg pt-8 ${
+        className={`bg-customColor h-screen  p-8 rounded-r-lg pt-8 ${
           isOpen ? 'w-80' : 'w-20'
         } duration-300 relative`}
       >

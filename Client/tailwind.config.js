@@ -30,6 +30,15 @@ export default {
       animation: {
         shake: 'shake 0.3s ease-in-out',
       },
+      width: {
+        '402': '402px',
+      },
+      height: {
+        '166': '166px',
+      },
+      fontSize: {
+        'xxs': '0.695rem', // 10px
+      },
 
     },
   },
