@@ -7,8 +7,9 @@ export const LoadingContext = createContext();
 export const LoadingProvider = ({ children }) => {      
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false)
+    const [navName, setNavName] = useState(null);
     return(
-        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess }}>
+        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName }}>
             {children}
         </LoadingContext.Provider>
     );

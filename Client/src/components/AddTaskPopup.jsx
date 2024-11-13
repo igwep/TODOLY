@@ -1,8 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { UploadFileIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
 
 
+// eslint-disable-next-line react/prop-types
 const AddTaskPopup = ({isOpen, setIsOpen}) => {
 
   return (
@@ -93,19 +95,13 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
     />
   </div>
 </div>
-
     </div>
-    
-    {/* Submit Button */}
-    
   </form>
 </div>
-                </div>
+  </div>
                 <button style={{
                     backgroundColor: '#F24E1E'
-                }} type="submit" className=" text-white px-4 py-2 rounded mt-4">
-      Done
-    </button>
+                }} type="submit" className=" text-white px-4 py-2 rounded mt-4">Done</button>
             </div>
           </div>
         </div>

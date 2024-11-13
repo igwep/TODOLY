@@ -1,4 +1,8 @@
+import React from "react";
+import { useLocation } from 'react-router-dom';
 const ClipboardCheckedIcon = () => {
+  const location = useLocation();
+
     return (
       <svg
         width="34px"
@@ -9,7 +13,7 @@ const ClipboardCheckedIcon = () => {
         <g
           fill="none"
           fillRule="evenodd"
-          stroke="#ffffff"
+          stroke={`${location.pathname === '/my-task' ? '#FF6767' : '#ffffff'}`}
           strokeLinecap="round"
           strokeLinejoin="round"
           transform="translate(4 3)"

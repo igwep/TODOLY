@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HelpIcon from '@mui/icons-material/Help';
@@ -8,16 +9,19 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LogoutModal from './LogoutModel';
 import { useAuthContext } from '../context/UseAuth';
 import Loader from './Loader'; 
+import { colors } from '@mui/material';
 
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { userData } = useAuthContext();
+
+  const location = useLocation();
   if (!userData) {
     return (
       <Loader />
-    ); // Or a loading spinner if you want to display one
+    ); 
   }
  /*  const userInfo =  Object.values(userData);
   console.log('userInfo:', userInfo) */
@@ -59,31 +63,31 @@ const Sidebar = () => {
         </div>
        
         <div className="flex flex-col gap-4 mt-20">
-          <div className="text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+          <Link to="/Dashboard"  className={`${location.pathname === '/Dashboard' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
             <DashboardIcon style={{ fontSize: 32 }} />
             {isOpen && <span className="text-lg">Dashboard</span>}
-          </div>
-          <div className="text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
-            <ExclamationMarkIcon style={{ fontSize: 34 }} />
+          </Link>
+          <Link to="/vital-task" className={`${location.pathname === '/vital-task' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
+            <ExclamationMarkIcon style={{ fontSize: 34, colors: '#FF6767' }} />
             {isOpen && <span className="text-lg">Vital Task</span>}
-          </div>
-          <div className="text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+          </Link>
+          <Link to="/my-task" className={`${location.pathname === '/my-task' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
             <ClipboardCheckedIcon style={{ fontSize: 34 }} />
             {isOpen && <span className="text-lg">My Task</span>}
-          </div>
-          <div className="text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+          </Link>
+          <Link to="/task-category" className={`${location.pathname === '/task-category' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
             <BulletPointIcon style={{ fontSize: 34 }} />
             {isOpen && <span className="text-lg">Task categories</span>}
-          </div>
+          </Link>
           
-          <div className="text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+          <Link to="/settings" className={`${location.pathname === '/settings' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
             <SettingsIcon style={{ fontSize: 34 }} />
             {isOpen && <span className="text-lg">Settings</span>}
-          </div>
-          <div className="text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+          </Link>
+          <Link to="/help" className={`${location.pathname === '/help' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
             <HelpIcon style={{ fontSize: 34 }} />
             {isOpen && <span className="text-lg">Help</span>}
-          </div>
+          </Link>
         </div>
         <button onClick={handleOpenLogoutModal} className="text-gray-200 flex absolute bottom-0 items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
             <LogoutIcon style={{ fontSize: 34 }}   />

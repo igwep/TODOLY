@@ -1,4 +1,8 @@
+import React from "react";
+import { useLocation } from "react-router-dom";
+
 const BulletPointIcon = () => {
+  const location = useLocation();
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +11,7 @@ const BulletPointIcon = () => {
         viewBox="0 0 290.5 290.5"
         fill="currentColor" // Use "currentColor" to allow flexibility with the icon's color
       >
-        <g fill="#ffffff" fillRule="evenodd" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round">
+        <g fill={`${location.pathname === '/task-category' ? '#FF6767' : '#ffffff '}`} fillRule="evenodd" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round">
           <path d="M74,66.001h209c4.143,0,7.5-3.358,7.5-7.5s-3.357-7.5-7.5-7.5H74c-4.142,0-7.5,3.358-7.5,7.5S69.858,66.001,74,66.001z" />
           <path d="M283,138H74c-4.142,0-7.5,3.358-7.5,7.5c0,4.142,3.358,7.5,7.5,7.5h209c4.143,0,7.5-3.358,7.5-7.5C290.5,141.358,287.143,138,283,138z" />
           <path d="M283,224.999H74c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h209c4.143,0,7.5-3.358,7.5-7.5S287.143,224.999,283,224.999z" />

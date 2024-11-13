@@ -10,6 +10,7 @@ import Sidebar from './components/SideBar';
 import AdditionalInfo from './components/AdditionalInfo';
 import { useAuthContext } from './context/UseAuth';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { VitalTask } from './pages/VitalTask';
 
 
  const AppContent = () => {
@@ -28,7 +29,8 @@ import ProtectedRoute from './routes/ProtectedRoute';
     '/': '/assets/images/Frame14.jpg',
     '/signup-page': '/assets/images/Frame14.jpg',
     '/additional-info': '/assets/images/Frame14.jpg',
-    '/Dashboard': null
+    '/Dashboard': null,
+    '/vital-task':null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
   const noNavBars = ['/', '/signup-page', '/additional-info'];
@@ -60,6 +62,9 @@ import ProtectedRoute from './routes/ProtectedRoute';
         <Routes>
           <Route path="/Dashboard" element={<ProtectedRoute>
             <Dashboard  userData={userData}/>
+          </ProtectedRoute>} />
+          <Route path="/vital-task" element={<ProtectedRoute>
+            <VitalTask  userData={userData}/>
           </ProtectedRoute>} />
         </Routes>
       </div>

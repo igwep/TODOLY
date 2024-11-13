@@ -7,8 +7,6 @@ import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddTaskPopup from '../components/AddTaskPopup';
 
-
-
 export const Dashboard = () => {
     const formattedDate = moment().format("MMMM Do"); // Output: "June 12th"
       const [hover, setHover] = useState(false);
