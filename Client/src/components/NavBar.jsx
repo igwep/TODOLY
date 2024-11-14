@@ -1,22 +1,72 @@
-import React from 'react'
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { SearchIcon , NotificationIcon, CalenderIcon } from '../svgs';
 import moment from 'moment';
 
 
  const NavBar = () => {
-  const dateNumber = moment().format('DD/MM/YYYY'); // Example output: "2024-11-09"
-const dayOfWeek = moment().format('dddd');        // Example output: "Saturday"
 
-console.log('Date:', dateNumber, 'day of the week', dayOfWeek);
+const dateNumber = moment().format('DD/MM/YYYY');
+const dayOfWeek = moment().format('dddd');        
+const location = useLocation();
+const title = () => {
+  if(location.pathname === '/Dashboard'){
+    return ( 
+<>
+<span className='text-customColor'>Dash</span><span>Board</span>
+</>
+    )
+  }
+  else if(location.pathname === '/vital-task'){
+    return ( 
+      <>
+      <span className='text-customColor'>Vital-</span><span>Task</span>
+      </>
+          );
+  }
+  else if(location.pathname === '/my-task'){
+    return ( 
+      <>
+      <span className='text-customColor'>My-</span><span>Task</span>
+      </>
+          );
+  }
+  else if(location.pathname === '/task-category'){
+    return ( 
+      <>
+      <span className='text-customColor'>Task-</span><span>Category</span>
+      </>
+          );
+  }
+  else if(location.pathname === '/settings'){
+    return ( 
+      <>
+      <span className='text-customColor'>Settings</span>
+      </>
+          );
+  }
+  else if(location.pathname === '/help'){
+    return ( 
+      <>
+      <span className='text-customColor'>Help</span>
+      </>
+          );
+  }
+  
+  
+}
+const dashboardTitle = title();
+
   return (
   <>
-  <div className='w-[100%] shadow-md' style={{
+  <div className='w-[100%] fixed shadow-md' style={{
     background: '#FEF6EE'
   }}>
     <nav className='flex justify-between items-center px-16 py-4'>
-      <div>{/* name */}
+      <div className='min-w-72'>{/* name */}
       <p className='text-4xl font-semibold'>
-        <span className='text-customColor'>Dash</span>Board
+        {dashboardTitle}
       </p>
       </div>
       

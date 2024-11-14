@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState}from 'react';
+import React, {useState, useEffect}from 'react';
 import { Link } from 'react-router-dom';
 import LoginLottie from '../components/LoginLottie';
 import { Password, Username, GoogleIcon, FacebookIcon, TwitterXIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
 import { LoginUser } from '../FirebaseFunctions/LoginUser';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate, useLocation } from 'react-router-dom';
 import { GoogleSignIn } from '../FirebaseFunctions/LoginUser';
 import Loader from '../components/Loader';
 import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
@@ -13,6 +13,18 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
 
  const LoginPage = () => {
   const navigate = useNavigate()
+  const location = useLocation();
+  const [fade, setFade] = useState(false);
+  useEffect(() => {
+    // Trigger fade-in on route change
+    setFade(false);
+
+    // Timeout to trigger fade-out when the component is about to unmount
+    const timeout = setTimeout(() => setFade(true), 100); // Duration should match CSS transition
+
+    return () => clearTimeout(timeout); // Clean up timeout on unmount
+  }, [location]);
+
     const [formData, setFormData] = useState({
         email:'',
         password: ''
@@ -42,7 +54,7 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
     }
     
   return (
-    <section className='h-full bg-white w-full rounded-md'>
+    <section className={`h-full bg-white w-full rounded-md transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'}`}>
       {
         loading ? (<Loader />) : (<div className='w-full h-full flex justify-between'>
           <div className='md:w-[60%] w-[100%]  flex    items-center justify-start'>{/* form */}

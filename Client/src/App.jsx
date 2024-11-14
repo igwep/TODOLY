@@ -11,20 +11,18 @@ import AdditionalInfo from './components/AdditionalInfo';
 import { useAuthContext } from './context/UseAuth';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { VitalTask } from './pages/VitalTask';
+import { Mytask } from './pages/MyTask';
+import TaskCategory from './pages/TaskCategory';
+import { Settings } from './pages/Settings';
+import { Help } from './pages/Help';
+import ScrollToTop from './utils/ScrollToTop';
 
 
  const AppContent = () => {
-  const [fade, setFade] = useState(false);
+  
   const {user, userData} = useAuthContext();
   const location = useLocation();
-  useEffect(()=>{
-    setFade(true)
   
-    return () => {
-      setFade(false);
-      setTimeout(() => setFade(true), 700); // Timeout should match CSS transition duration
-    };
-  },[location]);
   const routeBackgrounds = {
     '/': '/assets/images/Frame14.jpg',
     '/signup-page': '/assets/images/Frame14.jpg',
@@ -37,15 +35,11 @@ import { VitalTask } from './pages/VitalTask';
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
 
   return (
-<>
+<div>
       {/* Conditionally render SectionBackgroundImages only if backgroundImage exists */}
       {backgroundImage && (
         <SectionBackgroundImages
-          src={backgroundImage}
-          className={`transition-opacity duration-300 font-Mons ${
-            fade ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
+          src={backgroundImage}>
           <Routes location={location}>
             <Route path="/signup-page" element={<SignupPage />} />
             <Route path="/" element={<LoginPage />} />
@@ -66,9 +60,21 @@ import { VitalTask } from './pages/VitalTask';
           <Route path="/vital-task" element={<ProtectedRoute>
             <VitalTask  userData={userData}/>
           </ProtectedRoute>} />
+          <Route path="/my-task" element={<ProtectedRoute>
+            <Mytask  userData={userData}/>
+          </ProtectedRoute>} />
+          <Route path="/task-category" element={<ProtectedRoute>
+            <TaskCategory userData={userData}/>
+          </ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute>
+            <Settings  userData={userData}/>
+          </ProtectedRoute>} />
+          <Route path="/help" element={<ProtectedRoute>
+            <Help  userData={userData}/>
+          </ProtectedRoute>} />
         </Routes>
       </div>
-    </>
+    </div>
    
     
     
@@ -78,6 +84,7 @@ import { VitalTask } from './pages/VitalTask';
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <AppContent />
     </Router>
   );

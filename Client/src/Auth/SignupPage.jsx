@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect,  useContext} from 'react';
 import { LoadingContext } from '../context/LoadingContext';
+import { useLocation } from 'react-router-dom';
 import LottieAnimation from '../components/LottieAnimation';
 import { FirstName, LastName, Username, Email, Password, ConfirmPassword } from '../svgs';
 import Typography from '@mui/material/Typography';
@@ -22,8 +23,19 @@ import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefaul
     
     const [formErrors, setFormErrors] = useState({password:'', confirmPassword:'', terms:''});
     const [errorShake, setErrorShake] = useState(false);
+    const [fade, setFade] = useState(false);
     const {loading, setLoading} = useContext(LoadingContext);
-    const {success, setSuccess} = useContext(LoadingContext)
+    const {success, setSuccess} = useContext(LoadingContext);
+    const location = useLocation();
+    useEffect(() => {
+      // Trigger fade-in on route change
+      setFade(false);
+  
+      // Timeout to trigger fade-out when the component is about to unmount
+      const timeout = setTimeout(() => setFade(true), 100); // Duration should match CSS transition
+  
+      return () => clearTimeout(timeout); // Clean up timeout on unmount
+    }, [location]);
  
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
@@ -128,13 +140,13 @@ if (!formErrors.password && !formErrors.confirmPassword) {
     }, [success]);
     useEffect(() => {
       if (errorShake) {
-        const timer = setTimeout(() => setErrorShake(false), 300);
+        const timer = setTimeout(() => setErrorShake(false), 100);
         return () => clearTimeout(timer);
       }
     }, [errorShake]);
     return (
       
-  <section className='h-full bg-white w-full rounded-md'>
+  <section className={`h-full bg-white w-full rounded-md transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'}`}>
     {success && (<VerificationPopup setSuccess={setSuccess} email={formData.email} handleSubmit={handleSubmit}/> )}
           <div className='w-full h-full flex justify-between'>
           <div className={`w-[50%]  md:flex ${loading ? 'hidden' : 'flex'} hidden`}>

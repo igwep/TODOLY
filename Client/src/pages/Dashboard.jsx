@@ -6,6 +6,8 @@ import moment from 'moment';
 import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddTaskPopup from '../components/AddTaskPopup';
+import Loader from '../components/Loader';
+import { useAuthContext } from '../context/UseAuth';
 
 export const Dashboard = () => {
     const formattedDate = moment().format("MMMM Do"); // Output: "June 12th"
@@ -19,14 +21,19 @@ export const Dashboard = () => {
       };
   
       const [isOpen, setIsOpen] = useState(false);
-      
+      const { userData } = useAuthContext();
+      if (!userData) {
+        return (
+          <Loader />
+        ); 
+      }
 
   return (
-    <div className='pl-96 py-8 h-screen px-8 w-[100%] '>
+    <div className='pt-24 pl-96 py-8 h-screen px-8 w-[100%] '>
         <div>{/* heading */}
-        <div>{/* welcome */}
+        <div className='text-4xl mb-4 mt-8'>{/* welcome */}
           <p>
-            Welcome back, <span>Precious</span>
+            Welcome back, <span>{userData.userDetails?.firstName || 'First Name Not Found'}👋 </span>
           </p>
         </div>
         <div>{/* friends */}

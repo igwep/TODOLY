@@ -9,7 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LogoutModal from './LogoutModel';
 import { useAuthContext } from '../context/UseAuth';
 import Loader from './Loader'; 
-import { colors } from '@mui/material';
+
 
 
 const Sidebar = () => {
@@ -39,7 +39,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="absolute h-screen  top-32">
+    <div className="fixed h-screen  top-32">
       {/* Sidebar */}
       <div
         className={`bg-customColor h-screen  p-8 rounded-r-lg pt-8 ${
@@ -88,11 +88,12 @@ const Sidebar = () => {
             <HelpIcon style={{ fontSize: 34 }} />
             {isOpen && <span className="text-lg">Help</span>}
           </Link>
-        </div>
-        <button onClick={handleOpenLogoutModal} className="text-gray-200 flex absolute bottom-0 items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
+          <button onClick={handleOpenLogoutModal} className="text-gray-200 flex  items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md">
             <LogoutIcon style={{ fontSize: 34 }}   />
             {isOpen && <span className="text-lg">Logout</span>}
           </button>
+        </div>
+        
       </div>
       <LogoutModal open={isLogoutModalOpen} handleClose={handleCloseLogoutModal}/>
       
