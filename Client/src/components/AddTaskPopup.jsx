@@ -1,11 +1,57 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import { UploadFileIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
+import { useAuthContext } from '../context/UseAuth';
+import { Addtask } from '../FirebaseFunctions/Addtask';
 
 
 // eslint-disable-next-line react/prop-types
 const AddTaskPopup = ({isOpen, setIsOpen}) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    date:'',
+    priority:'',
+    taskDescription:'',
+    taskImage:'',
+    id:''
+
+  })
+
+  const handleChange = (e) => {
+    const { name, value, files, type } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: name === "taskImage" ? files[0] : value,
+    }));
+  };
+  const { user } = useAuthContext(); // Use the hook here
+  
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const handleSubmit = async (event) =>{
+    
+    event.preventDefault();
+    if (!formData.priority || !formData.taskDescription || !formData.date) {
+      return alert("Please fill in all fields before submitting.");
+    }
+    
+    if (!user) {
+      return alert("No user is logged in!");
+    }
+  
+    try {
+      await Addtask({ formData, setFormData, user }); // Pass the data as an object
+      console.log("Submitted formData:", formData);
+    } catch (error) {
+      console.error("Failed to add task:", error);
+    }
+    
+
+    
+  }
 
   return (
    
@@ -23,14 +69,17 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
                
 
 <div>
-  <form action="" className="space-y-4 p-4">
+  <form  onSubmit={handleSubmit} action="" className="space-y-4 p-4">
     {/* Title Input */}
     <div className="flex flex-col">
       <label htmlFor="title" className="font-medium">Title</label>
       <input
         type="text"
         id="title"
+        name="title"  
+        value={formData.title}
         className="border rounded p-2 mt-1"
+        onChange={handleChange}
       />
     </div>
     
@@ -40,7 +89,10 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
       <input
         type="date"
         id="date"
+        name="date" 
+        value={formData.date}
         className="border rounded p-2 mt-1"
+        onChange={handleChange}
       />
     </div>
     
@@ -49,13 +101,13 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
       <label className="font-medium">Priority</label>
       <div className="flex items-center gap-4 mt-1">
         <label className="flex items-center gap-2"> <Typography variant="h5" style={{ color: 'red', marginRight: '2px' }}>•</Typography> <span className='text-gray-400'>Extreme</span> 
-          <input type="checkbox" name="priority" value="Extreme" className="ml-2" />
+          <input type="radio" name="priority"     checked={formData.priority === 'Extreme'}       onChange={handleChange}  value="Extreme" className="ml-2" />
         </label>
         <label className="flex items-center gap-2"> <Typography variant="h5" style={{ color: 'blue', marginRight: '2px' }}>•</Typography> <span className='text-gray-400'>Moderate</span>
-          <input type="checkbox" name="priority" value="Moderate" className="ml-2" />
+          <input type="radio" name="priority"     checked={formData.priority === 'Moderate'}       onChange={handleChange}  value="Moderate" className="ml-2" />
         </label>
         <label className="flex items-center gap-2"> <Typography variant="h5" style={{ color: 'green', marginRight: '2px' }}>•</Typography> <span className='text-gray-400'>Low</span>
-          <input type="checkbox" name="priority" value="Low" className="ml-2" />
+          <input type="radio" name="priority"  checked={formData.priority === 'Low'}       onChange={handleChange} value="Low" className="ml-2" />
         </label>
       </div>
     </div>
@@ -66,9 +118,12 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
       <div className="flex flex-col w-1/2 ">
         <label htmlFor="description" className="font-medium">Task Description</label>
         <textarea
-          id="description"
+          id="taskDescription"
           rows="9"
+          name="taskDescription"
           placeholder="Start writing here..."
+          value={formData.taskDescription}
+          onChange={handleChange}
           className="border border-gray-300 h-full rounded-md p-2 mt-1 resize-none"
         ></textarea>
       </div>
@@ -91,17 +146,20 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
       type="file"
       id="image"
       accept="image/*"
+      name="taskImage"
+      onChange={handleChange}
       className="absolute inset-0 opacity-0 cursor-pointer"
     />
   </div>
 </div>
     </div>
+    <button style={{
+                    backgroundColor: '#F24E1E'
+                }} type="submit" className=" text-white px-4 py-2 rounded mt-4">Done</button>
   </form>
 </div>
   </div>
-                <button style={{
-                    backgroundColor: '#F24E1E'
-                }} type="submit" className=" text-white px-4 py-2 rounded mt-4">Done</button>
+               
             </div>
           </div>
         </div>

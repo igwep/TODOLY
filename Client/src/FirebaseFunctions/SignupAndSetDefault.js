@@ -20,16 +20,16 @@ try{
             },
             task:[],
             categories: {
-                high: {
-                  name: "High Priority",
+                Extreme: {
+                  name: "Extreme",
                   tasks: [] // Empty array for tasks under this category
                 },
-                moderate: {
-                  name: "Moderate Priority",
+                Moderate: {
+                  name: "Moderate",
                   tasks: [] // Empty array for tasks under this category
                 },
-                low: {
-                  name: "Low Priority",
+                Low: {
+                  name: "Low",
                   tasks: [] // Empty array for tasks under this category
                 }
               }

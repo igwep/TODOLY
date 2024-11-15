@@ -32,7 +32,7 @@ import { SignupAndSetDefaultData } from '../FirebaseFunctions/SignupAndSetDefaul
       setFade(false);
   
       // Timeout to trigger fade-out when the component is about to unmount
-      const timeout = setTimeout(() => setFade(true), 100); // Duration should match CSS transition
+      const timeout = setTimeout(() => setFade(true), 50); // Duration should match CSS transition
   
       return () => clearTimeout(timeout); // Clean up timeout on unmount
     }, [location]);
@@ -146,7 +146,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
     }, [errorShake]);
     return (
       
-  <section className={`h-full bg-white w-full rounded-md transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'}`}>
+  <section className={`h-full bg-white w-full rounded-md transition-opacity duration-50 ${fade ? 'opacity-100' : 'opacity-0'}`}>
     {success && (<VerificationPopup setSuccess={setSuccess} email={formData.email} handleSubmit={handleSubmit}/> )}
           <div className='w-full h-full flex justify-between'>
           <div className={`w-[50%]  md:flex ${loading ? 'hidden' : 'flex'} hidden`}>

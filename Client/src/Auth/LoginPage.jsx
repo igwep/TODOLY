@@ -20,7 +20,7 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
     setFade(false);
 
     // Timeout to trigger fade-out when the component is about to unmount
-    const timeout = setTimeout(() => setFade(true), 100); // Duration should match CSS transition
+    const timeout = setTimeout(() => setFade(true), 50); // Duration should match CSS transition
 
     return () => clearTimeout(timeout); // Clean up timeout on unmount
   }, [location]);
@@ -54,7 +54,7 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
     }
     
   return (
-    <section className={`h-full bg-white w-full rounded-md transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'}`}>
+    <section className={`h-full bg-white w-full rounded-md transition-opacity duration-50 ${fade ? 'opacity-100' : 'opacity-0'}`}>
       {
         loading ? (<Loader />) : (<div className='w-full h-full flex justify-between'>
           <div className='md:w-[60%] w-[100%]  flex    items-center justify-start'>{/* form */}
