@@ -26,27 +26,48 @@ export const GoogleSignIn = async (navigate, setLoading) => {
     {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
+
+
+    //fetcg the credentials
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
     const user = result.user;
+    const idToken = await user.getIdToken();
+    const response = await fetch("http://localhost:5000/verify-google-token", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idToken }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to verify token: ${response.statusText}`);
+    }
+
+    const data = await response.json();
     // Retrieve user's display name and split into first and last names
     const fullName = user.displayName || '';
+    const emailAddress = user.email;
     const [firstName, ...lastNameParts] = fullName.split(" ");
     const lastName = lastNameParts.join(" ");
 
     // check if user exists in the firestore database
-    const userRef = doc(db, 'user', user.uid);
+    const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
     if(!userDoc.exists()){
         await setDoc(userRef, {
             userDetails: {
                 firstName: firstName ||"",  // Initialize with empty fields
                 lastName: lastName || "",
-                userName: ""
+                userName: "",
+                email: emailAddress || ""
             },
             task: [],
             categories: {
-                high: { name: "High Priority", tasks: [] },
-                moderate: { name: "Moderate Priority", tasks: [] },
-                low: { name: "Low Priority", tasks: [] }
+                Extreme: { name: "Extreme", tasks: [] },
+                Moderate: { name: "Moderate Priority", tasks: [] },
+                Low: { name: "Low Priority", tasks: [] }
             }
         });
         navigate('additional-info');
@@ -54,7 +75,7 @@ export const GoogleSignIn = async (navigate, setLoading) => {
         navigate('/additional-info');
     } 
     else {
-        navigate('/dashboard');
+        navigate('/Dashboard');
     }
 
 } catch (error){

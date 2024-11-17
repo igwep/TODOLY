@@ -17,10 +17,10 @@ const AdditionalInfo = ({ user }) => {
     try {
       // Save the additional user info in Firestore
       // eslint-disable-next-line react/prop-types
-      await setDoc(doc(db, 'user', user.uid), { userDetails: { userName } }, { merge: true });
+      await setDoc(doc(db, 'users', user.uid), { userDetails: { userName } }, { merge: true });
       console.log('User data saved successfully!');
 
-      navigate('/dashboard');
+      navigate('/Dashboard');
     } catch (error) {
       console.error('Error saving additional info:', error);
     } finally {
