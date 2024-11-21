@@ -6,11 +6,13 @@ import Loader from '../components/Loader';
 import { FullTaskView } from '../components/FullTaskView';
 import { NoteIcon } from '../svgs';
 import { TrashIcon } from '../svgs';
+import { FetchTaskById } from '../FirebaseFunctions/TaskUpdate';
 export const Mytask = () => {
  
   
-  const { userData } = useAuthContext();
+  const { user, userData } = useAuthContext();
   const [showFullView, setShowFullView] = useState(0)
+  const [activeDropdown, setActiveDropdown] = useState(null);
   if (!userData) {
     return (
       <Loader />
@@ -22,6 +24,9 @@ export const Mytask = () => {
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   }
+  const handleDropdown = (index) => {
+    setActiveDropdown(activeDropdown === index ? null : index);
+  };
 
   return (
     <div className='pl-96 pt-32 py-8 h-screen px-8 w-[100%]'>
@@ -53,9 +58,26 @@ export const Mytask = () => {
                             <div className='flex text-gray-400'><span className='mr-1'>Created on: </span> <span>{item.createdOn}</span></div>
                           </div>
                           </div>
-                          <div className='cursor-pointer absolute top-1 right-1 '>
+                          <div  onClick={() => {handleDropdown(index); FetchTaskById(user, item.priority, item.id)}} className='cursor-pointer absolute top-1 right-1 '>
                           <MoreHorizIcon />
                           </div>
+                          {/* Dropdown Menu */}
+                  {activeDropdown === index && (
+                    <div className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
+                      <button
+                       
+                        className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+                      >
+                        Start
+                      </button>
+                      <button
+                        
+                        className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                          
           
                         </div>
@@ -79,3 +101,4 @@ export const Mytask = () => {
   </div>
   )
 }
+
