@@ -4,10 +4,14 @@ import { UploadFileIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
 import { useAuthContext } from '../context/UseAuth';
 import { Addtask } from '../FirebaseFunctions/Addtask';
+import moment from 'moment';
 
 
 // eslint-disable-next-line react/prop-types
 const AddTaskPopup = ({isOpen, setIsOpen}) => {
+
+const formattedDate = moment().format('YYYY-MM-DD');
+
   const [formData, setFormData] = useState({
     title: '',
     date:'',
@@ -15,7 +19,6 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
     taskDescription:'',
     taskImage:'',
     id:''
-
   })
 
   const handleChange = (e) => {
@@ -43,7 +46,7 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
     }
   
     try {
-      await Addtask({ formData, setFormData, user }); // Pass the data as an object
+      await Addtask({ formData, setFormData, user, formattedDate }); // Pass the data as an object
       console.log("Submitted formData:", formData);
     } catch (error) {
       console.error("Failed to add task:", error);
@@ -90,6 +93,7 @@ const AddTaskPopup = ({isOpen, setIsOpen}) => {
         type="date"
         id="date"
         name="date" 
+        min={formattedDate}
         value={formData.date}
         className="border rounded p-2 mt-1"
         onChange={handleChange}

@@ -1,7 +1,7 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase"; // Adjust this import path based on your setup
 
-export const Addtask = async ({ formData, setFormData, user }) => {
+export const Addtask = async ({ formData, setFormData, user, formattedDate }) => {
   if (user) {
     try {
       // Debugging: Log the formData before sending it
@@ -62,11 +62,15 @@ export const Addtask = async ({ formData, setFormData, user }) => {
       const updatedTasks = [
         ...existingTasks,
         {
-          id: new Date().getTime().toString(), // Generate a unique ID for the task
+          id: new Date().getDate().toString(), // Generate a unique ID for the task
           title: formData.title,
           taskDescription: formData.taskDescription,
           date: formData.date,
           taskImage: data.imageUrl,
+          createdOn: formattedDate,
+          priority:formData.priority,
+          //added status
+          status: 'not Started'
         },
       ];
 
