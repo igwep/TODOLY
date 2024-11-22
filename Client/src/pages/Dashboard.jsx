@@ -34,7 +34,7 @@ export const Dashboard = () => {
       const upComingTodos = allTask.filter(todos => {
         const dueDate = moment(todos.date, 'YYYY-MM-DD');
         const daysDifference = dueDate.diff(currentDate, 'days');
-        return daysDifference === 1 || daysDifference === 2; // Only tasks due in 1 or 2 days
+        return daysDifference === 1 || daysDifference === 2 || daysDifference === 0; // Only tasks due in 1 or 2 days
       });
       
      
@@ -53,7 +53,7 @@ export const Dashboard = () => {
     }
 
   return (
-    <div className='pt-24 pl-96 py-8  px-8 w-[100%] '>
+    <div className='pt-24 pl-96 py-8 bg-gray-100  px-8 w-[100%] '>
         <div>{/* heading */}
         <div className='text-4xl mb-4 mt-8'>{/* welcome */}
           <p>
@@ -64,7 +64,7 @@ export const Dashboard = () => {
 
         </div>
         </div>
-        <div className='h-screen border border-gray-400 p-4 w-full'>{/* main dashboard */}
+        <div className='h-screen border  border-gray-400 p-4 w-full'>{/* main dashboard */}
           <div className='bg-gray-100 rounded-lg shadow-lg w-[40%] p-4'>
             <div className='flex justify-between items-center'>
            <div className='flex items-center'>
@@ -93,7 +93,7 @@ export const Dashboard = () => {
                     <CircleIcon item={item} />
                     </div>
                     <div className='flex flex-col w-full h-full'>
-                      <span className='w-[65%] text-sm font-semibold '>{item.title}</span>
+                      <span className='w-[65%] text-lg font-semibold '>{truncateText(item.title, 20)}</span>
                       <div className='flex  gap-2 items-center  w-full'>
                       <span className='text-sm text-gray-500 w-[65%]'>{truncateText(item.taskDescription, 90)}</span>
                       <div className='w-[27%] rounded-lg h-20'>
@@ -101,10 +101,10 @@ export const Dashboard = () => {
                       </div>
                       </div>
                       <div className='flex gap-2 text-xxs mt-2 w-full absolute bottom-2 '>
-                      <div className='flex'><span className='mr-1'>prioty: </span> <span style={{
+                      <div className='flex'><span className='mr-1'>Prioty: </span> <span style={{
                              color: item.priority === 'Extreme' ? 'red' :  item.priority === 'Moderate' ? 'blue' : 'green' 
                             }}>{item.priority}</span></div>
-                      <div className='flex'><span className='mr-1'>Status: </span> <span className='text-red-500 whitespace-nowrap'> Not Started</span></div>
+                      <div className='flex'><span className='mr-1'>Status: </span> <span style={{color: item.status === 'not Started' ? 'red' : item.status === 'in Progress' ? 'Blue' : 'green' }} className='whitespace-nowrap'>{item.status}</span></div>
                       <div className='flex text-gray-400'><span className='mr-1'>Created on: </span> <span>{item.createdOn}</span></div>
                     </div>
                     </div>

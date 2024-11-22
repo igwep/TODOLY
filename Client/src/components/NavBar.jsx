@@ -60,7 +60,7 @@ const dashboardTitle = title();
 
   return (
   <>
-  <div className='w-[100%] fixed shadow-md' style={{
+  <div className='w-[100%] z-20 fixed shadow-md' style={{
     background: '#FEF6EE'
   }}>
     <nav className='flex justify-between items-center px-16 py-4'>

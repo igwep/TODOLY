@@ -140,7 +140,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
     }, [success]);
     useEffect(() => {
       if (errorShake) {
-        const timer = setTimeout(() => setErrorShake(false), 100);
+        const timer = setTimeout(() => setErrorShake(false), 250);
         return () => clearTimeout(timer);
       }
     }, [errorShake]);

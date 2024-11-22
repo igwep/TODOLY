@@ -1,5 +1,6 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase"; // Adjust this import path based on your setup
+import { v4 as uuidv4 } from 'uuid';
 
 export const Addtask = async ({ formData, setFormData, user, formattedDate }) => {
   if (user) {
@@ -62,7 +63,8 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       const updatedTasks = [
         ...existingTasks,
         {
-          id: new Date().getDate().toString(), // Generate a unique ID for the task
+          id: uuidv4(),
+          // Generate a unique ID for the task
           title: formData.title,
           taskDescription: formData.taskDescription,
           date: formData.date,

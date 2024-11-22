@@ -3,3 +3,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.no-scrollbar {
+    overflow-y: scroll; /* Enables vertical scrolling */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge */
+  }
+  
+  

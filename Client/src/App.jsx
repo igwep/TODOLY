@@ -48,7 +48,7 @@ import ScrollToTop from './utils/ScrollToTop';
         </SectionBackgroundImages>
       )}
 
-      <div className='font-Inter bg-gray-100'>
+      <div className='font-Inter '>
         {shouldHaveNavBars && (
           <>
           <NavBar /><Sidebar userData={userData} /></>
