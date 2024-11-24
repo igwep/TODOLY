@@ -9,8 +9,12 @@ export const LoadingProvider = ({ children }) => {
     const [success, setSuccess] = useState(false)
     const [navName, setNavName] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
+        categoryName: '',
+        taskId:''
+      })
     return(
-        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName, isOpen, setIsOpen }}>
+        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName, isOpen, setIsOpen, setFullTaskViewDelete, FullTaskViewDelete }}>
             {children}
         </LoadingContext.Provider>
     );

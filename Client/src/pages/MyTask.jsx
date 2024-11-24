@@ -17,10 +17,7 @@ export const Mytask = () => {
   const [showFullView, setShowFullView] = useState(0)
   const [activeDropdown, setActiveDropdown] = useState(null);
   const {isOpen, setIsOpen} = useContext(LoadingContext);
-  const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
-    categoryName: '',
-    taskId:''
-  })
+  const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext)
   const [loader, setLoader] = useState(false)
   if (!userData) {
     return (
