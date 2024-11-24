@@ -121,3 +121,48 @@ export const taskDelete = async (user, categoryName, taskId) => {
   }
 
 }
+export const TaskInfoUpdate = async (user, categoryName, taskId, setFormData) => {
+  const userId = user?.uid;
+
+  if (!userId) {
+    console.error("User not authenticated");
+    throw new Error("User not authenticated");
+  }
+
+  console.log("Updating status for task in userId:", userId, "categoryName:", categoryName);
+
+  // Reference the user document
+  const userRef = doc(db, "users", userId);
+  const userSnapshot = await getDoc(userRef);
+
+  if (!userSnapshot.exists()) {
+    console.error("User document not found");
+    throw new Error("User document not found");
+  }
+
+  const userData = userSnapshot.data();
+  console.log("User data fetched:", userData);
+
+  // Access the categories field
+  const categories = userData.categories || {};
+  const categoryData = categories[categoryName];
+
+  if (!categoryData) {
+    console.error(`Category '${categoryName}' not found`);
+    throw new Error(`Category '${categoryName}' not found`);
+  }
+
+  console.log(`Category '${categoryName}' data:`, categoryData);
+  const taskIdString = String(taskId); // Ensure taskId is a string
+  const tasks = categoryData.tasks || [];
+  const taskIndex = tasks.findIndex(t => t.id === taskIdString);
+
+  if (taskIndex === -1) {
+    console.error("Task not found in the category's tasks array");
+    throw new Error("Task not found");
+  }
+
+  console.log("Task found at index:", taskIndex);
+  
+
+}

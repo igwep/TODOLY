@@ -84,11 +84,14 @@ const dashboardTitle = title();
      
       <div className='flex justify-between w-[13%] '>{/* side icons */}
       <div className='flex  gap-2'>{/* two icons */}
-       <div className='bg-customColor p-3 rounded-lg flex items-center cursor-pointer'>
-       <NotificationIcon />
-       </div>
-       <div className='bg-customColor p-3 rounded-lg flex items-center cursor-pointer'>
-        <CalenderIcon />
+      <div className='bg-customColor p-3 rounded-lg flex items-center cursor-pointer group'>
+  <NotificationIcon className="transition-transform duration-200 group-hover:scale-90" />
+</div>
+
+
+
+       <div className='bg-customColor p-3 rounded-lg flex items-center cursor-pointer group'>
+        <CalenderIcon className="transition-transform duration-200 group-hover:scale-90" />
        </div>
 
       </div>

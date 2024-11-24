@@ -1,7 +1,17 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase"; // Adjust this import path based on your setup
 import { v4 as uuidv4 } from 'uuid';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+
+const notify = (message, type = 'success') => {
+  if (type === 'success') {
+    toast.success(message);
+  } else if (type === 'error') {
+    toast.error(message);
+  }
+};
 export const Addtask = async ({ formData, setFormData, user, formattedDate }) => {
   if (user) {
     try {
@@ -62,7 +72,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
   
       const updatedTasks = [
         ...existingTasks,
-        {
+        { /// add a if state if they is uid or not
           id: uuidv4(),
           // Generate a unique ID for the task
           title: formData.title,
@@ -85,7 +95,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       });
 
       // Reset the form data after successful update
-      alert(`Task added to '${categoryKey}' priority successfully.`);
+      notify(`Task added to '${categoryKey}' priority successfully.`);
       setFormData({
         id: "",
         taskDescription: "",

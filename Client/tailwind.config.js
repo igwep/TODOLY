@@ -37,7 +37,12 @@ export default {
         '166': '166px',
       },
       fontSize: {
-        'xxs': '0.695rem', // 10px
+        'xxs': '0.595rem', // 10px
+      },
+      screens: {
+        tablet: '768px', // Custom screen for tablets
+        desktop: '1280px', // Custom screen for desktops
+        ultrawide: '1920px', // Custom screen for ultrawide monitors
       },
 
     },

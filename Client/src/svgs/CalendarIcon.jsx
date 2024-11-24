@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CalendarIcon = () => {
+const CalendarIcon = ({className = '' }) => {
   return (
     <svg 
       width="15"
@@ -8,6 +8,7 @@ const CalendarIcon = () => {
       viewBox="0 0 15 15" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
       
     >
       <path 

@@ -1,9 +1,22 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React from 'react'
+import React,{useEffect} from 'react'
 
 
-export const FullTaskView = ({Task, showFullView}) => {
+export const FullTaskView = ({Task, showFullView, setFullTaskViewDelete}) => {
+  useEffect(() => {
+    if (Task && Task.length > 0) {
+      const task = Task[showFullView];
+      if (task) {
+        setFullTaskViewDelete({
+          categoryName: task.priority,
+          taskId: task.id,
+        });
+      }
+    }
+  }, [Task, showFullView, setFullTaskViewDelete]);
+
+
   if (!Task || Task.length === 0) {
     return (
       <div className="p-4 text-center text-gray-600">
@@ -13,6 +26,7 @@ export const FullTaskView = ({Task, showFullView}) => {
     );
   }
     const task = Task[showFullView];
+    
     console.log("task:", showFullView)
     if (!task) {
       return (

@@ -4,12 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 .no-scrollbar {
-    overflow-y: scroll; /* Enables vertical scrolling */
-    scrollbar-width: none; /* Firefox */
-  }
-  
-  .no-scrollbar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, and Edge */
-  }
-  
+  overflow-y: scroll; /* Enables vertical scrolling */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
+}
+
+/* Add this to your global CSS */
+.group {
+  position: relative;
+}
+
+.group:hover {
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.3); /* Top padding shadow */
+}
+
   

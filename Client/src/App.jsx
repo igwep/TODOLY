@@ -16,6 +16,8 @@ import TaskCategory from './pages/TaskCategory';
 import { Settings } from './pages/Settings';
 import { Help } from './pages/Help';
 import ScrollToTop from './utils/ScrollToTop';
+import AddTaskPopup from './components/AddTaskPopup';
+
 
 
  const AppContent = () => {
@@ -49,6 +51,7 @@ import ScrollToTop from './utils/ScrollToTop';
       )}
 
       <div className='font-Inter '>
+        <AddTaskPopup />
         {shouldHaveNavBars && (
           <>
           <NavBar /><Sidebar userData={userData} /></>

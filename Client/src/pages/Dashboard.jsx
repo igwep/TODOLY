@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import ClipboardWithTimerIcon from '../svgs/ClipboardWithTimerIcon';
 import AddIcon from '@mui/icons-material/Add';
 import moment from 'moment';
@@ -8,6 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddTaskPopup from '../components/AddTaskPopup';
 import Loader from '../components/Loader';
 import { useAuthContext } from '../context/UseAuth';
+import { LoadingContext } from '../context/LoadingContext';
 
 export const Dashboard = () => {
     const formattedDate = moment().format("MMMM Do"); // Output: "June 12th"
@@ -20,8 +21,8 @@ export const Dashboard = () => {
         backgroundColor: hover ? '#FF6767' : '',
         borderRadius: '50%'
       };
-  
-      const [isOpen, setIsOpen] = useState(false);
+      const { setIsOpen } = useContext(LoadingContext);
+      //const [isOpen, setIsOpen] = useState(false);
       const { userData } = useAuthContext();
       if (!userData) {
         return (
@@ -126,7 +127,7 @@ export const Dashboard = () => {
 
         </div>
 
-<AddTaskPopup isOpen={isOpen} setIsOpen={setIsOpen} />
+{/* <AddTaskPopup isOpen={isOpen} setIsOpen={setIsOpen} /> */}
 
     </div>
   )

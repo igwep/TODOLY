@@ -8,8 +8,9 @@ export const LoadingProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false)
     const [navName, setNavName] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
     return(
-        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName }}>
+        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName, isOpen, setIsOpen }}>
             {children}
         </LoadingContext.Provider>
     );
