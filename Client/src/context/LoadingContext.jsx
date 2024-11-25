@@ -13,8 +13,9 @@ export const LoadingProvider = ({ children }) => {
         categoryName: '',
         taskId:''
       })
+    const [isEdit, setIsEdit] = useState(false);
     return(
-        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName, isOpen, setIsOpen, setFullTaskViewDelete, FullTaskViewDelete }}>
+        <LoadingContext.Provider value={{loading, setLoading, success, setSuccess, navName, setNavName, isOpen, setIsOpen, setFullTaskViewDelete, FullTaskViewDelete, setIsEdit, isEdit }}>
             {children}
         </LoadingContext.Provider>
     );

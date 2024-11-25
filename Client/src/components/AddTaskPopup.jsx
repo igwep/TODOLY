@@ -8,11 +8,15 @@ import Loader from './Loader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingContext } from '../context/LoadingContext';
+import { TaskInfoUpdate } from '../FirebaseFunctions/TaskUpdate';
+import { updateTaskInDatabase } from '../FirebaseFunctions/TaskUpdate';
 
 const AddTaskPopup = () => {
   const [loading, setLoading] = useState(false);
   const formattedDate = moment().format('YYYY-MM-DD');
-  const { isOpen, setIsOpen } = useContext(LoadingContext)
+  const { isOpen, setIsOpen } = useContext(LoadingContext);
+  const { isEdit, setIsEdit } = useContext(LoadingContext);
+  const { FullTaskViewDelete} = useContext(LoadingContext)
 
   
   const [formData, setFormData] = useState({
@@ -23,8 +27,21 @@ const AddTaskPopup = () => {
     taskImage: '',
     id: ''
   });
-
   const { user } = useAuthContext();
+  
+  useEffect(() => {
+    if (isEdit) {
+      const fetchTaskDetails = async () => {
+        try {
+          await TaskInfoUpdate(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId, setFormData);
+        } catch (error) {
+          console.error("Error fetching task details:", error);
+        }
+      };
+      fetchTaskDetails();
+    }
+  }, [FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId, isEdit, user]);
+ 
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -57,9 +74,23 @@ const AddTaskPopup = () => {
 
     setLoading(true);
 
+    
     try {
-      await Addtask({ formData, setFormData, user, formattedDate });
-      
+      if (isEdit) {
+        // Call the updateTaskInDatabase function for editing tasks
+        await updateTaskInDatabase(
+          user,
+          FullTaskViewDelete.categoryName,
+          formData
+        );
+        notify("Task updated successfully.");
+        setIsEdit(false); // Reset edit mode
+      } else {
+        // Call the Addtask function for adding new tasks
+        await Addtask({ formData, setFormData, user, formattedDate });
+        notify("Task added successfully.");
+      }
+
       setFormData({
         title: '',
         date: '',
@@ -69,8 +100,8 @@ const AddTaskPopup = () => {
         id: ''
       }); // Reset form
     } catch (error) {
-      console.error("Failed to add task:", error);
-      notify("Failed to add task.", 'error');
+      console.error(isEdit ? "Failed to update task:" : "Failed to add task:", error);
+      notify(isEdit ? "Failed to update task." : "Failed to add task.", 'error');
     } finally {
       setLoading(false);
     }
@@ -86,11 +117,25 @@ const AddTaskPopup = () => {
             <div>
               {/* Header */}
               <div className='flex justify-between mb-8'>
-                <div>
+                {
+                  isEdit ?  <div>
+                  <span className='border-b-2 border-red-600'>Edit T</span>
+                  <span>ask</span>
+                </div> : (
+                    <div>
                   <span className='border-b-2 border-red-600'>Add New T</span>
                   <span>ask</span>
                 </div>
-                <button onClick={() => setIsOpen(false)} className='underline'>Go back</button>
+                  )
+                }
+                <button onClick={() => {setIsOpen(false); setIsEdit(false); setFormData({
+        title: '',
+        date: '',
+        priority: '',
+        taskDescription: '',
+        taskImage: '',
+        id: ''
+      }); }} className='underline'>Go back</button>
               </div>
               <div className='border border-gray-300'>
                 <form onSubmit={handleSubmit} className="space-y-4 p-4">
@@ -122,7 +167,9 @@ const AddTaskPopup = () => {
                   </div>
 
                   {/* Priority Checkboxes */}
-                  <div className="flex flex-col">
+                  {
+                    isEdit ? '' : (
+                      <div className="flex flex-col">
                     <label className="font-medium">Priority</label>
                     <div className="flex items-center gap-4 mt-1">
                       <label className="flex items-center gap-2">
@@ -163,6 +210,8 @@ const AddTaskPopup = () => {
                       </label>
                     </div>
                   </div>
+                    )
+                  }
 
                   {/* Description and Image Inputs */}
                   <div className="flex gap-4">
@@ -203,13 +252,24 @@ const AddTaskPopup = () => {
                     </div>
                   </div>
 
-                  <button
+                 {
+                  isEdit ? (  <button
                     type="submit"
                     className="text-white px-4 py-2 rounded mt-4"
                     style={{ backgroundColor: '#F24E1E' }}
                   >
-                    Done
-                  </button>
+                    Save
+                  </button> ) : (
+                     <button
+                     type="submit"
+                     className="text-white px-4 py-2 rounded mt-4"
+                     style={{ backgroundColor: '#F24E1E' }}
+                   >
+                     Done
+                   </button> 
+                  )
+                 }
+                  
                 </form>
               </div>
             </div>

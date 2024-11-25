@@ -1,4 +1,4 @@
-import React,{useState, useContext} from 'react'
+import React,{useState, useContext, useEffect} from 'react'
 import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useAuthContext } from '../context/UseAuth';
@@ -17,7 +17,14 @@ export const Mytask = () => {
   const [showFullView, setShowFullView] = useState(0)
   const [activeDropdown, setActiveDropdown] = useState(null);
   const {isOpen, setIsOpen} = useContext(LoadingContext);
-  const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext)
+  const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext);
+  const {isEdit, setIsEdit} = useContext(LoadingContext);
+  console.log('is edit:', isEdit);
+  
+  useEffect(() => {
+    console.log("isEdit state changed:", isEdit);
+  }, [isEdit]);
+
   const [loader, setLoader] = useState(false)
   if (!userData) {
     return (
@@ -85,7 +92,7 @@ export const Mytask = () => {
     
     }
   };
-  
+ 
 
   return (
     <>
@@ -190,7 +197,7 @@ export const Mytask = () => {
    {
    allTask.length > 0 ? (
                 <div className=' flex gap-4 justify-end p-4'>
-       {/* PASS ID AS PROP!! */}         <div onClick={()=> setIsOpen(true)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
+       {/* PASS ID AS PROP!! */}         <div onClick={()=> {setIsOpen(true); setIsEdit(true); console.log("onClick triggered. isEdit:", isEdit);}} className='bg-customColor p-3 rounded-md cursor-pointer group'>
                 <NoteIcon  width={20} height={20} fill="white" className="transition-transform duration-200 group-hover:scale-90" /> 
                 </div>
                 <div onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
