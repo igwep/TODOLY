@@ -1,17 +1,17 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase"; // Adjust this import path based on your setup
 import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { notify } from "../utils/Notify";
 
 
-const notify = (message, type = 'success') => {
+
+/* const notify = (message, type = 'success') => {
   if (type === 'success') {
     toast.success(message);
   } else if (type === 'error') {
     toast.error(message);
   }
-};
+}; */
 export const Addtask = async ({ formData, setFormData, user, formattedDate }) => {
   if (user) {
     try {
@@ -95,7 +95,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       });
 
       // Reset the form data after successful update
-      notify(`Task added to '${categoryKey}' priority successfully.`);
+      notify(`Task added to '${categoryKey}' priority successfully.`, "succces", true);
       setFormData({
         id: "",
         taskDescription: "",

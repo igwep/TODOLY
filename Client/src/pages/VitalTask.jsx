@@ -9,6 +9,8 @@ import { NoteIcon } from '../svgs';
 import { TrashIcon } from '../svgs';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
+import { notify } from '../utils/Notify';
+import { ToastContainer } from 'react-toastify';
 
 export const VitalTask = () => {
   const { user, userData } = useAuthContext();
@@ -38,11 +40,11 @@ export const VitalTask = () => {
   const UpdateTaskToInProgress = async (user, categoryName, taskId, newStatus) =>{
     setActiveDropdown(null)
     try {
-      await UpdateTaskStatus(user, categoryName, taskId, newStatus);
-      console.log("Task status updated successfully.");
+     const taskTitle  =  await UpdateTaskStatus(user, categoryName, taskId, newStatus);
+     notify(`${taskTitle} status updated successfully.`, "success", true);
      
     } catch (error) {
-      console.error("Error updating task status:", error.message);
+    notify("Error updating task status:", "error", false);
     }
   }
   const handleDelete = async (user, categoryName, taskId) => {
@@ -73,6 +75,8 @@ export const VitalTask = () => {
   };
   return (
    <>
+   <ToastContainer />
+   
     {
       loader ? (<Loader />) : ('')
     }

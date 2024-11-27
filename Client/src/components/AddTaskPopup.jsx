@@ -83,12 +83,12 @@ const AddTaskPopup = () => {
           FullTaskViewDelete.categoryName,
           formData
         );
-        notify("Task updated successfully.");
+      
         setIsEdit(false); // Reset edit mode
       } else {
         // Call the Addtask function for adding new tasks
         await Addtask({ formData, setFormData, user, formattedDate });
-        notify("Task added successfully.");
+       
       }
 
       setFormData({

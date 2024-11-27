@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchIcon, NotificationIcon, CalenderIcon } from '../svgs';
 import moment from 'moment';
+import { getNotificationLog } from '../utils/Notify';
+import { clearNotifications } from '../utils/Notify';
 
 const NavBar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dateNumber = moment().format('DD/MM/YYYY');
   const dayOfWeek = moment().format('dddd');
   const location = useLocation();
+  const [notifications, setNotifications] = useState([]);
+
+  const fetchNotifications = () => {
+    const savedNotifications = getNotificationLog();
+    setNotifications(savedNotifications);
+  };
+
+  useEffect(() => {
+    // Fetch notifications when the component mounts
+    fetchNotifications();
+  }, []);
 
   const title = () => {
     if (location.pathname === '/Dashboard') {
@@ -84,27 +97,46 @@ const NavBar = () => {
               {/* Notification Icon */}
               <div
                 className="bg-customColor p-3 rounded-lg flex items-center cursor-pointer group relative"
-                onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+                onClick={() => {
+                  setIsDropdownVisible(!isDropdownVisible);
+                  if (!isDropdownVisible) fetchNotifications(); // Refresh notifications when dropdown opens
+                }}
               >
                 <NotificationIcon className="transition-transform duration-200 group-hover:scale-90" />
 
                 {/* Dropdown Notification */}
                 {isDropdownVisible && (
-                  <div className="absolute top-14 right-0 bg-white shadow-lg rounded-lg p-4 w-64 z-10">
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute top-14 right-0 bg-white shadow-lg rounded-lg p-4 w-64 z-10"
+                  >
                     <p className="font-bold text-customColor mb-2">Notifications</p>
                     <ul className="space-y-2">
-                      <li className="text-sm">
-                        <p>🔔 Task 1 is due tomorrow</p>
-                      </li>
-                      <li className="text-sm">
-                        <p>🔔 Meeting scheduled at 3 PM</p>
-                      </li>
-                      <li className="text-sm">
-                        <p>🔔 New task added to your list</p>
-                      </li>
+                      {notifications.length > 0 ? (
+                        notifications.map((notification) => (
+                          <li
+                            key={notification.id}
+                            className={`notification-${notification.type}`}
+                          >
+                            <p>{notification.message}</p>
+                            <small>
+                              {new Date(notification.timestamp).toLocaleString()}
+                            </small>
+                          </li>
+                        ))
+                      ) : (
+                        <p className="text-gray-500">No notifications</p>
+                      )}
                     </ul>
-                    <p className="text-xs text-gray-500 mt-3 text-right cursor-pointer">
-                      View All
+                    <p
+                      onClick={() => {
+                        clearNotifications();
+                        setIsDropdownVisible(false);
+                        setNotifications([]);
+                      }}
+                      className="text-xs text-gray-500 mt-3 text-right cursor-pointer"
+                    >
+                      Clear All
                     </p>
                   </div>
                 )}

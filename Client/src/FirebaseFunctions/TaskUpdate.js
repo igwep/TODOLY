@@ -1,7 +1,8 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { notify } from "../utils/Notify";
 
-export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus) => {
+export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, nameOftask) => {
   const userId = user?.uid;
 
   if (!userId) {
@@ -45,6 +46,8 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus) =>
   }
 
   console.log("Task found at index:", taskIndex);
+  const taskTitle = tasks[taskIndex].title;
+  console.log("Task title:", taskTitle);
 
   // Update only the status of the task
   tasks[taskIndex].status = newStatus;
@@ -61,6 +64,8 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus) =>
 
   await updateDoc(userRef, { categories: updatedCategories });
   console.log("Task status successfully updated");
+
+  return taskTitle
 };
  
 export const taskDelete = async (user, categoryName, taskId) => {
@@ -101,6 +106,7 @@ export const taskDelete = async (user, categoryName, taskId) => {
   }
 
   console.log("Task found at index:", taskIndex);
+  
   const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
 
   // Update Firestore with the modified tasks array
@@ -114,7 +120,7 @@ export const taskDelete = async (user, categoryName, taskId) => {
 
   try {
     await updateDoc(userRef, { categories: updatedCategoryData });
-    console.log("Task successfully deleted");
+    notify("Task successfully deleted", "success", true);
   } catch (error) {
     console.error("Error deleting task:", error);
     throw error;
@@ -157,6 +163,7 @@ export const TaskInfoUpdate = async (user, categoryName, taskId, setFormData) =>
   }
 
   console.log("Task found:", task);
+  
 
   // Set task data into form state
   setFormData({
@@ -219,5 +226,5 @@ export const updateTaskInDatabase = async (user, categoryName, updatedTask) => {
 
   await updateDoc(userRef, { categories: updatedCategories });
 
-  console.log("Task updated successfully!");
+  notify("Task updated successfully!", "success", true);
 };

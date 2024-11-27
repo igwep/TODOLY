@@ -10,6 +10,7 @@ import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { notify } from '../utils/Notify';
 import { LoadingContext} from '../context/LoadingContext';
 export const Mytask = () => {
  
@@ -31,13 +32,13 @@ export const Mytask = () => {
       <Loader />
     ); 
   } 
-  const notify = (message, type = 'success') => {
+/*   const notify = (message, type = 'success') => {
     if (type === 'success') {
       toast.success(message);
     } else if (type === 'error') {
       toast.error(message);
     }
-  };
+  }; */
 
   const allTask = Object.keys(userData.categories)
   .flatMap(key => userData.categories[key].tasks)
@@ -56,8 +57,9 @@ export const Mytask = () => {
   const UpdateTaskToInProgress = async (user, categoryName, taskId, newStatus) =>{
     setActiveDropdown(null)
     try {
-      await UpdateTaskStatus(user, categoryName, taskId, newStatus);
-      notify("Task status updated successfully.");
+      
+      const taskTitle = await UpdateTaskStatus(user, categoryName, taskId, newStatus);
+      notify(`${taskTitle} status updated successfully.`, "success", true);
      
     } catch (error) {
       console.error("Error updating task status:", error.message);
@@ -114,7 +116,8 @@ export const Mytask = () => {
       <h1 className='mt-2'>no tasks found</h1>
     ) : (
       allTask.map((item, index) => (
-        <div
+        <div 
+        
           key={item.id}
           onClick={() => setShowFullView(index)}
           className={`${showFullView === index ? 'bg-gray-200' : ''} border cursor-pointer hover:bg-gray-200 border-gray-500 relative rounded-xl p-2 flex gap-4 mt-2 w-full h-166`}
@@ -145,7 +148,7 @@ export const Mytask = () => {
                 <span className='mr-1'>Status: </span>
                 <span
                   style={{
-                    color: item.status === 'not Started' ? 'red' : item.status === 'in Progress' ? 'blue' : 'green',
+                    color: item.status === 'not Started' ? 'red' : item.status === 'In Progress' ? 'blue' : 'green',
                   }}
                   className='whitespace-nowrap'
                 >
@@ -162,7 +165,7 @@ export const Mytask = () => {
             <MoreHorizIcon />
           </div>
           {activeDropdown === index && (
-            <div className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
+            <div   className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
               {item.status !== 'In Progress' ? (
                 <button
                   onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
@@ -172,7 +175,7 @@ export const Mytask = () => {
                 </button>
               ) : (
                 <button
-                  onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
+                  onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "Finished")}
                   className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
                 >
                   Finish
