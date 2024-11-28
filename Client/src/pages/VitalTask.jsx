@@ -107,7 +107,9 @@ export const VitalTask = () => {
                       <div className='flex'><span className='mr-1'>Priority: </span> <span style={{
                              color: item.priority === 'Extreme' ? 'red' :  item.priority === 'Moderate' ? 'blue' : 'green' 
                             }}>{item.priority}</span></div>
-                      <div className='flex'><span className='mr-1'>Status: </span> <span style={{color: item.status === 'not Started' ? 'red' : item.status === 'in Progress' ? 'Blue' : 'green' }} className='text-red-500 whitespace-nowrap'>{item.status}</span></div>
+                      <div className='flex'><span className='mr-1'>Status: </span> <span  style={{
+                    color: item.status === 'not Started' ? 'red' : item.status === 'In Progress' ? 'blue' : item.status === 'Finished' ? 'green' : 'red' ,
+                  }} className='text-red-500 whitespace-nowrap'>{item.status}</span></div>
                       <div className='flex text-gray-400'><span className='mr-1'>Created on: </span> <span>{item.createdOn}</span></div>
                     </div>
                     </div>

@@ -9,7 +9,6 @@ import AddTaskPopup from '../components/AddTaskPopup';
 import Loader from '../components/Loader';
 import { useAuthContext } from '../context/UseAuth';
 import { LoadingContext } from '../context/LoadingContext';
-import { ToastContainer} from 'react-toastify';
 import { FullTaskView } from '../components/FullTaskView';
 import { NoteIcon } from '../svgs';
 import { TrashIcon } from '../svgs';
@@ -65,7 +64,7 @@ export const Dashboard = () => {
 
   return (
     <>
-    <ToastContainer />
+
     {
       fullView ? (<div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
         <div className="bg-white w-[95%] md:w-[75%] lg:w-[60%] h-[90%] rounded-lg shadow-lg p-8 relative overflow-y-auto">
@@ -106,7 +105,7 @@ export const Dashboard = () => {
 
     </div>
     </div>
-    <div className='h-screen border  border-gray-400 p-4 w-full'>{/* main dashboard */}
+    <div className='h-auto border  border-gray-400 p-4 w-full'>{/* main dashboard */}
       <div className='bg-gray-100 rounded-lg shadow-lg w-[40%] p-4'>
         <div className='flex justify-between items-center'>
        <div className='flex items-center'>

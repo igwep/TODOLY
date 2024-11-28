@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React,{useState, useContext, useEffect} from 'react'
 import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -8,7 +9,7 @@ import { NoteIcon } from '../svgs';
 import { TrashIcon } from '../svgs';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../utils/Notify';
 import { LoadingContext} from '../context/LoadingContext';
@@ -17,7 +18,7 @@ export const Mytask = () => {
   const { user, userData } = useAuthContext();
   const [showFullView, setShowFullView] = useState(0)
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const {isOpen, setIsOpen} = useContext(LoadingContext);
+  const { setIsOpen} = useContext(LoadingContext);
   const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext);
   const {isEdit, setIsEdit} = useContext(LoadingContext);
   console.log('is edit:', isEdit);
@@ -148,7 +149,7 @@ export const Mytask = () => {
                 <span className='mr-1'>Status: </span>
                 <span
                   style={{
-                    color: item.status === 'not Started' ? 'red' : item.status === 'In Progress' ? 'blue' : 'green',
+                    color: item.status === 'not Started' ? 'red' : item.status === 'In Progress' ? 'blue' : item.status === 'Finished' ? 'green' : 'red' ,
                   }}
                   className='whitespace-nowrap'
                 >
@@ -166,21 +167,21 @@ export const Mytask = () => {
           </div>
           {activeDropdown === index && (
             <div   className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
-              {item.status !== 'In Progress' ? (
+              {item.status === 'not Started' ? (
                 <button
                   onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
                   className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
                 >
                   Start
                 </button>
-              ) : (
+              ) : item.status === 'In Progress' ? (
                 <button
                   onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "Finished")}
                   className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
                 >
                   Finish
                 </button>
-              )}
+              ) : item.status === 'Finished' ? '' : ''}
               <button
                 onClick={() => handleDelete(user, item.priority, item.id)}
                 className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"

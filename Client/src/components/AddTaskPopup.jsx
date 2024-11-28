@@ -5,8 +5,8 @@ import { useAuthContext } from '../context/UseAuth';
 import { Addtask } from '../FirebaseFunctions/Addtask';
 import moment from 'moment';
 import Loader from './Loader';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { notify } from '../utils/Notify';
 import { LoadingContext } from '../context/LoadingContext';
 import { TaskInfoUpdate } from '../FirebaseFunctions/TaskUpdate';
 import { updateTaskInDatabase } from '../FirebaseFunctions/TaskUpdate';
@@ -51,24 +51,24 @@ const AddTaskPopup = () => {
     }));
   };
 
-  const notify = (message, type = 'success') => {
+  /* const notify = (message, type = 'success') => {
     if (type === 'success') {
       toast.success(message);
     } else if (type === 'error') {
       toast.error(message);
     }
-  };
+  }; */
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     
     if (!formData.priority || !formData.taskDescription || !formData.date) {
-      notify("Please fill in all fields before submitting.", 'error');
+      notify("Please fill in all fields before submitting.", 'error', false);
       return;
     }
     
     if (!user) {
-      notify("No user is logged in!", 'error');
+      
       return;
     }
 
@@ -101,7 +101,7 @@ const AddTaskPopup = () => {
       }); // Reset form
     } catch (error) {
       console.error(isEdit ? "Failed to update task:" : "Failed to add task:", error);
-      notify(isEdit ? "Failed to update task." : "Failed to add task.", 'error');
+      notify(isEdit ? "Failed to update task." : "error", 'false');
     } finally {
       setLoading(false);
     }

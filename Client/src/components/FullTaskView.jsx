@@ -73,13 +73,8 @@ export const FullTaskView = ({Task, showFullView, setFullTaskViewDelete}) => {
         <p className="text-sm">
           Status:{" "}
           <span
-            style={{
-              color:
-                task.status === "not Started"
-                  ? "red"
-                  : task.status === "in Progress"
-                  ? "blue"
-                  : "green",
+             style={{
+              color: task.status === 'not Started' ? 'red' : task.status === 'In Progress' ? 'blue' : task.status === 'Finished' ? 'green' : 'red' ,
             }}
           >
             {task.status}
