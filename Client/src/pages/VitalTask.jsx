@@ -43,6 +43,7 @@ export const VitalTask = () => {
      const taskTitle  =  await UpdateTaskStatus(user, categoryName, taskId, newStatus);
      notify(`${taskTitle} status updated successfully.`, "success", true);
      
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
     notify("Error updating task status:", "error", false);
     }
@@ -66,7 +67,7 @@ export const VitalTask = () => {
       setShowFullView(-1);
     }
     
-      console.log("Task deleted successfully");
+     
     } catch (error) {
       console.error("Error deleting task:", error);
     } finally{
@@ -80,7 +81,7 @@ export const VitalTask = () => {
     {
       loader ? (<Loader />) : ('')
     }
-    <div className='pl-96 pt-32 py-8 bg-gray-100 h-screen px-8 w-[100%]'>
+    <div className='pl-[25vw] pt-32 py-8 bg-gray-100 h-screen px-8 w-[100%]'>
       <div className='flex gap-4 w-full'>
       <div className='border border-gray-500 w-[25%] h-[80vh] rounded-2xl shadow-lg p-4 fixed  overflow-hidden'>{/* first border */}
       <div><span className='border-b-2 border-red-600'> Vital </span><span>ask</span></div>

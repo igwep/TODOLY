@@ -21,13 +21,14 @@ export const Mytask = () => {
   const { setIsOpen} = useContext(LoadingContext);
   const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext);
   const {isEdit, setIsEdit} = useContext(LoadingContext);
+  const [loader, setLoader] = useState(false)
   console.log('is edit:', isEdit);
   
   useEffect(() => {
     console.log("isEdit state changed:", isEdit);
   }, [isEdit]);
 
-  const [loader, setLoader] = useState(false)
+  
   if (!userData) {
     return (
       <Loader />
@@ -103,7 +104,7 @@ export const Mytask = () => {
      {
     loader ? (<Loader />) : ('')
   }
-    <div className='pl-96 pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
+    <div className='pl-[25vw] pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
     <div className='flex  w-full'>
     <div className='border border-gray-500 w-[25%] h-[80vh] rounded-2xl shadow-lg p-4 fixed  overflow-hidden'>
   {/* Title section */}

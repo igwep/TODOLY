@@ -10,7 +10,7 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, na
     throw new Error("User not authenticated");
   }
 
-  console.log("Updating status for task in userId:", userId, "categoryName:", categoryName);
+
 
   // Reference the user document
   const userRef = doc(db, "users", userId);
@@ -22,7 +22,7 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, na
   }
 
   const userData = userSnapshot.data();
-  console.log("User data fetched:", userData);
+
 
   // Access the categories field
   const categories = userData.categories || {};
@@ -33,7 +33,7 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, na
     throw new Error(`Category '${categoryName}' not found`);
   }
 
-  console.log(`Category '${categoryName}' data:`, categoryData);
+
 
   // Find the task in the tasks array
   const taskIdString = String(taskId); // Ensure taskId is a string
@@ -47,11 +47,11 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, na
 
   console.log("Task found at index:", taskIndex);
   const taskTitle = tasks[taskIndex].title;
-  console.log("Task title:", taskTitle);
+ 
 
   // Update only the status of the task
   tasks[taskIndex].status = newStatus;
-  console.log("Updated task status:", tasks[taskIndex]);
+
 
   // Write the updated tasks array back to Firestore
   const updatedCategories = {

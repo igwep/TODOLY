@@ -35,6 +35,8 @@ export default {
       },
       height: {
         '166': '166px',
+        '176': '176px',
+        '266': '266px'
       },
       fontSize: {
         'xxs': '0.595rem', // 10px

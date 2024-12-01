@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -6,6 +7,7 @@ import moment from 'moment';
 
 export const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -29,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       // Iterate through each category and update tasks
       const updatedCategories = Object.entries(userData.categories).reduce(
         (updated, [categoryKey, category]) => {
-          console.log(`Processing category: ${category.name}`);
+         
   
           const updatedTasks = category.tasks.map((task) => {
             if (!moment(task.date, "YYYY-MM-DD", true).isValid()) {
@@ -38,22 +40,18 @@ export const AuthProvider = ({ children }) => {
             }
   
             const dueDate = moment(task.date, "YYYY-MM-DD").add(1, "days"); // Add 1 day to due date
-            console.log(
-              `Task ID: ${task.id}, Adjusted Due Date: ${dueDate.format(
-                "YYYY-MM-DD"
-              )}, Status: ${task.status}`
-            );
+           
   
             // Check if the task is overdue and not finished
             if (
               now.isAfter(dueDate) && // Check if current time is after the adjusted due date
               task.status !== "Finished" // Only update if not "Finished"
             ) {
-              console.log(`Task ID: ${task.id} is overdue. Marking it as "Failed".`);
+              
               return { ...task, status: "Failed" };
             }
   
-            console.log(`Task ID: ${task.id} is not overdue or already finished.`);
+         
             return task;
           });
   
@@ -73,7 +71,7 @@ export const AuthProvider = ({ children }) => {
         categories: updatedCategories,
       };
   
-      console.log("Updated user data:", JSON.stringify(updatedUserData, null, 2));
+     
   
       // Save the updated data to Firestore
       const userDocRef = doc(db, "users", uid);
@@ -94,7 +92,7 @@ export const AuthProvider = ({ children }) => {
     let unsubscribeFirestore = null;
 
     const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
-      console.log('Auth state changed. Current user:', currentUser);
+      
       setUser(currentUser);
       setLoading(false);
 
@@ -109,13 +107,13 @@ export const AuthProvider = ({ children }) => {
             console.log('Firestore snapshot received.');
             if (docSnapshot.exists()) {
               const data = docSnapshot.data();
-              console.log('User document data:', JSON.stringify(data, null, 2));
+          
               setUserData(data);
 
               // Check for overdue tasks
               if (data.categories) {
                 const updatedData = await updateOverdueTasks(data, currentUser.uid);
-                console.log('Updated user data after checking overdue tasks:', updatedData);
+                
               }
             } else {
               console.warn('No user document found.');

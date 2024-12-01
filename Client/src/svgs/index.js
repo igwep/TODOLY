@@ -19,3 +19,5 @@ export { default as CircleIcon  } from './CircleIcon';
 export { default as UploadFileIcon }  from './UploadFileIcon'
 export { default as NoteIcon } from './NoteIcon'
 export { default as TrashIcon } from './TrashIcon'
+export { default as ClipBoardClick } from './ClipBoardClick'
+export { default as BookIcon } from './BookIcon'
