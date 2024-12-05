@@ -17,6 +17,7 @@ import { Settings } from './pages/Settings';
 import { Help } from './pages/Help';
 import ScrollToTop from './utils/ScrollToTop';
 import AddTaskPopup from './components/AddTaskPopup';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -51,6 +52,7 @@ import AddTaskPopup from './components/AddTaskPopup';
       )}
 
       <div className='font-Inter '>
+        <ToastContainer />
         <AddTaskPopup />
         {shouldHaveNavBars && (
           <>

@@ -5,7 +5,6 @@ import { useAuthContext } from '../context/UseAuth';
 import { Addtask } from '../FirebaseFunctions/Addtask';
 import moment from 'moment';
 import Loader from './Loader';
-import { ToastContainer } from 'react-toastify';
 import { notify } from '../utils/Notify';
 import { LoadingContext } from '../context/LoadingContext';
 import { TaskInfoUpdate } from '../FirebaseFunctions/TaskUpdate';
@@ -109,7 +108,7 @@ const AddTaskPopup = () => {
 
   return (
     <>
-      <ToastContainer />
+      
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           {loading && <Loader />}

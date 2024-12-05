@@ -9,7 +9,6 @@ import { NoteIcon } from '../svgs';
 import { TrashIcon } from '../svgs';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../utils/Notify';
 import { LoadingContext} from '../context/LoadingContext';
@@ -93,7 +92,6 @@ export const Mytask = () => {
 
   return (
     <>
-    <ToastContainer />
      {
     loader ? (<Loader />) : ('')
   }

@@ -13,7 +13,7 @@ import { notify } from '../utils/Notify';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import TaskChart from '../components/Chart';
 import { CompletetedTask } from '../components/CompletetedTask';
-import { ToastContainer } from 'react-toastify';
+
 
 
 export const Dashboard = () => {
@@ -79,7 +79,7 @@ export const Dashboard = () => {
 
   return (
     <>
-<ToastContainer />
+
     {
       fullView ? (<div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
         <div className="bg-white w-[95%] md:w-[75%] lg:w-[60%] h-[90%] rounded-lg shadow-lg p-8 relative overflow-y-auto">
@@ -254,7 +254,7 @@ export const Dashboard = () => {
         </div>
         <div className='bg-gray-100 shadow-md rounded-md h-full p-8 '>{/* completed tasks */}
         <span className='flex gap-2 mb-4'><BookIcon /> <span className='text-customColor'> Completed Task</span></span>  
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center h-56  overflow-y-auto  no-scrollbar'>
             
             <CompletetedTask />
             </div>

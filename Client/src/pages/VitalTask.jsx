@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useAuthContext } from '../context/UseAuth';
@@ -10,13 +10,15 @@ import { TrashIcon } from '../svgs';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
 import { notify } from '../utils/Notify';
-import { ToastContainer } from 'react-toastify';
+import { LoadingContext } from '../context/LoadingContext';
+
 
 export const VitalTask = () => {
   const { user, userData } = useAuthContext();
   const [showFullView, setShowFullView] = useState(0)
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [loader, setLoader] = useState(false);
+  const { setIsEdit, setIsOpen, isEdit } = useContext(LoadingContext)
   const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
     categoryName: '',
     taskId:''
@@ -76,7 +78,7 @@ export const VitalTask = () => {
   };
   return (
    <>
-   <ToastContainer />
+ 
    
     {
       loader ? (<Loader />) : ('')
@@ -118,33 +120,31 @@ export const VitalTask = () => {
                     <MoreHorizIcon />
                     </div>
                     {/* Dropdown Menu */}
-                  {activeDropdown === index && (
-                    <div className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
-                      {
-                        item.status !== 'In Progress' ? (
-                          <button onClick={()=> UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
-                       
-                        className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
-                      >
-                        Start
-                      </button>
-                        ) : (
-                          <button onClick={()=> UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
-                       
-                        className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
-                      >
-                        Finish
-                      </button>
-                        )
-                      }
-                      <button
-                        onClick={() => handleDelete(user, item.priority, item.id)}
-                        className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
+                    {activeDropdown === index && (
+            <div   className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
+              {item.status === 'not Started' ? (
+                <button
+                  onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
+                  className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+                >
+                  Start
+                </button>
+              ) : item.status === 'In Progress' ? (
+                <button
+                  onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "Finished")}
+                  className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+                >
+                  Finish
+                </button>
+              ) : item.status === 'Finished' ? '' : ''}
+              <button
+                onClick={() => handleDelete(user, item.priority, item.id)}
+                className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+              >
+                Delete
+              </button>
+            </div>
+          )}
                    
     
                   </div>
@@ -158,7 +158,7 @@ export const VitalTask = () => {
             {
               vitaTask.length > 0 ? (
                 <div className=' flex gap-4 justify-end p-4'>
-                <div className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <div onClick={()=> {setIsOpen(true); setIsEdit(true); }} className='bg-customColor p-3 rounded-md cursor-pointer group'>
                 <NoteIcon width={20} height={20} fill="white" className="transition-transform duration-200 group-hover:scale-90" /> 
                 </div>
                 <div onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
