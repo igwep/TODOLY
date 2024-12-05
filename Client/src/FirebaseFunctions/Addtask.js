@@ -95,7 +95,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       });
 
       // Reset the form data after successful update
-      notify(`Task added to '${categoryKey}' priority successfully.`, "succces", true);
+      notify(`Task added to '${categoryKey}' priority successfully.`, 'success', true);
       setFormData({
         id: "",
         taskDescription: "",
@@ -106,9 +106,9 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       });
     } catch (error) {
       console.error("Error updating tasks:", error);
-      alert("Failed to update tasks. See console for details.");
+      notify("Failed to update tasks. See console for details.", 'error');
     }
   } else {
-    alert("User is not authenticated.");
+    notify("User is not authenticated.", 'error');
   }
 };

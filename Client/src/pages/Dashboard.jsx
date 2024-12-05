@@ -13,6 +13,7 @@ import { notify } from '../utils/Notify';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import TaskChart from '../components/Chart';
 import { CompletetedTask } from '../components/CompletetedTask';
+import { ToastContainer } from 'react-toastify';
 
 
 export const Dashboard = () => {
@@ -78,7 +79,7 @@ export const Dashboard = () => {
 
   return (
     <>
-
+<ToastContainer />
     {
       fullView ? (<div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
         <div className="bg-white w-[95%] md:w-[75%] lg:w-[60%] h-[90%] rounded-lg shadow-lg p-8 relative overflow-y-auto">
@@ -119,7 +120,7 @@ export const Dashboard = () => {
 
     </div>
     </div> 
-    <div className=' border flex gap-36   border-gray-400 p-4 w-full '>{/* main dashboard */}
+    <div className=' border flex gap-24 py-4   border-gray-400 px-8 w-full '>{/* main dashboard */}
     <div className="bg-gray-100 rounded-lg shadow-lg w-[35%] h-[70vh]  no-scrollbar    p-4">
   <div className="flex justify-between items-center">
     <div className="flex items-center mb-4">
@@ -189,13 +190,8 @@ export const Dashboard = () => {
               <div className="flex">
                 <span className="mr-1">Status:</span>
                 <span
-                  style={{
-                    color:
-                      item.status === 'not Started'
-                        ? 'red'
-                        : item.status === 'in Progress'
-                        ? 'blue'
-                        : 'green',
+                   style={{
+                    color: item.status === 'not Started' ? 'red' : item.status === 'In Progress' ? 'blue' : item.status === 'Finished' ? 'green' : 'red' ,
                   }}
                   className="whitespace-nowrap"
                 >
@@ -244,8 +240,8 @@ export const Dashboard = () => {
   </div>
 </div>
 
-      <div className='  w-[50%] flex flex-col gap-12 '>{/* two */}
-        <div className='bg-gray-100 shadow-md rounded-lg p-4'>
+      <div className='  w-[50%] flex flex-col gap-8 '>{/* two */}
+        <div className='bg-gray-100 shadow-md rounded-lg p-8'>
         <div className='flex flex-col items-start gap-4'>{/* charts */}
         <span className='flex gap-2'><ClipBoardClick /> <span className='text-customColor'>Task status</span></span>  
 
@@ -256,9 +252,10 @@ export const Dashboard = () => {
         </div>
         
         </div>
-        <div className='bg-gray-100 shadow-md rounded-md h-full p-4'>{/* completed tasks */}
-            <div>
-            <span className='flex gap-2'><BookIcon /> <span className='text-customColor'> Completed Task</span></span>  
+        <div className='bg-gray-100 shadow-md rounded-md h-full p-8 '>{/* completed tasks */}
+        <span className='flex gap-2 mb-4'><BookIcon /> <span className='text-customColor'> Completed Task</span></span>  
+            <div className='flex flex-col items-center'>
+            
             <CompletetedTask />
             </div>
 

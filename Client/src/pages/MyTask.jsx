@@ -34,13 +34,6 @@ export const Mytask = () => {
       <Loader />
     ); 
   } 
-/*   const notify = (message, type = 'success') => {
-    if (type === 'success') {
-      toast.success(message);
-    } else if (type === 'error') {
-      toast.error(message);
-    }
-  }; */
 
   const allTask = Object.keys(userData.categories)
   .flatMap(key => userData.categories[key].tasks)

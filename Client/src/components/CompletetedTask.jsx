@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useAuthContext } from '../context/UseAuth'
 import Loader from './Loader';
+import { CircleIcon } from '../svgs';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 export const CompletetedTask = () => {
     const { userData } = useAuthContext();
+    const [showFullView, setShowFullView] = useState(0)
     if (!userData) {
         return (
           <Loader />
@@ -11,11 +14,12 @@ export const CompletetedTask = () => {
       }
     
       const categories = userData?.categories; // Safely access categories
+      let completedTasks = []
       
       if (categories) {
           const allTasks = Object.values(categories)
               .flatMap(category => category.tasks || []); // Flatten all tasks
-          const completedTasks = allTasks
+           completedTasks = allTasks
               .filter(task => task.status === 'Finished')
               .sort((a, b) => a.id.localeCompare(b.id));
       
@@ -23,9 +27,86 @@ export const CompletetedTask = () => {
       } else {
           console.log('No categories found.');
       }
-      
+      const truncateText = (text, maxLength) => {
+        return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+      }
 
   return (
-    <div>fgfngvnfjvnj</div>
+<>
+{
+  completedTasks.length === 0 ? (
+    <h1 className='mt-2'>no Completeted Task  found</h1>
+  ) : (
+    completedTasks.map((item, index) =>(
+      <div 
+        
+          key={item.id}
+          onClick={() => setShowFullView(index)}
+          className={`${showFullView === index ? 'bg-gray-200' : ''} border cursor-pointer hover:bg-gray-200 border-gray-500 relative rounded-xl p-2 flex gap-4 mt-2 w-[80%] h-166`}
+        >
+          <div>
+            <CircleIcon item={item} />
+          </div>
+          <div className='flex flex-col  w-full h-full'>
+            <span className='w-[65%] text-lg font-semibold '>{truncateText(item.title, 10)}</span>
+            <div className='flex gap-2 items-center w-full'>
+              <span className='text-sm text-gray-500 w-[65%]'>{truncateText(item.taskDescription, 50)}</span>
+              <div className='w-[27%] rounded-lg h-20'>
+                <img src={item.taskImage} alt="" className='w-full h-full rounded-lg' />
+              </div>
+            </div>
+            <div className='flex text-xs'>
+                <span className='mr-1'>Status: </span>
+                <span
+                  style={{
+                    color: item.status === 'not Started' ? 'red' : item.status === 'In Progress' ? 'blue' : item.status === 'Finished' ? 'green' : 'red' ,
+                  }}
+                  className='whitespace-nowrap'
+                >
+                  {item.status}
+                </span>
+              </div>
+              <div className='flex text-xs text-gray-400 mt-2'>
+                <span className='mr-1'>Completeted </span>
+                <span className='whitespace-nowrap '>
+                  {item.dayFinished}
+                </span>
+              </div>
+            
+          </div>
+          <div /* onClick={() => handleDropdown(index)} */ className='cursor-pointer absolute top-1 right-1 '>
+            <MoreHorizIcon />
+          </div>
+          {/* {activeDropdown === index && (
+            <div   className="absolute right-4 top-8 bg-white shadow-md rounded-md z-10">
+              {item.status === 'not Started' ? (
+                <button
+                  onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "In Progress")}
+                  className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+                >
+                  Start
+                </button>
+              ) : item.status === 'In Progress' ? (
+                <button
+                  onClick={() => UpdateTaskToInProgress(user, item.priority, item.id, "Finished")}
+                  className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+                >
+                  Finish
+                </button>
+              ) : item.status === 'Finished' ? '' : ''}
+              <button
+                onClick={() => handleDelete(user, item.priority, item.id)}
+                className="block px-4 py-2 hover:bg-customColor hover:text-white text-black w-full text-left"
+              >
+                Delete
+              </button>
+            </div>
+          )} */}
+        </div>
+    ))
+  )
+}
+
+</>
   )
 }

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-// Global notification log (replace with Context or Redux for state management in larger apps)
+// Global notification log (optional for persistence)
 let notificationLog = [];
 
 /**
@@ -10,8 +10,15 @@ let notificationLog = [];
  * @param {boolean} persist - Whether to save the notification for later display.
  */
 export const notify = (message, type = "info", persist = false) => {
-  // Display the toast notification
-  toast(message, { type });
+  // Display the toast notification with proper configuration
+  toast(message, {
+    type,
+    autoClose: 5000, // Auto close after 5 seconds
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
 
   if (persist) {
     // Create a new notification object
@@ -25,7 +32,7 @@ export const notify = (message, type = "info", persist = false) => {
     // Add to the notification log
     notificationLog.push(newNotification);
 
-    // Save the log to localStorage (optional, for persistence across sessions)
+    // Save the log to localStorage (optional)
     localStorage.setItem("notifications", JSON.stringify(notificationLog));
   }
 };
@@ -36,13 +43,9 @@ export const getNotificationLog = () => notificationLog;
 // Optionally, initialize log from localStorage
 const savedNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
 notificationLog = savedNotifications;
+
 export const clearNotifications = () => {
-  // Clear the global log
-  notificationLog = [];
-
-  // Remove from localStorage
-  localStorage.removeItem("notifications");
-
-  // Optionally: notify the user or trigger UI updates
-  console.log("Notifications cleared.");
+  notificationLog = []; // Clear the global log
+  localStorage.removeItem("notifications"); // Remove from localStorage
+  console.log("Notifications cleared."); // Optional log
 };

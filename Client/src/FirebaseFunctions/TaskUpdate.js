@@ -1,6 +1,7 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { notify } from "../utils/Notify";
+import moment from "moment";
 
 export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, nameOftask) => {
   const userId = user?.uid;
@@ -50,7 +51,12 @@ export const UpdateTaskStatus = async (user, categoryName, taskId, newStatus, na
  
 
   // Update only the status of the task
-  tasks[taskIndex].status = newStatus;
+  const fullDate = moment().format("dddd, MMMM Do YYYY");
+  tasks[taskIndex] = {
+    ...tasks[taskIndex],
+    status: newStatus,
+    ...(newStatus === "Finished" && { dayFinished: fullDate }),
+  };
 
 
   // Write the updated tasks array back to Firestore
