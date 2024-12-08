@@ -13,6 +13,7 @@ import { notify } from '../utils/Notify';
 import { UpdateTaskStatus } from '../FirebaseFunctions/TaskUpdate';
 import TaskChart from '../components/Chart';
 import { CompletetedTask } from '../components/CompletetedTask';
+import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
 
 
 
@@ -22,7 +23,7 @@ export const Dashboard = () => {
     const [fullView, setFullView] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null)
     const [showFullViewIndex, setShowFullViewIndex] = useState(0)
-    const {setFullTaskViewDelete} = useContext(LoadingContext);
+    const {setFullTaskViewDelete, FullTaskViewDelete, setIsEdit} = useContext(LoadingContext);
     // eslint-disable-next-line no-unused-vars
     const [loader, setLoader] = useState(false)
     
@@ -75,7 +76,36 @@ export const Dashboard = () => {
         console.error("Error updating task status:", error.message);
       }
     }
-   
+    const handleDelete = async (user, categoryName, taskId) => {
+      //put a loading so the show full will render back well 
+      setLoader(true)
+      try {
+        setActiveDropdown(null); // Close dropdown
+        setShowFullViewIndex(0);
+        setFullView(false)
+        await taskDelete(user, categoryName, taskId); // Wait for task deletion
+        const updatedTasks = Object.keys(userData.categories)
+        .flatMap(key => userData.categories[key].tasks)
+        .sort((a, b) => a.id.localeCompare(b.id));
+  
+      if (updatedTasks.length > 0) {
+        // Update `showFullView` to the first task or another valid index
+        setShowFullViewIndex(0);
+      } else {
+        // No tasks left, reset `showFullView`
+        setShowFullViewIndex(-1);
+      }
+      
+      notify("Task deleted successfully");
+      } catch (error) {
+        console.error("Error deleting task:", error);
+        notify("Error updating task status. Please try again.", "error");
+      } finally{
+        setLoader(false)
+        
+      
+      }
+    };
 
   return (
     <>
@@ -99,19 +129,19 @@ export const Dashboard = () => {
             setFullTaskViewDelete={setFullTaskViewDelete} 
           />
           <div className=' flex gap-4 justify-end p-4'>
-                <div className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <div onClick={()=> {setIsOpen(true); setIsEdit(true); setFullView(false); }}  className='bg-customColor p-3 rounded-md cursor-pointer group'>
                 <NoteIcon width={20} height={20} fill="white" className="transition-transform duration-200 group-hover:scale-90" /> 
                 </div>
-                <div /* onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} */ className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <div onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
                 <TrashIcon width={20} height={20} fill="white"  className="transition-transform duration-200 group-hover:scale-90" />
                 </div>
                 </div>
         </div>
       </div>) :(
         
-    <div className='pt-24 pl-[25vw] py-8 bg-gray-100 h-screen  px-8 w-[100%] '>
+    <div className='pt-24 md:pl-[25vw] py-8 bg-gray-100   md:px-8 px-4 w-[100%] '>
     <div>{/* heading */}
-    <div className='text-4xl mb-4 mt-8'>{/* welcome */}
+    <div className='md:text-4xl text-2xl mb-4 mt-8'>{/* welcome */}
       <p>
         Welcome back, <span>{userData.userDetails?.firstName || 'First Name Not Found'}👋 </span>
       </p>
@@ -120,8 +150,8 @@ export const Dashboard = () => {
 
     </div>
     </div> 
-    <div className=' border flex gap-24 py-4   border-gray-400 px-8 w-full '>{/* main dashboard */}
-    <div className="bg-gray-100 rounded-lg shadow-lg w-[35%] h-[70vh]  no-scrollbar    p-4">
+    <div className=' border flex flex-col md:flex-row md:gap-24 gap-4 py-4   border-gray-400 px-8 w-full '>{/* main dashboard */}
+    <div className="bg-gray-100 rounded-lg shadow-lg md:w-[35%] w-full  h-[60vh] md:h-[70vh]  no-scrollbar  p-4">
   <div className="flex justify-between items-center">
     <div className="flex items-center mb-4">
       <ClipboardWithTimerIcon />
@@ -144,7 +174,7 @@ export const Dashboard = () => {
       <span>{formattedDate}</span> <span></span>. <span className="text-gray-500">today</span>
     </span>
   </div>
-  <div className=" gap-2 w-full  h-full overflow-y-auto no-scrollbar "> {/* Scrollable container */}
+  <div className=" gap-2 w-full   h-full overflow-y-auto no-scrollbar "> {/* Scrollable container */}
     {upComingTodos.length > 0 ? (
       upComingTodos.map((item, index) => (
         <div
@@ -154,7 +184,7 @@ export const Dashboard = () => {
             setFullView(true);
             
           }}
-          className="border border-gray-500 relative rounded-xl p-2 mt-2 h-176 flex cursor-pointer hover:bg-gray-200 gap-4 w-full"
+          className="border   border-gray-500 relative rounded-xl    p-2 mt-2 h-176 flex cursor-pointer hover:bg-gray-200 gap-4 w-full"
         >
           <div>
             <CircleIcon item={item} />
@@ -240,12 +270,12 @@ export const Dashboard = () => {
   </div>
 </div>
 
-      <div className='  w-[50%] flex flex-col gap-8 '>{/* two */}
+      <div className='  md:w-[50%] w-full flex flex-col gap-8 '>{/* two */}
         <div className='bg-gray-100 shadow-md rounded-lg p-8'>
         <div className='flex flex-col items-start gap-4'>{/* charts */}
         <span className='flex gap-2'><ClipBoardClick /> <span className='text-customColor'>Task status</span></span>  
 
-        <div>
+        <div className='z-10'>
       <TaskChart/>
         </div>
 

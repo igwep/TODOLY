@@ -39,11 +39,11 @@ export const FullTaskView = ({Task, showFullView, setFullTaskViewDelete}) => {
 
 
   return (
-    <div className="p-4 w-full relative">
+    <div className="md:p-4 p-1 w-full relative">
   <div className="w-full flex flex-col gap-4 items-start">
     <div className="w-full flex gap-4">
       {/* Image Section */}
-      <div className="min-w-[20%] max-w-[20%] h-40">
+      <div className="min-w-[20%] md:max-w-[20%] max-w-[40%] h-40">
         <img
           src={task.taskImage}
           alt="no-image-was-found"

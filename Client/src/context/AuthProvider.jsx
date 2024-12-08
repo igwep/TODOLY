@@ -84,6 +84,62 @@ export const AuthProvider = ({ children }) => {
       throw error; // Rethrow the error for further handling
     }
   };
+  const updateCompleteTasks = async (userData, uid) => {
+    try {
+      console.log("Starting removal of completed tasks older than 3 days...");
+      const now = moment();
+      console.log("Current time:", now.format("YYYY-MM-DD HH:mm:ss"));
+  
+      if (!userData.categories) {
+        console.warn("No categories found in user data.");
+        return userData; // Return unchanged user data
+      }
+  
+      // Iterate through each category and remove tasks older than 3 days
+      const updatedCategories = Object.entries(userData.categories).reduce(
+        (updated, [categoryKey, category]) => {
+          const filteredTasks = category.tasks.filter((task) => {
+            if (!moment(task.dayFinished, "dddd, MMMM Do YYYY", true).isValid()) {
+              console.warn(`Invalid date format for task ID: ${task.id}. Skipping.`);
+              return true; // Keep task unchanged
+            }
+  
+            const deleteDate = moment(task.dayFinished, "dddd, MMMM Do YYYY").add(3, "days");
+            if (now.isAfter(deleteDate)) {
+              console.log(`Removing task ID: ${task.id}, finished on: ${task.dayFinished}`);
+              return false; // Exclude task from the list (remove it)
+            }
+  
+            return true; // Keep task if not yet expired
+          });
+  
+          updated[categoryKey] = {
+            ...category,
+            tasks: filteredTasks,
+          };
+  
+          return updated;
+        },
+        {}
+      );
+  
+      // Update the user data in Firestore
+      const updatedUserData = {
+        ...userData,
+        categories: updatedCategories,
+      };
+  
+      const userDocRef = doc(db, "users", uid);
+      await updateDoc(userDocRef, updatedUserData);
+      console.log("Old tasks successfully removed from Firestore.");
+  
+      return updatedUserData;
+    } catch (error) {
+      console.error("Error removing old completed tasks:", error);
+      throw error;
+    }
+  };
+  
   
   
 
@@ -113,6 +169,7 @@ export const AuthProvider = ({ children }) => {
               // Check for overdue tasks
               if (data.categories) {
                 const updatedData = await updateOverdueTasks(data, currentUser.uid);
+                const updatedTaskData = await updateCompleteTasks(data, currentUser.uid);
                 
               }
             } else {

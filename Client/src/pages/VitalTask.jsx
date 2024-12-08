@@ -83,9 +83,9 @@ export const VitalTask = () => {
     {
       loader ? (<Loader />) : ('')
     }
-    <div className='pl-[25vw] pt-32 py-8 bg-gray-100 h-screen px-8 w-[100%]'>
+    <div className='md:pl-[25vw] pt-32 py-8 bg-gray-100 h-screen px-8 w-[100%]'>
       <div className='flex gap-4 w-full'>
-      <div className='border border-gray-500 w-[25%] h-[80vh] rounded-2xl shadow-lg p-4 fixed  overflow-hidden'>{/* first border */}
+      <div className='border border-gray-500 md:w-[25%] h-[80vh] rounded-2xl shadow-lg p-4 md:fixed  overflow-hidden'>{/* first border */}
       <div><span className='border-b-2 border-red-600'> Vital </span><span>ask</span></div>
       <div className='no-scrollbar   h-full overflow-y-auto pt-2 '>{/* todos */}
                 
@@ -153,7 +153,7 @@ export const VitalTask = () => {
                 }
               </div>
       </div>
-      <div className='border border-gray-500 h-[80vh] w-[46%] xl:w-[48%] rounded-2xl shadow-lg fixed  right-5
+      <div className='border hidden md:block   border-gray-500 h-[80vh] w-[46%] xl:w-[48%] rounded-2xl shadow-lg fixed  right-5
       '><FullTaskView Task={vitaTask} showFullView={showFullView} setFullTaskViewDelete={setFullTaskViewDelete}  /> 
             {
               vitaTask.length > 0 ? (

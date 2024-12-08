@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -81,7 +82,7 @@ const TaskChart = () => {
   return (
     <div className="flex flex-wrap gap-4 justify-center">
       {Object.keys(taskStatusCounts).map((status, index) => (
-        <div key={status} className="w-24">
+        <div key={status} className="md:w-24 w-32">
           <h3 className="text-center font-bold mb-2">{status}</h3>
           <Doughnut data={chartData[index]} options={options} />
           <p className="text-center mt-2">

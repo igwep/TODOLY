@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, {useState} from 'react'
 import { useAuthContext } from '../context/UseAuth'
 import Loader from './Loader';
@@ -8,9 +9,9 @@ import { notify } from '../utils/Notify';
 
 export const CompletetedTask = () => {
     const {user, userData } = useAuthContext();
-    const [showFullView, setShowFullView] = useState(0)
+    const [ setShowFullView] = useState(0)
     const [activeDropdown, setActiveDropdown] = useState(null);
-    const [loader, setLoader] = useState(false)
+    const [ setLoader] = useState(false)
     if (!userData) {
         return (
           <Loader />
@@ -76,7 +77,7 @@ export const CompletetedTask = () => {
         
           key={item.id}
           onClick={() => setShowFullView(index)}
-          className={`${showFullView === index ? 'bg-gray-200' : ''} border cursor-pointer hover:bg-gray-200 border-gray-500 relative rounded-xl p-2 flex gap-4 mt-2 w-[80%] h-166`}
+          className=' border cursor-pointer hover:bg-gray-200 border-gray-500 relative rounded-xl p-2 flex gap-4 mt-2 md:w-[80%] h-166'
         >
           <div>
             <CircleIcon item={item} />

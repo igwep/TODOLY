@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useContext } from 'react';
 import { UploadFileIcon } from '../svgs';
 import Typography from '@mui/material/Typography';
@@ -110,9 +111,9 @@ const AddTaskPopup = () => {
     <>
       
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 md:p-0 p-4">
           {loading && <Loader />}
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[100%] max-w-[50%]">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[100%] md:max-w-[50%]">
             <div>
               {/* Header */}
               <div className='flex justify-between mb-8'>
@@ -213,8 +214,8 @@ const AddTaskPopup = () => {
                   }
 
                   {/* Description and Image Inputs */}
-                  <div className="flex gap-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="flex md:flex-row w-full gap-4">
+                    <div className="flex flex-col md:w-1/2 w-[70%]">
                       <label htmlFor="description" className="font-medium">Task Description</label>
                       <textarea
                         id="taskDescription"
@@ -226,10 +227,10 @@ const AddTaskPopup = () => {
                         className="border border-gray-300 h-full rounded-md p-2 mt-1 resize-none"
                       ></textarea>
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col w-[30%] md:w-1/2 ">
                       <label htmlFor="image" className="font-medium">Upload Image</label>
-                      <div className="relative border border-gray-300 text-xs rounded-lg p-8 mt-1 flex flex-col gap-4 items-center justify-center">
-                        <UploadFileIcon className="text-gray-400 mr-2" />
+                      <div className="relative border border-gray-300 text-xs rounded-lg md:p-8 p-6 mt-1 flex flex-col gap-4 items-center justify-center">
+                        <UploadFileIcon className="text-gray-400  mr-2" />
                         <span className="text-gray-400">Drag & Drop files here</span>
                         <span className="text-gray-400">Or</span>
                         <button

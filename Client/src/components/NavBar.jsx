@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchIcon, NotificationIcon, CalenderIcon } from '../svgs';
 import moment from 'moment';
 import { getNotificationLog } from '../utils/Notify';
 import { clearNotifications } from '../utils/Notify';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+import { LoadingContext } from '../context/LoadingContext';
 
 const NavBar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -11,6 +14,7 @@ const NavBar = () => {
   const dayOfWeek = moment().format('dddd');
   const location = useLocation();
   const [notifications, setNotifications] = useState([]);
+  const { isSideOpen, setIsSideOpen} = useContext(LoadingContext)
 
   const fetchNotifications = () => {
     const savedNotifications = getNotificationLog();
@@ -67,6 +71,10 @@ const NavBar = () => {
   };
 
   const dashboardTitle = title();
+  const toggleSidebar = () => {
+    setIsSideOpen(!isSideOpen)
+    console.log('toggle')
+  };
 
   return (
     <>
@@ -76,33 +84,43 @@ const NavBar = () => {
           background: '#FEF6EE',
         }}
       >
-        <nav className="flex justify-between items-center px-16 py-4">
+        <nav className="flex justify-between items-center md:px-16 px-12 py-4">
+          <div className='md:hidden'>
+          <IconButton onClick={()=> toggleSidebar()}
+      edge="start"
+      color="inherit"
+      aria-label="menu"
+      sx={{ scale: 1.5, mr: 2 }}
+    >
+      <MenuIcon />
+    </IconButton>
+          </div>
           <div className="min-w-72">
             <p className="text-4xl font-semibold">{dashboardTitle}</p>
           </div>
 
-          <div className="flex shadow-lighter-sm w-[50%]">
+          <div className="flex md:shadow-lighter-sm md:w-[50%]">
             <input
               type="text"
               placeholder="Search your task here.."
-              className="focus:outline-none focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
+              className="focus:outline-none hidden md:flex focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
             />
-            <div className="bg-customColor rounded-r-lg cursor-pointer p-1">
+            <div className="bg-customColor md:rounded-r-lg rounded-lg p-1  cursor-pointer md:mr-0 mr-3 ">
               <SearchIcon />
             </div>
           </div>
 
-          <div className="flex justify-between w-[13%]">
+          <div className="flex justify-between  w-[13%]">
             <div className="flex gap-2">
               {/* Notification Icon */}
               <div
-                className="bg-customColor p-3 rounded-lg flex items-center cursor-pointer group relative"
+                className="bg-customColor p-3.5 rounded-lg flex items-center cursor-pointer group relative"
                 onClick={() => {
                   setIsDropdownVisible(!isDropdownVisible);
                   if (!isDropdownVisible) fetchNotifications(); // Refresh notifications when dropdown opens
                 }}
               >
-                <NotificationIcon className="transition-transform duration-200 group-hover:scale-90" />
+                <NotificationIcon className="transition-transform duration-200 group-hover:scale-90 " />
 
                 {/* Dropdown Notification */}
                 {isDropdownVisible && (
@@ -143,12 +161,12 @@ const NavBar = () => {
               </div>
 
               {/* Calendar Icon */}
-              <div className="bg-customColor p-3 rounded-lg flex items-center cursor-pointer group">
+              <div className="bg-customColor p-3 rounded-lg md:flex hidden items-center cursor-pointer group">
                 <CalenderIcon className="transition-transform duration-200 group-hover:scale-90" />
               </div>
             </div>
 
-            <div className="text-sm">
+            <div className="text-sm hidden md:flex flex-col">
               <p className="font-semibold">{dayOfWeek}</p>
               <p className="text-textColor">{dateNumber}</p>
             </div>
