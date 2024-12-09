@@ -27,6 +27,7 @@ const NavBar = () => {
   }, []);
 
   const title = () => {
+    //find a better way to do this !!!
     if (location.pathname === '/Dashboard') {
       return (
         <>
@@ -48,13 +49,6 @@ const NavBar = () => {
           <span>Task</span>
         </>
       );
-    } else if (location.pathname === '/task-category') {
-      return (
-        <>
-          <span className="text-customColor">Task-</span>
-          <span>Category</span>
-        </>
-      );
     } else if (location.pathname === '/settings') {
       return (
         <>
@@ -68,7 +62,15 @@ const NavBar = () => {
         </>
       );
     }
-  };
+    else if (location.pathname === '/profile') {
+      return (
+        <>
+          <span className="text-customColor">Profile</span>
+        </>
+      );
+    }
+  }
+  ;
 
   const dashboardTitle = title();
   const toggleSidebar = () => {
@@ -110,7 +112,7 @@ const NavBar = () => {
             </div>
           </div>
 
-          <div className="flex justify-between  tablet:w-[13%]">
+          <div className="flex justify-between gap-4  tablet:w-[13%]">
             <div className="flex gap-2">
               {/* Notification Icon */}
               <div

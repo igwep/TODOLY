@@ -18,12 +18,13 @@ import { Help } from './pages/Help';
 import ScrollToTop from './utils/ScrollToTop';
 import AddTaskPopup from './components/AddTaskPopup';
 import { ToastContainer } from 'react-toastify';
+import ProfleSection from './components/ProfleSection';
 
 
 
  const AppContent = () => {
   
-  const {user, userData} = useAuthContext();
+  const {user} = useAuthContext();
   const location = useLocation();
   
   const routeBackgrounds = {
@@ -56,26 +57,29 @@ import { ToastContainer } from 'react-toastify';
         <AddTaskPopup />
         {shouldHaveNavBars && (
           <>
-          <NavBar /><Sidebar userData={userData} /></>
+          <NavBar /><Sidebar/></>
         )} {/* Conditionally render NavBar */}
         <Routes>
           <Route path="/Dashboard" element={<ProtectedRoute>
-            <Dashboard  userData={userData}/>
+            <Dashboard  />
           </ProtectedRoute>} />
           <Route path="/vital-task" element={<ProtectedRoute>
-            <VitalTask  userData={userData}/>
+            <VitalTask />
           </ProtectedRoute>} />
           <Route path="/my-task" element={<ProtectedRoute>
-            <Mytask  userData={userData}/>
+            <Mytask />
           </ProtectedRoute>} />
           <Route path="/task-category" element={<ProtectedRoute>
-            <TaskCategory userData={userData}/>
+            <TaskCategory />
           </ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute>
-            <Settings  userData={userData}/>
+            <Settings  />
           </ProtectedRoute>} />
           <Route path="/help" element={<ProtectedRoute>
-            <Help  userData={userData}/>
+            <Help />
+          </ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute>
+            <ProfleSection />
           </ProtectedRoute>} />
         </Routes>
       </div>

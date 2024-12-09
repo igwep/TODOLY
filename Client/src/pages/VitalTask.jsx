@@ -19,7 +19,7 @@ export const VitalTask = () => {
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [loader, setLoader] = useState(false);
   const [fullView, setFullView] = useState(false);
-  const { setIsEdit, setIsOpen, isEdit } = useContext(LoadingContext)
+  const { setIsEdit, setIsOpen } = useContext(LoadingContext)
   const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
     categoryName: '',
     taskId:''

@@ -17,7 +17,7 @@ const Sidebar = () => {
   
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { userData } = useAuthContext();
-  const { isSideOpen, setIsSideOpen} = useContext(LoadingContext)
+  const { isSideOpen, setIsSideOpen, setShowProfile} = useContext(LoadingContext)
  // const [hideSidebar, setHideSidebar] = useState(false)
   const location = useLocation();
   if (!userData) {
@@ -49,7 +49,7 @@ const Sidebar = () => {
           isSideOpen ? ' left-0 ' : '-left-96'
         } duration-300 relative`}
       >
-        <div onClick={ ()=> console.log('clicked')} className='absolute -top-10 cursor-pointer left-0 w-full flex flex-col  items-center '>
+        <Link to="/profile"  className='absolute -top-10 cursor-pointer left-0 w-full flex flex-col  items-center '>
         <div className='w-20 h-20 rounded-full overflow-hidden'>{/* image */}
   <img src="/assets/images/Frame14.jpg" alt="" className='h-full w-full object-cover' />
           </div>
@@ -63,7 +63,7 @@ const Sidebar = () => {
             </span>
           </div>
 
-        </div>
+        </Link>
        
         <div className="flex flex-col gap-4 mt-20">
           <Link to="/Dashboard" onClick={()=> toggleSidebar() }  className={`${location.pathname === '/Dashboard' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
@@ -78,11 +78,6 @@ const Sidebar = () => {
             <ClipboardCheckedIcon style={{ fontSize: 34 }} />
            <span className="text-lg">My Task</span>
           </Link>
-          <Link to="/task-category" onClick={()=> toggleSidebar() } className={`${location.pathname === '/task-category' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
-            <BulletPointIcon style={{ fontSize: 34 }} />
-           <span className="text-lg">Task categories</span>
-          </Link>
-          
           <Link to="/settings" onClick={()=> toggleSidebar() } className={`${location.pathname === '/settings' ? 'bg-gray-100 flex items-center gap-4 p-3 rounded-md text-customColor' : 'text-gray-200 flex items-center gap-4 p-3 hover:scale-105 transition-all hover:bg-lighterCustomColor rounded-md'}`}>
             <SettingsIcon style={{ fontSize: 34 }} />
              <span className="text-lg">Settings</span>
