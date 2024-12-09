@@ -79,13 +79,13 @@ const NavBar = () => {
   return (
     <>
       <div
-        className="w-[100%] z-20 fixed shadow-md"
+        className="w-[100%] z-20 fixed mx-auto shadow-md"
         style={{
           background: '#FEF6EE',
         }}
       >
-        <nav className="flex justify-between items-center md:px-16 px-12 py-4">
-          <div className='md:hidden'>
+        <nav className="flex justify-between items-center  tablet:px-16 px-12 py-4">
+          <div className='tablet:hidden'>
           <IconButton onClick={()=> toggleSidebar()}
       edge="start"
       color="inherit"
@@ -95,26 +95,26 @@ const NavBar = () => {
       <MenuIcon />
     </IconButton>
           </div>
-          <div className="min-w-72">
+          <div className="md:min-w-72 min-w-56">
             <p className="text-4xl font-semibold">{dashboardTitle}</p>
           </div>
 
-          <div className="flex md:shadow-lighter-sm md:w-[50%]">
+          <div className="flex justify-end   tablet:shadow-lighter-sm md:w-[50%]">
             <input
               type="text"
               placeholder="Search your task here.."
-              className="focus:outline-none hidden md:flex focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
+              className="focus:outline-none hidden tablet:flex focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
             />
             <div className="bg-customColor md:rounded-r-lg rounded-lg p-1  cursor-pointer md:mr-0 mr-3 ">
               <SearchIcon />
             </div>
           </div>
 
-          <div className="flex justify-between  w-[13%]">
+          <div className="flex justify-between  tablet:w-[13%]">
             <div className="flex gap-2">
               {/* Notification Icon */}
               <div
-                className="bg-customColor p-3.5 rounded-lg flex items-center cursor-pointer group relative"
+                className="bg-customColor p-3.5 rounded-lg flex items-center cursor-pointer group ml-2 relative"
                 onClick={() => {
                   setIsDropdownVisible(!isDropdownVisible);
                   if (!isDropdownVisible) fetchNotifications(); // Refresh notifications when dropdown opens
@@ -161,12 +161,12 @@ const NavBar = () => {
               </div>
 
               {/* Calendar Icon */}
-              <div className="bg-customColor p-3 rounded-lg md:flex hidden items-center cursor-pointer group">
+              <div className="bg-customColor p-3 rounded-lg tablet:flex hidden items-center cursor-pointer group">
                 <CalenderIcon className="transition-transform duration-200 group-hover:scale-90" />
               </div>
             </div>
 
-            <div className="text-sm hidden md:flex flex-col">
+            <div className="text-sm hidden tablet:flex flex-col">
               <p className="font-semibold">{dayOfWeek}</p>
               <p className="text-textColor">{dateNumber}</p>
             </div>

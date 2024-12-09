@@ -139,9 +139,9 @@ export const Dashboard = () => {
         </div>
       </div>) :(
         
-    <div className='pt-24 md:pl-[25vw] py-8 bg-gray-100   md:px-8 px-4 w-[100%] '>
+    <div className='pt-24 tablet:pl-[25vw] py-8 bg-gray-100   tablet:px-8 px-4 w-[100%] '>
     <div>{/* heading */}
-    <div className='md:text-4xl text-2xl mb-4 mt-8'>{/* welcome */}
+    <div className='tablet:text-4xl text-2xl mb-4 mt-8'>{/* welcome */}
       <p>
         Welcome back, <span>{userData.userDetails?.firstName || 'First Name Not Found'}👋 </span>
       </p>
@@ -150,8 +150,8 @@ export const Dashboard = () => {
 
     </div>
     </div> 
-    <div className=' border flex flex-col md:flex-row md:gap-24 gap-4 py-4   border-gray-400 px-8 w-full '>{/* main dashboard */}
-    <div className="bg-gray-100 rounded-lg shadow-lg md:w-[35%] w-full  h-[60vh] md:h-[70vh]  no-scrollbar  p-4">
+    <div className=' border flex flex-col tablet:flex-row tablet:gap-24 gap-4 py-4   border-gray-400 px-8 w-full '>{/* main dashboard */}
+    <div className="bg-gray-100 rounded-lg shadow-lg tablet:w-[37%] w-full  h-[60vh] md:h-[70vh]  no-scrollbar  p-4">
   <div className="flex justify-between items-center">
     <div className="flex items-center mb-4">
       <ClipboardWithTimerIcon />
@@ -201,7 +201,7 @@ export const Dashboard = () => {
                 <img src={item.taskImage} alt="" className="w-full h-full rounded-lg" />
               </div>
             </div>
-            <div className="flex gap-2 text-xxs mt-2 w-full absolute bottom-2">
+            <div className="flex gap-2 text-xxs mt-2  w-full absolute bottom-2">
               <div className="flex">
                 <span className="mr-1">Priority:</span>
                 <span
@@ -270,12 +270,12 @@ export const Dashboard = () => {
   </div>
 </div>
 
-      <div className='  md:w-[50%] w-full flex flex-col gap-8 '>{/* two */}
+      <div className='  tablet:w-[50%] w-full flex flex-col gap-8 '>{/* two */}
         <div className='bg-gray-100 shadow-md rounded-lg p-8'>
         <div className='flex flex-col items-start gap-4'>{/* charts */}
         <span className='flex gap-2'><ClipBoardClick /> <span className='text-customColor'>Task status</span></span>  
 
-        <div className='z-10'>
+        <div className=''>
       <TaskChart/>
         </div>
 

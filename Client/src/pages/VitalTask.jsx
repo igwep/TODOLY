@@ -18,6 +18,7 @@ export const VitalTask = () => {
   const [showFullView, setShowFullView] = useState(0)
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [loader, setLoader] = useState(false);
+  const [fullView, setFullView] = useState(false);
   const { setIsEdit, setIsOpen, isEdit } = useContext(LoadingContext)
   const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
     categoryName: '',
@@ -36,9 +37,11 @@ export const VitalTask = () => {
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   }
+
   const handleDropdown = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
+
   const UpdateTaskToInProgress = async (user, categoryName, taskId, newStatus) =>{
     setActiveDropdown(null)
     try {
@@ -50,6 +53,7 @@ export const VitalTask = () => {
     notify("Error updating task status:", "error", false);
     }
   }
+
   const handleDelete = async (user, categoryName, taskId) => {
     //put a loading so the show full will render back well 
         setLoader(true)
@@ -76,6 +80,7 @@ export const VitalTask = () => {
       setLoader(false)
     }
   };
+  
   return (
    <>
  
@@ -83,9 +88,9 @@ export const VitalTask = () => {
     {
       loader ? (<Loader />) : ('')
     }
-    <div className='md:pl-[25vw] pt-32 py-8 bg-gray-100 h-screen px-8 w-[100%]'>
+    <div className='tablet:pl-[25vw] pt-32 py-8 bg-gray-100 h-screen px-8 w-[100%]'>
       <div className='flex gap-4 w-full'>
-      <div className='border border-gray-500 md:w-[25%] h-[80vh] rounded-2xl shadow-lg p-4 md:fixed  overflow-hidden'>{/* first border */}
+      <div className='border border-gray-500 tablet:w-[25%] w-full h-[80vh] rounded-2xl shadow-lg p-4 tablet:fixed  overflow-hidden'>{/* first border */}
       <div><span className='border-b-2 border-red-600'> Vital </span><span>ask</span></div>
       <div className='no-scrollbar   h-full overflow-y-auto pt-2 '>{/* todos */}
                 
@@ -93,7 +98,7 @@ export const VitalTask = () => {
       {
                   vitaTask.length > 0 ? 
                   vitaTask.map((item, index) =>(
-                    <div key={index} onClick={() => setShowFullView(index)} className={`${showFullView === index ? 'bg-gray-200' : ''} border border-gray-500 relative cursor-pointer hover:bg-gray-200 rounded-xl p-2 flex mt-2  gap-4 w-full h-166`}>
+                    <div key={index} onClick={() => {setShowFullView(index); setFullView(true)}} className={`${showFullView === index ? 'bg-gray-200' : ''} border border-gray-500 relative cursor-pointer hover:bg-gray-200 rounded-xl   p-2 flex mt-2  gap-4 w-full h-166`}>
                           
                     <div className=''>
                     <CircleIcon item={item} />
@@ -153,7 +158,7 @@ export const VitalTask = () => {
                 }
               </div>
       </div>
-      <div className='border hidden md:block   border-gray-500 h-[80vh] w-[46%] xl:w-[48%] rounded-2xl shadow-lg fixed  right-5
+      <div className='border hidden tablet:block   border-gray-500 h-[80vh] w-[46%] xl:w-[48%] rounded-2xl shadow-lg fixed  right-5
       '><FullTaskView Task={vitaTask} showFullView={showFullView} setFullTaskViewDelete={setFullTaskViewDelete}  /> 
             {
               vitaTask.length > 0 ? (
@@ -167,7 +172,34 @@ export const VitalTask = () => {
                 </div>
               ) : ''
             }
-       </div>
+       </div>{/* mobile task view */}
+       <div className={`fixed ${fullView ? 'block' : 'hidden'} inset-0 md:hidden flex justify-center items-center bg-black bg-opacity-50 z-50`}>
+        <div className="bg-white w-[95%] md:w-[75%] lg:w-[60%] md:h-[90%] h-{50%} rounded-lg shadow-lg p-8 relative overflow-y-auto">
+          {/* Close Button */}
+          <button 
+            onClick={() => setFullView(false)} 
+            className="absolute top-4 right-4 text-gray-600 hover:text-customColor bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+  
+          {/* Full Task View Content */}
+          <FullTaskView 
+            Task={vitaTask} 
+            showFullView={showFullView} 
+            setFullTaskViewDelete={setFullTaskViewDelete} 
+          />
+          <div className=' flex gap-4 justify-end p-4'>
+                <div onClick={()=> {setIsOpen(true); setIsEdit(true); setFullView(false); }}  className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <NoteIcon width={20} height={20} fill="white" className="transition-transform duration-200 group-hover:scale-90" /> 
+                </div>
+                <div onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <TrashIcon width={20} height={20} fill="white"  className="transition-transform duration-200 group-hover:scale-90" />
+                </div>
+                </div>
+        </div>
+      </div>
       </div>
     </div>
     </>

@@ -20,6 +20,7 @@ export const Mytask = () => {
   const { setIsOpen} = useContext(LoadingContext);
   const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext);
   const {isEdit, setIsEdit} = useContext(LoadingContext);
+  const [fullView, setFullView] = useState(false);
   const [loader, setLoader] = useState(false)
   console.log('is edit:', isEdit);
   
@@ -95,9 +96,9 @@ export const Mytask = () => {
      {
     loader ? (<Loader />) : ('')
   }
-    <div className='pl-[25vw] pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
+    <div className='tablet:pl-[25vw] pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
     <div className='flex  w-full'>
-    <div className='border border-gray-500 w-[25%] h-[80vh] rounded-2xl shadow-lg p-4 fixed  overflow-hidden'>
+    <div className='border border-gray-500 tablet:w-[25%] w-full h-[80vh] rounded-2xl shadow-lg p-4 tablet:fixed  overflow-hidden'>
   {/* Title section */}
   <div className='absolute top-0 left-0 w-full bg-gray-100 z-10 p-4'>
     <span className='border-b-2 border-red-600'> My T</span><span>ask</span>
@@ -112,7 +113,7 @@ export const Mytask = () => {
         <div 
         
           key={item.id}
-          onClick={() => setShowFullView(index)}
+          onClick={() => {setShowFullView(index); setFullView(true)}}
           className={`${showFullView === index ? 'bg-gray-200' : ''} border cursor-pointer hover:bg-gray-200 border-gray-500 relative rounded-xl p-2 flex gap-4 mt-2 w-full h-166`}
         >
           <div>
@@ -188,12 +189,12 @@ export const Mytask = () => {
   </div>
 </div>
 
-    <div className='border border-gray-500 h-[80vh] w-[46%] xl:w-[48%] rounded-2xl shadow-lg fixed  right-5
+    <div className='border border-gray-500 hidden tablet:block h-[80vh] w-[46%] xl:w-[48%] rounded-2xl shadow-lg fixed  right-5
     '><FullTaskView Task={allTask} showFullView={showFullView} setFullTaskViewDelete={setFullTaskViewDelete} /> 
    {
    allTask.length > 0 ? (
                 <div className=' flex gap-4 justify-end p-4'>
-       {/* PASS ID AS PROP!! */}         <div onClick={()=> {setIsOpen(true); setIsEdit(true); console.log("onClick triggered. isEdit:", isEdit);}} className='bg-customColor p-3 rounded-md cursor-pointer group'>
+       {/* PASS ID AS PROP!! */}  <div onClick={()=> {setIsOpen(true); setIsEdit(true); console.log("onClick triggered. isEdit:", isEdit);}} className='bg-customColor p-3 rounded-md cursor-pointer group'>
                 <NoteIcon  width={20} height={20} fill="white" className="transition-transform duration-200 group-hover:scale-90" /> 
                 </div>
                 <div onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
@@ -202,6 +203,34 @@ export const Mytask = () => {
                 </div>
               ) : ''
             } </div>
+            {/* mobile task view */}
+            <div className={`fixed ${fullView ? 'block' : 'hidden'} inset-0 md:hidden flex justify-center items-center bg-black bg-opacity-50 z-50`}>
+        <div className="bg-white w-[95%] md:w-[75%] lg:w-[60%] md:h-[90%] h-{50%} rounded-lg shadow-lg p-8 relative overflow-y-auto">
+          {/* Close Button */}
+          <button 
+             onClick={() => setFullView(false)}  
+            className="absolute top-4 right-4 text-gray-600 hover:text-customColor bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+  
+          {/* Full Task View Content */}
+          <FullTaskView 
+            Task={allTask} 
+            showFullView={showFullView} 
+            setFullTaskViewDelete={setFullTaskViewDelete} 
+          />
+          <div className=' flex gap-4 justify-end p-4'>
+                <div onClick={()=> {setIsOpen(true); setIsEdit(true);  setFullView(false) ; }}  className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <NoteIcon width={20} height={20} fill="white" className="transition-transform duration-200 group-hover:scale-90" /> 
+                </div>
+                <div onClick={() => handleDelete(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId)} className='bg-customColor p-3 rounded-md cursor-pointer group'>
+                <TrashIcon width={20} height={20} fill="white"  className="transition-transform duration-200 group-hover:scale-90" />
+                </div>
+                </div>
+        </div>
+      </div>
     </div>
     
   </div>

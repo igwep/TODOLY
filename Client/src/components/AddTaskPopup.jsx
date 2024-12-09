@@ -111,7 +111,7 @@ const AddTaskPopup = () => {
     <>
       
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 md:p-0 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 md:p-0 p-2">
           {loading && <Loader />}
           <div className="bg-white p-6 rounded-lg shadow-lg w-[100%] md:max-w-[50%]">
             <div>
@@ -141,7 +141,7 @@ const AddTaskPopup = () => {
                 <form onSubmit={handleSubmit} className="space-y-4 p-4">
                   {/* Title Input */}
                   <div className="flex flex-col">
-                    <label htmlFor="title" className="font-medium">Title</label>
+                    <label htmlFor="title" className="font-medium text-sm md:text-base">Title</label>
                     <input
                       type="text"
                       id="title"
@@ -154,7 +154,7 @@ const AddTaskPopup = () => {
 
                   {/* Date Input */}
                   <div className="flex flex-col">
-                    <label htmlFor="date" className="font-medium">Date</label>
+                    <label htmlFor="date" className="font-medium text-sm md:text-base">Date</label>
                     <input
                       type="date"
                       id="date"
@@ -171,7 +171,7 @@ const AddTaskPopup = () => {
                     isEdit ? '' : (
                       <div className="flex flex-col">
                     <label className="font-medium">Priority</label>
-                    <div className="flex items-center gap-4 mt-1">
+                    <div className="flex items-center text-sm md:text-base gap-4 mt-1">
                       <label className="flex items-center gap-2">
                         <Typography variant="h5" style={{ color: 'red', marginRight: '2px' }}>•</Typography>
                         <span className='text-gray-400'>Extreme</span>
@@ -181,7 +181,7 @@ const AddTaskPopup = () => {
                           checked={formData.priority === 'Extreme'}
                           onChange={handleChange}
                           value="Extreme"
-                          className="ml-2"
+                          className="md:ml-2 ml-0"
                         />
                       </label>
                       <label className="flex items-center gap-2">
@@ -193,7 +193,7 @@ const AddTaskPopup = () => {
                           checked={formData.priority === 'Moderate'}
                           onChange={handleChange}
                           value="Moderate"
-                          className="ml-2"
+                          className="md:ml-2 ml-0"
                         />
                       </label>
                       <label className="flex items-center gap-2">
@@ -205,7 +205,7 @@ const AddTaskPopup = () => {
                           checked={formData.priority === 'Low'}
                           onChange={handleChange}
                           value="Low"
-                          className="ml-2"
+                          className="md:ml-2 ml-0"
                         />
                       </label>
                     </div>
@@ -216,7 +216,7 @@ const AddTaskPopup = () => {
                   {/* Description and Image Inputs */}
                   <div className="flex md:flex-row w-full gap-4">
                     <div className="flex flex-col md:w-1/2 w-[70%]">
-                      <label htmlFor="description" className="font-medium">Task Description</label>
+                      <label htmlFor="description" className="font-medium text-sm md:text-base">Task Description</label>
                       <textarea
                         id="taskDescription"
                         rows="9"
@@ -228,7 +228,7 @@ const AddTaskPopup = () => {
                       ></textarea>
                     </div>
                     <div className="flex flex-col w-[30%] md:w-1/2 ">
-                      <label htmlFor="image" className="font-medium">Upload Image</label>
+                      <label htmlFor="image" className="font-medium  text-sm md:text-base">Upload Image</label>
                       <div className="relative border border-gray-300 text-xs rounded-lg md:p-8 p-6 mt-1 flex flex-col gap-4 items-center justify-center">
                         <UploadFileIcon className="text-gray-400  mr-2" />
                         <span className="text-gray-400">Drag & Drop files here</span>

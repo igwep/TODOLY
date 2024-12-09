@@ -146,7 +146,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
     }, [errorShake]);
     return (
       
-  <section className={`h-full bg-white w-full rounded-md transition-opacity duration-50 ${fade ? 'opacity-100' : 'opacity-0'}`}>
+  <section className={`md:h-full h-[80%] bg-white w-full rounded-md transition-opacity duration-50 ${fade ? 'opacity-100' : 'opacity-0'}`}>
     {success && (<VerificationPopup setSuccess={setSuccess} email={formData.email} handleSubmit={handleSubmit}/> )}
           <div className='w-full h-full flex justify-between'>
           <div className={`w-[50%]  md:flex ${loading ? 'hidden' : 'flex'} hidden`}>

@@ -18,6 +18,7 @@ const Sidebar = () => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { userData } = useAuthContext();
   const { isSideOpen, setIsSideOpen} = useContext(LoadingContext)
+ // const [hideSidebar, setHideSidebar] = useState(false)
   const location = useLocation();
   if (!userData) {
     return (
@@ -39,12 +40,12 @@ const Sidebar = () => {
     setIsSideOpen(!isSideOpen)
     console.log('toggle')
   };
-
+  
   return (
-    <div className={` ${isSideOpen ? 'z-20' : ''} fixed h-screen   top-32`}>
+    <div className={` ${isSideOpen ? 'z-20 pointer-events-auto' : 'z-10 pointer-events-none'} desktop:pointer-events-auto fixed h-screen   top-32`}>
       {/* Sidebar */}
       <div
-        className={`bg-customColor h-screen md:left-0 transition-all  ease-in-out  p-8 rounded-r-lg w-80 pt-8 ${
+        className={`bg-customColor h-screen tablet:left-0 transition-all  ease-in-out  p-8 rounded-r-lg w-80 pt-8 ${
           isSideOpen ? ' left-0 ' : '-left-96'
         } duration-300 relative`}
       >

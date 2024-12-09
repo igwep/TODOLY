@@ -42,9 +42,10 @@ export default {
         'xxs': '0.595rem', // 10px
       },
       screens: {
-        tablet: '768px', // Custom screen for tablets
-        desktop: '1280px', // Custom screen for desktops
-        ultrawide: '1920px', // Custom screen for ultrawide monitors
+        mobile: '320px', // Smallest mobile screens
+        tablet: '840px', // Tablets
+        laptop: '1024px', // Laptops
+        desktop: '1280px', // Desktops
       },
 
     },
