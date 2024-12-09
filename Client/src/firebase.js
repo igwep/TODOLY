@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // src/firebase.js
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
@@ -5,15 +6,16 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, GoogleA
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDu9YGp-OxeUgzR4dU2k6Y53msOPNj4bkY",
-    authDomain: "todolist-8e390.firebaseapp.com",
-    databaseURL: "https://todolist-8e390-default-rtdb.firebaseio.com",
-    projectId: "todolist-8e390",
-    storageBucket: "todolist-8e390.appspot.com",
-    messagingSenderId: "1067625301460",
-    appId: "1:1067625301460:web:672e39c224968563e70241",
-    measurementId: "G-68S43P0LPW"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
