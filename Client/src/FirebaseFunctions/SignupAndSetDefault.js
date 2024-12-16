@@ -1,22 +1,23 @@
-import react from 'react';
-import { sendEmailVerification, signInWithCredential, signInWithEmailAndPassword } from 'firebase/auth';
+import { sendEmailVerification,  signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db, createUserWithEmailAndPassword } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
-export const SignupAndSetDefaultData = async (email, password, userDetails, setLoading, setSuccess, success ) =>{
+export const SignupAndSetDefaultData = async (email, password, userDetails, setLoading, setSuccess ) =>{
 
 try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     await sendEmailVerification(user);
     console.log('verification email sent to:', email);
+
 try{
   await setDoc(doc(db, 'users', user.uid),{
     userDetails:{
-        firstName: userDetails.firstName,
-        lastName: userDetails.lastName,
+        firstName:userDetails.firstName,
+        lastName:userDetails.lastName,
         userName:userDetails.userName,
-        email:userDetails.email
+        email:userDetails.email,
+        profilePicture:''
             },
             task:[],
             categories: {
@@ -36,12 +37,11 @@ try{
         });
         console.log("User signed up and default data added to Firestore");
         setSuccess(true);
-      
+  
 } catch(error){
   console.error('Error adding data to Firestore', error);
 } 
 
-          
                 console.log("user signed up and default data added to firestore");
             } catch (error) {
               if(error.code === 'auth/email-already-in-use'){

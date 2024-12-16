@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HelpIcon from '@mui/icons-material/Help';
-import { ExclamationMarkIcon, ClipboardCheckedIcon, BulletPointIcon  } from '../svgs';
+import { ExclamationMarkIcon, ClipboardCheckedIcon  } from '../svgs';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LogoutModal from './LogoutModel';
 import { useAuthContext } from '../context/UseAuth';
@@ -17,7 +17,7 @@ const Sidebar = () => {
   
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { userData } = useAuthContext();
-  const { isSideOpen, setIsSideOpen, setShowProfile} = useContext(LoadingContext)
+  const { isSideOpen, setIsSideOpen} = useContext(LoadingContext)
  // const [hideSidebar, setHideSidebar] = useState(false)
   const location = useLocation();
   if (!userData) {
@@ -25,8 +25,7 @@ const Sidebar = () => {
       <Loader />
     ); 
   }
- /*  const userInfo =  Object.values(userData);
-  console.log('userInfo:', userInfo) */
+
 
   const handleOpenLogoutModal = () => {
     setIsLogoutModalOpen(true);
@@ -40,6 +39,7 @@ const Sidebar = () => {
     setIsSideOpen(!isSideOpen)
     console.log('toggle')
   };
+  console.log("profile picture:", userData.userDetails.profilePicture)
   
   return (
     <div className={` ${isSideOpen ? 'z-20 pointer-events-auto' : 'z-10 pointer-events-none'} desktop:pointer-events-auto fixed h-screen   top-32`}>
@@ -51,7 +51,7 @@ const Sidebar = () => {
       >
         <Link to="/profile"  className='absolute -top-10 cursor-pointer left-0 w-full flex flex-col  items-center '>
         <div className='w-20 h-20 rounded-full overflow-hidden'>{/* image */}
-  <img src="/assets/images/Frame14.jpg" alt="" className='h-full w-full object-cover' />
+  <img src={userData.userDetails?.profilePicture} alt="" className='h-full w-full object-cover' />
           </div>
 
           <div className='flex flex-col items-center text-white'>{/* profile details */}

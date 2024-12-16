@@ -19,6 +19,8 @@ import ScrollToTop from './utils/ScrollToTop';
 import AddTaskPopup from './components/AddTaskPopup';
 import { ToastContainer } from 'react-toastify';
 import ProfleSection from './components/ProfleSection';
+import SearchPage from './pages/SearchPage';
+import { LoadingContext } from './context/LoadingContext';
 
 
 
@@ -26,6 +28,7 @@ import ProfleSection from './components/ProfleSection';
   
   const {user} = useAuthContext();
   const location = useLocation();
+  const {showSearchResult, setShowSearchResult } = useContext(LoadingContext)
   
   const routeBackgrounds = {
     '/': '/assets/images/Frame14.jpg',
@@ -55,11 +58,15 @@ import ProfleSection from './components/ProfleSection';
       <div className='font-Inter '>
         <ToastContainer />
         <AddTaskPopup />
+       
         {shouldHaveNavBars && (
           <>
           <NavBar /><Sidebar/></>
         )} {/* Conditionally render NavBar */}
-        <Routes>
+         
+      {
+        showSearchResult ? (<SearchPage/>) : (
+          <Routes>
           <Route path="/Dashboard" element={<ProtectedRoute>
             <Dashboard  />
           </ProtectedRoute>} />
@@ -82,6 +89,8 @@ import ProfleSection from './components/ProfleSection';
             <ProfleSection />
           </ProtectedRoute>} />
         </Routes>
+        )
+      }
       </div>
     </div>
    

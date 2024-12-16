@@ -10,13 +10,17 @@ export const LoadingProvider = ({ children }) => {
     const [navName, setNavName] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isSideOpen, setIsSideOpen] = useState(true);
+    const [query, setQuery] = useState("");
+    const [filteredTasks, setFilteredTasks] = useState([]);
+    const [showSearchResult, setShowSearchResult] = useState(false)
     const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
         categoryName: '',
         taskId:''
       })
     const [isEdit, setIsEdit] = useState(false);
     return(
-        <LoadingContext.Provider value={{ isSideOpen,
+        <LoadingContext.Provider value={{ 
+                isSideOpen,
                 setIsSideOpen,
                 loading,
                 setLoading,
@@ -30,6 +34,12 @@ export const LoadingProvider = ({ children }) => {
                 FullTaskViewDelete,
                 setIsEdit,
                 isEdit,
+                query, 
+                setQuery,
+                filteredTasks,
+                setFilteredTasks,
+                showSearchResult,
+                setShowSearchResult
                 }}>
             {children}
         </LoadingContext.Provider>

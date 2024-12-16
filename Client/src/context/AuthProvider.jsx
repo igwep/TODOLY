@@ -156,7 +156,7 @@ export const AuthProvider = ({ children }) => {
         setUserDataLoading(true);
         console.log('Fetching user data for UID:', currentUser.uid);
         const userDocRef = doc(db, 'users', currentUser.uid);
-
+  
         unsubscribeFirestore = onSnapshot(
           userDocRef,
           async (docSnapshot) => {

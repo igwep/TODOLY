@@ -7,6 +7,8 @@ import { clearNotifications } from '../utils/Notify';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { LoadingContext } from '../context/LoadingContext';
+import { useAuthContext } from '../context/UseAuth';
+import Loader from './Loader';
 
 const NavBar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -14,7 +16,10 @@ const NavBar = () => {
   const dayOfWeek = moment().format('dddd');
   const location = useLocation();
   const [notifications, setNotifications] = useState([]);
-  const { isSideOpen, setIsSideOpen} = useContext(LoadingContext)
+  const { isSideOpen, setIsSideOpen, query, setQuery, filteredTasks, setFilteredTasks, showSearchResult, setShowSearchResult } = useContext(LoadingContext)
+   const { userData } = useAuthContext();
+   
+  
 
   const fetchNotifications = () => {
     const savedNotifications = getNotificationLog();
@@ -24,7 +29,31 @@ const NavBar = () => {
   useEffect(() => {
     // Fetch notifications when the component mounts
     fetchNotifications();
-  }, []);
+  }, []); 
+
+  const allTask = userData?.categories
+  ? Object.keys(userData.categories)
+      .flatMap(key => userData.categories[key].tasks)
+      .sort((a, b) => a.id.localeCompare(b.id))
+  : [];
+
+if (!userData || !userData.categories) {
+  return <Loader />;
+}
+
+   const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setQuery(value);
+
+    // Filter tasks only if there's a search value
+    const filtered = value.length > 0 
+        ? allTask.filter(task => task.title.toLowerCase().includes(value)) 
+        : [];
+        
+    setFilteredTasks(filtered);
+    setShowSearchResult(value.length > 0 );
+  }; 
+   
 
   const title = () => {
     //find a better way to do this !!!
@@ -104,10 +133,12 @@ const NavBar = () => {
           <div className="flex justify-end   tablet:shadow-lighter-sm md:w-[50%]">
             <input
               type="text"
-              placeholder="Search your task here.."
+              value={query}
+              onChange={handleSearch} 
+              placeholder="Search tasks by title..."
               className="focus:outline-none hidden tablet:flex focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
             />
-            <div className="bg-customColor md:rounded-r-lg rounded-lg p-1  cursor-pointer md:mr-0 mr-3 ">
+            <div className="bg-customColor tablet:rounded-r-lg rounded-lg p-1  cursor-pointer md:mr-0 mr-3 ">
               <SearchIcon />
             </div>
           </div>

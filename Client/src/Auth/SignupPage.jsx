@@ -154,7 +154,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
           </div>
                 {/* Form */}
                 
-              {loading ? ( <Loader /> ) :  (<div className="md:w-[60%] w-[100%]  flex items-center justify-center">
+              {loading ? ( <Loader /> ) :  (<div className="md:w-[60%] w-[100%] overflow-x-auto  flex items-center justify-center">
                       <form onSubmit={handleSubmit} className="p-8   rounded-md w-full  max-w-2xl">
                         <div className='w-full flex justify-start'>
                         <h2 className="text-4xl font-bold mb-6 text-center">Sign Up</h2>

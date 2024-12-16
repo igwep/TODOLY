@@ -51,13 +51,6 @@ const AddTaskPopup = () => {
     }));
   };
 
-  /* const notify = (message, type = 'success') => {
-    if (type === 'success') {
-      toast.success(message);
-    } else if (type === 'error') {
-      toast.error(message);
-    }
-  }; */
 
   const handleSubmit = async (event) => {
     event.preventDefault();

@@ -20,10 +20,7 @@ export const VitalTask = () => {
   const [loader, setLoader] = useState(false);
   const [fullView, setFullView] = useState(false);
   const { setIsEdit, setIsOpen } = useContext(LoadingContext)
-  const [FullTaskViewDelete, setFullTaskViewDelete] = useState({
-    categoryName: '',
-    taskId:''
-  })
+  const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext);
 
   if (!userData) {
     return (
