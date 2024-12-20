@@ -218,8 +218,38 @@ export const updateTaskInDatabase = async (user, categoryName, updatedTask) => {
     throw new Error("Task not found");
   }
 
+  let imageUrl = tasks[taskIndex].taskImage; // Default to existing image URL
+
+  // If a new image is provided, upload it
+  if (updatedTask.taskImage instanceof File) {
+    const uploadData = new FormData();
+    uploadData.append("image", updatedTask.taskImage);
+    uploadData.append("userId", user.uid);
+
+    console.log("FormData for image upload:", uploadData);
+
+    const response = await fetch('http://localhost:5000/upload-image', {
+      method: 'POST',
+      body: uploadData,
+      mode: 'cors',
+    });
+
+    console.log("Upload image response status:", response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Image upload failed:", errorData);
+      throw new Error(errorData.error || "Failed to upload image.");
+    }
+
+    const data = await response.json();
+    console.log("Uploaded image URL:", data.imageUrl);
+
+    imageUrl = data.imageUrl; // Update the image URL with the new one
+  }
+
   // Update the task in the tasks array
-  tasks[taskIndex] = { ...tasks[taskIndex], ...updatedTask };
+  tasks[taskIndex] = { ...tasks[taskIndex], ...updatedTask, taskImage: imageUrl };
 
   // Update the database
   const updatedCategories = {
@@ -234,3 +264,4 @@ export const updateTaskInDatabase = async (user, categoryName, updatedTask) => {
 
   notify("Task updated successfully!", "success", true);
 };
+

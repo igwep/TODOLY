@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React,{useState, useContext, useEffect} from 'react'
+import React,{useState, useContext, useEffect, useMemo} from 'react'
 import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useAuthContext } from '../context/UseAuth';
@@ -22,24 +22,28 @@ export const Mytask = () => {
   const {isEdit, setIsEdit} = useContext(LoadingContext);
   const [fullView, setFullView] = useState(false);
   const [loader, setLoader] = useState(false)
-  console.log('is edit:', isEdit);
-  
-  useEffect(() => {
-    console.log("isEdit state changed:", isEdit);
-  }, [isEdit]);
-
+ 
+  const allTask = useMemo(() => {
+    if (!userData) {
+      return (
+        <Loader />
+      ); 
+    } 
+    return Object.keys(userData.categories)
+      .flatMap(key => userData.categories[key].tasks)
+      .sort((a, b) => a.id.localeCompare(b.id));
+  }, [userData]);
   
   if (!userData) {
     return (
       <Loader />
     ); 
   } 
+  
 
-  const allTask = Object.keys(userData.categories)
+ /*  const allTask = Object.keys(userData.categories)
   .flatMap(key => userData.categories[key].tasks)
-  .sort((a, b) => a.id.localeCompare(b.id));
-
-  console.log('all task', allTask);
+  .sort((a, b) => a.id.localeCompare(b.id)); */
 
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -60,6 +64,7 @@ export const Mytask = () => {
       console.error("Error updating task status:", error.message);
     }
   }
+  
   
   const handleDelete = async (user, categoryName, taskId) => {
     //put a loading so the show full will render back well 
@@ -98,9 +103,8 @@ export const Mytask = () => {
   }
     <div className='tablet:pl-[25vw] pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
     <div className='flex  w-full'>
-    <div className='border border-gray-500 tablet:w-[25%] w-full h-[80vh] rounded-2xl shadow-lg p-4 tablet:fixed  overflow-hidden'>
-  {/* Title section */}
-  <div className='absolute top-0 left-0 w-full bg-gray-100 z-10 p-4'>
+    <div className='border  border-gray-500 tablet:w-[25%] w-full h-[80vh] rounded-2xl shadow-lg p-4 tablet:fixed  overflow-hidden  relative '>
+  <div>
     <span className='border-b-2 border-red-600'> My T</span><span>ask</span>
   </div>
 

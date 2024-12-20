@@ -34,7 +34,7 @@ import { LoadingContext } from './context/LoadingContext';
     '/': '/assets/images/Frame14.jpg',
     '/signup-page': '/assets/images/Frame14.jpg',
     '/additional-info': '/assets/images/Frame14.jpg',
-    '/Dashboard': null,
+    '/dashboard': null,
     '/vital-task':null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
@@ -67,7 +67,7 @@ import { LoadingContext } from './context/LoadingContext';
       {
         showSearchResult ? (<SearchPage/>) : (
           <Routes>
-          <Route path="/Dashboard" element={<ProtectedRoute>
+          <Route path="/dashboard" element={<ProtectedRoute>
             <Dashboard  />
           </ProtectedRoute>} />
           <Route path="/vital-task" element={<ProtectedRoute>

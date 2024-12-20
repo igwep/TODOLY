@@ -43,7 +43,7 @@ export default {
       },
       screens: {
         mobile: '320px', // Smallest mobile screens
-        tablet: '840px', // Tablets
+        tablet: '1040px', // Tablets
         laptop: '1024px', // Laptops
         desktop: '1280px', // Desktops
       },

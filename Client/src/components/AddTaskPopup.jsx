@@ -14,9 +14,8 @@ import { updateTaskInDatabase } from '../FirebaseFunctions/TaskUpdate';
 const AddTaskPopup = () => {
   const [loading, setLoading] = useState(false);
   const formattedDate = moment().format('YYYY-MM-DD');
-  const { isOpen, setIsOpen } = useContext(LoadingContext);
-  const { isEdit, setIsEdit } = useContext(LoadingContext);
-  const { FullTaskViewDelete} = useContext(LoadingContext)
+  const { FullTaskViewDelete, previewImage, setPreviewImage,  isEdit, setIsEdit, isOpen, setIsOpen} = useContext(LoadingContext);
+  
 
   
   const [formData, setFormData] = useState({
@@ -33,23 +32,50 @@ const AddTaskPopup = () => {
     if (isEdit) {
       const fetchTaskDetails = async () => {
         try {
-          await TaskInfoUpdate(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId, setFormData);
+          await TaskInfoUpdate(user, FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId, (data) => {
+            setFormData(data);
+            setPreviewImage(data.taskImage);
+          });
         } catch (error) {
           console.error("Error fetching task details:", error);
         }
       };
       fetchTaskDetails();
+    
+
     }
-  }, [FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId, isEdit, user]);
+  }, [FullTaskViewDelete.categoryName, FullTaskViewDelete.taskId,  isEdit, setPreviewImage, user]);
  
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: name === "taskImage" ? files[0] : value,
-    }));
-  };
+  const { name, value, files } = e.target;
+
+  // Update form data for other fields or image
+  setFormData((prevFormData) => ({
+    ...prevFormData,
+    [name]: name === "taskImage" ? files[0] : value,
+  }));
+
+  // Update the preview when a new image is selected
+  if (name === "taskImage" && files && files[0]) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreviewImage(reader.result); // Update preview with new image data
+    };
+    reader.readAsDataURL(files[0]); // Read the new image file as a data URL
+  }
+  console.log("Updated formData:", formData);
+console.log("Preview image:", previewImage);
+
+};
+useEffect(() => {
+  console.log("Updated formData:", formData);
+}, [formData]);
+
+useEffect(() => {
+  console.log("Preview image:", previewImage);
+}, [previewImage]);
+
 
 
   const handleSubmit = async (event) => {
@@ -64,6 +90,7 @@ const AddTaskPopup = () => {
       
       return;
     }
+   
 
     setLoading(true);
 
@@ -92,6 +119,7 @@ const AddTaskPopup = () => {
         taskImage: '',
         id: ''
       }); // Reset form
+      setPreviewImage(null);
     } catch (error) {
       console.error(isEdit ? "Failed to update task:" : "Failed to add task:", error);
       notify(isEdit ? "Failed to update task." : "error", 'false');
@@ -128,7 +156,7 @@ const AddTaskPopup = () => {
         taskDescription: '',
         taskImage: '',
         id: ''
-      }); }} className='underline'>Go back</button>
+      }); setPreviewImage(null) }} className='underline'>Go back</button>
               </div>
               <div className='border border-gray-300'>
                 <form onSubmit={handleSubmit} className="space-y-4 p-4">
@@ -223,25 +251,35 @@ const AddTaskPopup = () => {
                     <div className="flex flex-col w-[30%] md:w-1/2 ">
                       <label htmlFor="image" className="font-medium  text-sm md:text-base">Upload Image</label>
                       <div className="relative border border-gray-300 text-xs rounded-lg md:p-8 p-6 mt-1 flex flex-col gap-4 items-center justify-center">
-                        <UploadFileIcon className="text-gray-400  mr-2" />
-                        <span className="text-gray-400">Drag & Drop files here</span>
-                        <span className="text-gray-400">Or</span>
-                        <button
-                          type="button"
-                          onClick={() => document.getElementById('image').click()}
-                          className="text-gray-500 px-4 py-2 border border-gray-500 rounded-md"
-                        >
-                          Browse
-                        </button>
-                        <input
-                          type="file"
-                          id="image"
-                          accept="image/*"
-                          name="taskImage"
-                          onChange={handleChange}
-                          className="absolute inset-0 opacity-0 cursor-pointer"
-                        />
-                      </div>
+        {previewImage ? (
+          <img
+            src={previewImage}
+            alt="Preview"
+            className="w-full h-56 object-cover rounded-md"
+          />
+        ) : (
+          <>
+            <UploadFileIcon className="text-gray-400 mr-2" />
+            <span className="text-gray-400">Drag & Drop files here</span>
+            <span className="text-gray-400">Or</span>
+            <button
+              type="button"
+              onClick={() => document.getElementById("image").click()}
+              className="text-gray-500 px-4 py-2 border border-gray-500 rounded-md"
+            >
+              Browse
+            </button>
+          </>
+        )}
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          name="taskImage"
+          onChange={handleChange}
+          className="absolute inset-0 opacity-0 cursor-pointer"
+        />
+      </div>
                     </div>
                   </div>
 

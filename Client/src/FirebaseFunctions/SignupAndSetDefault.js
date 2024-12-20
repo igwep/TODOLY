@@ -8,7 +8,7 @@ try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     await sendEmailVerification(user);
-    console.log('verification email sent to:', email);
+    
 
 try{
   await setDoc(doc(db, 'users', user.uid),{
@@ -35,7 +35,7 @@ try{
                 }
               }
         });
-        console.log("User signed up and default data added to Firestore");
+        
         setSuccess(true);
   
 } catch(error){
@@ -49,7 +49,7 @@ try{
                   const userCredential = await signInWithEmailAndPassword(auth, email, password);
                   const user = userCredential.user;
                   await sendEmailVerification(user);
-                  console.log('verification email sent to:', email);
+                
                   setSuccess(true);
                 } catch(error){
                   console.log(error);

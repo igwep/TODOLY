@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useMemo} from 'react'
 import { CircleIcon } from '../svgs';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useAuthContext } from '../context/UseAuth';
@@ -19,18 +19,25 @@ export const VitalTask = () => {
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [loader, setLoader] = useState(false);
   const [fullView, setFullView] = useState(false);
-  const { setIsEdit, setIsOpen } = useContext(LoadingContext)
+  const { setIsEdit, setIsOpen } = useContext(LoadingContext);
   const {FullTaskViewDelete, setFullTaskViewDelete} = useContext(LoadingContext);
-
-  if (!userData) {
-    return (
-      <Loader />
-    ); 
-  }
-  const extremeCategory = userData.categories.Extreme;
-  const vitaTask = extremeCategory.tasks.filter(task => task.priority === 'Extreme').sort((a, b) => a.id.localeCompare(b.id));;
   
-  console.log('vital task:', vitaTask)
+
+  const vitaTask = useMemo(() => {
+    if (!userData || !userData.categories || !userData.categories.Extreme) {
+      return []; // Return an empty array if data is unavailable
+    }
+    const extremeCategory = userData.categories.Extreme;
+    return extremeCategory.tasks
+      .filter(task => task.priority === 'Extreme')
+      .sort((a, b) => a.id.localeCompare(b.id));
+  }, [userData]); // Re-run only when `userData.categories.Extreme` changes
+
+ 
+  /* const extremeCategory = userData.categories.Extreme;
+  const vitaTask = extremeCategory.tasks.filter(task => task.priority === 'Extreme').sort((a, b) => a.id.localeCompare(b.id));;
+   */
+ 
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   }

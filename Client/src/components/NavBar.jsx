@@ -15,9 +15,10 @@ const NavBar = () => {
   const dateNumber = moment().format('DD/MM/YYYY');
   const dayOfWeek = moment().format('dddd');
   const location = useLocation();
+  const [isExpanded, setIsExpanded] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const { isSideOpen, setIsSideOpen, query, setQuery, filteredTasks, setFilteredTasks, showSearchResult, setShowSearchResult } = useContext(LoadingContext)
-   const { userData } = useAuthContext();
+  const { userData } = useAuthContext();
    
   
 
@@ -30,6 +31,22 @@ const NavBar = () => {
     // Fetch notifications when the component mounts
     fetchNotifications();
   }, []); 
+  
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        console.log('Screen is now in mobile view.');
+      } else {
+        setIsExpanded(false); // Reset expanded state for larger screens
+      }
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    // Clean up the event listener
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const allTask = userData?.categories
   ? Object.keys(userData.categories)
@@ -57,7 +74,7 @@ if (!userData || !userData.categories) {
 
   const title = () => {
     //find a better way to do this !!!
-    if (location.pathname === '/Dashboard') {
+    if (location.pathname === '/dashboard') {
       return (
         <>
           <span className="text-customColor">Dash</span>
@@ -104,8 +121,13 @@ if (!userData || !userData.categories) {
   const dashboardTitle = title();
   const toggleSidebar = () => {
     setIsSideOpen(!isSideOpen)
-    console.log('toggle')
+   
   };
+  const handleSearchClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+  
+  const width = window.innerWidth;
 
   return (
     <>
@@ -126,11 +148,11 @@ if (!userData || !userData.categories) {
       <MenuIcon />
     </IconButton>
           </div>
-          <div className="md:min-w-72 min-w-56">
-            <p className="text-4xl font-semibold">{dashboardTitle}</p>
+          <div className={`md:min-w-72  min-w-56 ${isExpanded ? 'hidden' : 'block'} `}>
+            <p className="text-4xl font-semibold ">{dashboardTitle}</p>
           </div>
 
-          <div className="flex justify-end   tablet:shadow-lighter-sm md:w-[50%]">
+          <div className="tablet:flex hidden justify-end tablet:shadow-lighter-sm md:w-[50%]">
             <input
               type="text"
               value={query}
@@ -138,14 +160,30 @@ if (!userData || !userData.categories) {
               placeholder="Search tasks by title..."
               className="focus:outline-none hidden tablet:flex focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
             />
-            <div className="bg-customColor tablet:rounded-r-lg rounded-lg p-1  cursor-pointer md:mr-0 mr-3 ">
+            <div className="bg-customColor rounded-r-lg  p-1  cursor-pointer md:mr-0 mr-3 ">
               <SearchIcon />
             </div>
           </div>
 
           <div className="flex justify-between gap-4  tablet:w-[13%]">
             <div className="flex gap-2">
+            <div className="flex tablet:hidden justify-end   tablet:shadow-lighter-sm  w-full">
+            <input
+              type="text"
+              value={query}
+              onChange={handleSearch} 
+              placeholder="Search tasks by title..."
+              className={`transition-all duration-300 ease-in-out ${
+                isExpanded ? 'w-full' : 'w-0 opacity-0'
+              }  py-1 border rounded focus:outline-none   focus:shadow-lighter-sm focus:border-none bg-white rounded-l-lg px-2`}
+             // className="focus:outline-none hidden tablet:flex focus:shadow-lighter-sm focus:border-none bg-white w-full rounded-l-lg px-2"
+            />
+            <div onClick={handleSearchClick} className={`bg-customColor  p-1 group  cursor-pointer md:mr-0 ${isExpanded ? 'rounded-r-lg': 'rounded-lg '}  `}>
+              <SearchIcon className="transition-transform duration-200 group-hover:scale-90 "  />
+            </div>
+          </div>
               {/* Notification Icon */}
+              
               <div
                 className="bg-customColor p-3.5 rounded-lg flex items-center cursor-pointer group ml-2 relative"
                 onClick={() => {
@@ -192,6 +230,7 @@ if (!userData || !userData.categories) {
                   </div>
                 )}
               </div>
+              
 
               {/* Calendar Icon */}
               <div className="bg-customColor p-3 rounded-lg tablet:flex hidden items-center cursor-pointer group">

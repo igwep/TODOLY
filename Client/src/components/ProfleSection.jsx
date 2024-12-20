@@ -65,7 +65,7 @@ const ProfleSection = () => {
                 <span className="border-b-2 border-red-600">Account Inform</span>
                 <span>ation</span>
               </div>
-              <Link to="/Dashboard" className="border-b-gray-600 border-b">
+              <Link to="/dashboard" className="border-b-gray-600 border-b">
                 Go back
               </Link>
             </div>

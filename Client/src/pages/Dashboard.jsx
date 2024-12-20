@@ -16,7 +16,6 @@ import { CompletetedTask } from '../components/CompletetedTask';
 import { taskDelete } from '../FirebaseFunctions/TaskUpdate';
 
 
-
 export const Dashboard = () => {
     const { user } = useAuthContext();
     const formattedDate = moment().format("MMMM Do"); // Output: "June 12th"
@@ -25,56 +24,59 @@ export const Dashboard = () => {
     const [showFullViewIndex, setShowFullViewIndex] = useState(0)
     const {setFullTaskViewDelete, FullTaskViewDelete, setIsEdit} = useContext(LoadingContext);
     // eslint-disable-next-line no-unused-vars
-    const [loader, setLoader] = useState(false)
-    
-      const [hover, setHover] = useState(false);
-      const iconStyle = {
+    const [loader, setLoader] = useState(false);
+    const [hover, setHover] = useState(false);
+
+    const iconStyle = {
         fontSize: 24,
-        color: hover ? '#FFFFFF' : '#FF6767', // Changes color on hover
-        transition: 'color 0.3s ease', // Smooth transition
+        color: hover ? '#FFFFFF' : '#FF6767',// Changes color on hover
+        transition: 'color 0.3s ease',//Smooth transition
         backgroundColor: hover ? '#FF6767' : '',
         borderRadius: '50%'
       };
-      const { setIsOpen } = useContext(LoadingContext);
+
+    const { setIsOpen } = useContext(LoadingContext);
       //const [isOpen, setIsOpen] = useState(false);
-      const { userData } = useAuthContext();
+    const { userData } = useAuthContext();
       if (!userData) {
         return (
           <Loader />
         ); 
       }
-
-      const allTask =Object.keys(userData.categories).flatMap(key => userData.categories[key].tasks);
-      const currentDate = moment();
-      const upComingTodos = allTask.filter(todos => {
-        const dueDate = moment(todos.date, 'YYYY-MM-DD');
-        const daysDifference = dueDate.diff(currentDate, 'days');
+      
+    const allTask =Object.keys(userData.categories).flatMap(key => userData.categories[key].tasks);
+    const currentDate = moment();
+    const upComingTodos = allTask.filter(todos => {
+    const dueDate = moment(todos.date, 'YYYY-MM-DD');
+    const daysDifference = dueDate.diff(currentDate, 'days');
         return daysDifference === 1 || daysDifference === 2 || daysDifference === 0; // Only tasks due in 1 or 2 days
       });
-      const handleDropdown = (index) => {
+
+    const handleDropdown = (index) => {
         setActiveDropdown(activeDropdown === index ? null : index);
       };
      
-    
-      
       allTask.forEach(todo => {
         const dueDate = moment(todo.date, 'YYYY-MM-DD');
-        console.log(`Task: ${todo.title}, Days Difference: ${dueDate.diff(currentDate, 'days')}`);
+       
     });
+
     const truncateText = (text, maxLength) => {
       return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
       
     }
+    
     const UpdateTaskToInProgress = async (user, categoryName, taskId, newStatus) =>{
       setActiveDropdown(null)
       try {
         
-        const taskTitle = await UpdateTaskStatus(user, categoryName, taskId, newStatus);
+    const taskTitle = await UpdateTaskStatus(user, categoryName, taskId, newStatus);
         notify(`${taskTitle} status updated successfully.`, "success", true);
        
       } catch (error) {
         console.error("Error updating task status:", error.message);
       }
+
     }
     const handleDelete = async (user, categoryName, taskId) => {
       //put a loading so the show full will render back well 
@@ -139,7 +141,7 @@ export const Dashboard = () => {
         </div>
       </div>) :(
         
-    <div className='pt-24 tablet:pl-[25vw] py-8 bg-gray-100   tablet:px-8 px-4 w-[100%] '>
+    <div className='pt-24 tablet:pl-[25vw] py-8 bg-gray-100 h-full  tablet:h-screen  tablet:px-8 px-4 w-[100%] '>
     <div>{/* heading */}
     <div className='tablet:text-4xl text-2xl mb-4 mt-8'>{/* welcome */}
       <p>

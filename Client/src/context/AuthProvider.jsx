@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log("Starting overdue tasks update...");
       console.log("User ID:", uid);
-      console.log("Original user data:", JSON.stringify(userData, null, 2));
+      
   
       const now = moment();
       console.log("Current time:", now.format("YYYY-MM-DD HH:mm:ss"));
@@ -144,58 +144,72 @@ export const AuthProvider = ({ children }) => {
   
 
   useEffect(() => {
-    console.log('Setting up auth state listener...');
+    console.log("Setting up auth state listener...");
     let unsubscribeFirestore = null;
-
+    let isUpdatingTasks = false; // Prevent simultaneous updates
+  
     const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
-      
       setUser(currentUser);
       setLoading(false);
-
+  
       if (currentUser) {
         setUserDataLoading(true);
-        console.log('Fetching user data for UID:', currentUser.uid);
-        const userDocRef = doc(db, 'users', currentUser.uid);
+        console.log("Fetching user data for UID:", currentUser.uid);
+  
+        const userDocRef = doc(db, "users", currentUser.uid);
   
         unsubscribeFirestore = onSnapshot(
           userDocRef,
           async (docSnapshot) => {
-            console.log('Firestore snapshot received.');
             if (docSnapshot.exists()) {
               const data = docSnapshot.data();
-          
-              setUserData(data);
-
-              // Check for overdue tasks
-              if (data.categories) {
-                const updatedData = await updateOverdueTasks(data, currentUser.uid);
-                const updatedTaskData = await updateCompleteTasks(data, currentUser.uid);
-                
+  
+              // Deep comparison: Check if userData is identical to avoid redundant updates
+              const isSameData = JSON.stringify(userData) === JSON.stringify(data);
+  
+              if (!isSameData) {
+                setUserData(data);
+  
+                // Update tasks only if necessary and not already updating
+                if (!isUpdatingTasks && data.categories) {
+                  isUpdatingTasks = true;
+                  try {
+                    console.log("Updating overdue and completed tasks...");
+                    const updatedData = await updateOverdueTasks(data, currentUser.uid);
+                    await updateCompleteTasks(updatedData, currentUser.uid);
+                  } catch (error) {
+                    console.error("Error updating tasks:", error);
+                  } finally {
+                    isUpdatingTasks = false;
+                  }
+                }
               }
             } else {
-              console.warn('No user document found.');
+              console.warn("No user document found.");
               setUserData(null);
             }
+  
             setUserDataLoading(false);
           },
           (error) => {
-            console.error('Error fetching user data:', error);
+            console.error("Error fetching user data:", error);
             setUserDataLoading(false);
           }
         );
       } else {
-        console.log('No user signed in. Clearing user data.');
+        console.log("No user signed in. Clearing user data.");
         setUserData(null);
         setUserDataLoading(false);
       }
     });
-
+  
     return () => {
-      console.log('Cleaning up listeners...');
+      console.log("Cleaning up listeners...");
       unsubscribeAuth();
       if (unsubscribeFirestore) unsubscribeFirestore();
     };
-  }, []);
+  }, [userData]);
+  
 
   return (
     <AuthContext.Provider

@@ -17,6 +17,7 @@ export const LoadingProvider = ({ children }) => {
         categoryName: '',
         taskId:''
       })
+      const [previewImage, setPreviewImage] = useState(null);
     const [isEdit, setIsEdit] = useState(false);
     return(
         <LoadingContext.Provider value={{ 
@@ -39,7 +40,9 @@ export const LoadingProvider = ({ children }) => {
                 filteredTasks,
                 setFilteredTasks,
                 showSearchResult,
-                setShowSearchResult
+                setShowSearchResult,
+                previewImage, 
+                setPreviewImage
                 }}>
             {children}
         </LoadingContext.Provider>

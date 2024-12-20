@@ -27,7 +27,7 @@ export const FullTaskView = ({Task, showFullView, setFullTaskViewDelete}) => {
   }
     const task = Task[showFullView];
     
-    console.log("task:", showFullView)
+   
     if (!task) {
       return (
         <div className="p-4 text-center text-gray-600">

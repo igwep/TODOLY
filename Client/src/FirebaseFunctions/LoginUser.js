@@ -74,7 +74,7 @@ export const GoogleSignIn = async (navigate, setLoading) => {
     } 
     
     else {
-        navigate('/Dashboard');
+        navigate('/dashboard');
     }
     
 

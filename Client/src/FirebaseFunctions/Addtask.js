@@ -3,20 +3,9 @@ import { db } from "../firebase"; // Adjust this import path based on your setup
 import { v4 as uuidv4 } from 'uuid';
 import { notify } from "../utils/Notify";
 
-
-
-/* const notify = (message, type = 'success') => {
-  if (type === 'success') {
-    toast.success(message);
-  } else if (type === 'error') {
-    toast.error(message);
-  }
-}; */
 export const Addtask = async ({ formData, setFormData, user, formattedDate }) => {
   if (user) {
     try {
-      // Debugging: Log the formData before sending it
-      console.log("Form data being sent:", formData);
 
       // Prepare the FormData to send the image
       const uploadData = new FormData();
@@ -48,17 +37,17 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       const userSnap = await getDoc(userDocRef);
 
       // Debugging: Check if the user document exists
-      console.log("User document snapshot exists:", userSnap.exists());
+     
       if (!userSnap.exists()) {
         throw new Error(`User document for '${user.uid}' does not exist.`);
       }
 
       // Get the current data from the document
       const userData = userSnap.data();
-      console.log("User data retrieved:", userData);
+    
 
       const categoryKey = formData.priority;
-      console.log("Category selected:", categoryKey);
+   
 
       
       if (!userData.categories || !userData.categories[categoryKey]) {
@@ -67,7 +56,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
 
     
       const existingTasks = userData.categories[categoryKey].tasks || [];
-      console.log("Existing tasks:", existingTasks);
+    
 
   
       const updatedTasks = [
@@ -87,7 +76,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
       ];
 
   
-      console.log("Updated tasks array:", updatedTasks);
+    
 
       // Update the 'tasks' array for the selected priority
       await updateDoc(userDocRef, {
