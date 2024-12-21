@@ -58,7 +58,7 @@ const ProfleSection = () => {
       {showPasswordUI ? (
         <ResetOrSetPassword />
       ) : (
-        <div className="tablet:pl-[25vw] pt-32 py-8 bg-gray-100 h-screen tablet:px-16 px-4 w-full">
+        <div className="tablet:pl-[25vw] pt-32 py-8 bg-gray-100 h-full tablet:px-16 px-4 w-full">
           <div className="flex flex-col gap-16 border border-gray-400 rounded-xl w-full tablet:w-[70%] p-4">
             <div className="flex items-center w-full justify-between">
               <div className="text-2xl font-semibold">

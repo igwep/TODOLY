@@ -3,6 +3,13 @@ import { toast } from "react-toastify";
 // Global notification log (optional for persistence)
 let notificationLog = [];
 
+// Optionally, initialize log from localStorage only once
+const initializeNotifications = () => {
+  const savedNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
+  notificationLog = savedNotifications;
+};
+initializeNotifications(); // Call this to initialize the log once
+
 /**
  * Notify function for showing toasts and saving notifications.
  * @param {string} message - The message to display in the notification.
@@ -32,6 +39,11 @@ export const notify = (message, type = "info", persist = false) => {
     // Add to the notification log
     notificationLog.push(newNotification);
 
+    // If there are more than 6 notifications, remove the oldest one
+    if (notificationLog.length > 6) {
+      notificationLog.shift(); // Remove the oldest notification
+    }
+
     // Save the log to localStorage (optional)
     localStorage.setItem("notifications", JSON.stringify(notificationLog));
   }
@@ -40,10 +52,7 @@ export const notify = (message, type = "info", persist = false) => {
 // Export the log for other components
 export const getNotificationLog = () => notificationLog;
 
-// Optionally, initialize log from localStorage
-const savedNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
-notificationLog = savedNotifications;
-
+// Clear the notifications log and localStorage
 export const clearNotifications = () => {
   notificationLog = []; // Clear the global log
   localStorage.removeItem("notifications"); // Remove from localStorage
