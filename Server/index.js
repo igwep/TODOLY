@@ -107,13 +107,12 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     res.status(500).send('Error adding user: ' + error.message);
   });
 }); */
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+// Serve static files from the Vite build folder
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
-// All API routes go here
-// e.g., app.use('/api', apiRoutes);
-
+// Serve the index.html file for all routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
 });
 // Start the server
 app.listen(port, () => {
