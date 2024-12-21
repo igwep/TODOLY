@@ -2,6 +2,7 @@ const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./config/todolist-8e390-firebase-adminsdk-xach1-ff5cb6075a.json');
 const multer = require('multer');
+const path = require('path');
 const upload = multer({ storage: multer.memoryStorage() });
 const bodyParser = require("body-parser");
 require('dotenv').config();
@@ -28,7 +29,9 @@ const app = express();
 const port = 5000;
 
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: process.env.NODE_ENV === 'production'
+    ? process.env.PRODUCTION_URL  // Use the platform URL from an environment variable
+    : 'http://localhost:5173',     // Use localhost during development
   methods: ['POST', 'GET'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -104,7 +107,14 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     res.status(500).send('Error adding user: ' + error.message);
   });
 }); */
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
+// All API routes go here
+// e.g., app.use('/api', apiRoutes);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
