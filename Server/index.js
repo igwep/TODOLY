@@ -72,7 +72,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "../Client/dist")));
 
 // API routes
 app.post("/verify-google-token", async (req, res) => {
@@ -120,7 +120,7 @@ app.get("/api", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../Client/dist/index.html"));
 });
 
 // Start the server only after Firebase is initialized
