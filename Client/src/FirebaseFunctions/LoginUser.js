@@ -7,7 +7,7 @@ export const LoginUser = async (email, password, navigate, setLoading) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log('logged in user:', user);
-        navigate('/Dashboard');
+        navigate('/dashboard');
 
     } catch(error){
         console.error('login error:', error.message);

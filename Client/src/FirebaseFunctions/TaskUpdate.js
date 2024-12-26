@@ -227,12 +227,15 @@ export const updateTaskInDatabase = async (user, categoryName, updatedTask) => {
     uploadData.append("userId", user.uid);
 
     console.log("FormData for image upload:", uploadData);
-
-    const response = await fetch('http://localhost:5000/upload-image', {
-      method: 'POST',
-      body: uploadData,
-      mode: 'cors',
-    });
+    const API_BASE_URL = import.meta.env.MODE === 'development'
+    ? 'http://localhost:5000'
+    : '';
+  
+  const response = await fetch(`${API_BASE_URL}/upload-image`, {
+    method: 'POST',
+    body: uploadData,
+    mode: 'cors',
+  });
 
     console.log("Upload image response status:", response.status);
 
