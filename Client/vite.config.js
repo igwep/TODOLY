@@ -4,10 +4,9 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build: {
-    rollupOptions: {
-      external: ['lottie-web'], // Exclude Lottie from the build to avoid eval
+  resolve: {
+    alias: {
+      'lottie-web': 'lottie-web/build/player/lottie_light', // Use light version if applicable
     },
   },
-  
 })

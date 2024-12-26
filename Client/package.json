@@ -18,12 +18,12 @@
     "dotenv": "^16.4.7",
     "firebase": "^10.14.1",
     "lottie-react": "^2.4.0",
+    "lottie-web": "^5.12.2",
     "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-firebase-hooks": "^5.1.1",
-    "react-lottie": "^1.2.4",
     "react-router-dom": "^6.27.0",
     "react-toastify": "^10.0.6",
     "uuid": "^11.0.3"
