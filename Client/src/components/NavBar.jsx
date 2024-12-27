@@ -143,12 +143,12 @@ if (!userData || !userData.categories) {
       edge="start"
       color="inherit"
       aria-label="menu"
-      sx={{ scale: 1.5, mr: 2 }}
+      sx={{ scale: 1.5, mr: '' }}
     >
       <MenuIcon />
     </IconButton>
           </div>
-          <div className={`md:min-w-72  min-w-36 ${isExpanded ? 'hidden' : 'block'} `}>
+          <div className={`md:min-w-72  min-w-40 ${isExpanded ? 'hidden' : 'block'} `}>
             <p className="text-4xl font-semibold ">{dashboardTitle}</p>
           </div>
 
