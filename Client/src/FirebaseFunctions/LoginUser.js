@@ -28,7 +28,10 @@ export const GoogleSignIn = async (navigate, setLoading) => {
     const token = credential.accessToken;
     const user = result.user;
     const idToken = await user.getIdToken();
-    const response = await fetch("http://localhost:5000/verify-google-token", {
+    const API_BASE_URL = import.meta.env.MODE === 'development'
+    ? 'http://localhost:5000'
+    : '';
+    const response = await fetch(`${API_BASE_URL}/verify-google-token`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useMemo} from 'react';
 import ClipboardWithTimerIcon from '../svgs/ClipboardWithTimerIcon';
 import AddIcon from '@mui/icons-material/Add';
 import moment from 'moment';
@@ -38,19 +38,29 @@ export const Dashboard = () => {
     const { setIsOpen } = useContext(LoadingContext);
       //const [isOpen, setIsOpen] = useState(false);
     const { userData } = useAuthContext();
-      if (!userData) {
-        return (
-          <Loader />
-        ); 
-      }
-      
-    const allTask =Object.keys(userData.categories).flatMap(key => userData.categories[key].tasks);
+        // Memoize allTask to ensure efficient calculations
+  const allTask = useMemo(() => {
+    if (!userData?.categories) {
+      return [];
+    }
+    return Object.keys(userData.categories).flatMap(key => userData.categories[key].tasks);
+  }, [userData]);
+
+  // Memoize upcoming todos
+  const upComingTodos = useMemo(() => {
+    if (allTask.length === 0) return [];
     const currentDate = moment();
-    const upComingTodos = allTask.filter(todos => {
-    const dueDate = moment(todos.date, 'YYYY-MM-DD');
-    const daysDifference = dueDate.diff(currentDate, 'days');
-        return daysDifference === 1 || daysDifference === 2 || daysDifference === 0; // Only tasks due in 1 or 2 days
-      });
+    return allTask.filter(todos => {
+      const dueDate = moment(todos.date, 'YYYY-MM-DD');
+      const daysDifference = dueDate.diff(currentDate, 'days');
+      return daysDifference >= 0 && daysDifference <= 2; // Only tasks due in 0, 1, or 2 days
+    });
+  }, [allTask]);
+
+  // Render a loader if userData is not available
+  if (!userData) {
+    return <Loader />;
+  }
 
     const handleDropdown = (index) => {
         setActiveDropdown(activeDropdown === index ? null : index);

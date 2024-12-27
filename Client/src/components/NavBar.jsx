@@ -148,7 +148,7 @@ if (!userData || !userData.categories) {
       <MenuIcon />
     </IconButton>
           </div>
-          <div className={`md:min-w-72  min-w-56 ${isExpanded ? 'hidden' : 'block'} `}>
+          <div className={`md:min-w-72  min-w-36 ${isExpanded ? 'hidden' : 'block'} `}>
             <p className="text-4xl font-semibold ">{dashboardTitle}</p>
           </div>
 
