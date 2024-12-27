@@ -60,8 +60,6 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
     
       const existingTasks = userData.categories[categoryKey].tasks || [];
     
-
-  
       const updatedTasks = [
         ...existingTasks,
         { /// add a if state if they is uid or not
@@ -78,8 +76,7 @@ export const Addtask = async ({ formData, setFormData, user, formattedDate }) =>
         },
       ];
 
-  
-    
+
 
       // Update the 'tasks' array for the selected priority
       await updateDoc(userDocRef, {

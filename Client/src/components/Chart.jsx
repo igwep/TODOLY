@@ -80,9 +80,9 @@ const TaskChart = () => {
 
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="tablet:flex tablet:flex-wrap grid grid-cols-2 items-center gap-4 justify-center">
       {Object.keys(taskStatusCounts).map((status, index) => (
-        <div key={status} className="tablet:w-24 w-32">
+        <div key={status} className="tablet:w-24 w-28">
           <h3 className="text-center font-bold mb-2">{status}</h3>
           <Doughnut data={chartData[index]} options={options} />
           <p className="text-center mt-2">
