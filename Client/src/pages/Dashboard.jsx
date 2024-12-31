@@ -151,7 +151,7 @@ export const Dashboard = () => {
         </div>
       </div>) :(
         
-    <div className='pt-24 tablet:pl-[25vw] py-8 bg-gray-100 h-full  tablet:h-screen  tablet:px-8 px-4 w-[100%] '>
+    <div className='pt-24 tablet:pl-[25vw] py-8 bg-gray-100 h-full  tablet:h-auto  tablet:px-8 px-4 w-[100%] '>
     <div>{/* heading */}
     <div className='tablet:text-4xl text-2xl mb-4 mt-8'>{/* welcome */}
       <p>
@@ -164,8 +164,8 @@ export const Dashboard = () => {
     </div> 
     <div className=' border flex flex-col tablet:flex-row tablet:gap-24 gap-4 py-4   border-gray-400 px-8 w-full '>{/* main dashboard */}
     <div className="bg-gray-100 rounded-lg shadow-lg tablet:w-[37%] w-full  h-[60vh] md:h-[70vh]  no-scrollbar  p-4">
-  <div className="flex justify-between items-center">
-    <div className="flex items-center mb-4">
+  <div className="flex justify-between w-full items-center mb-4">
+    <div className="flex items-center ">
       <ClipboardWithTimerIcon />
       <span className="text-sm text-customColor">TO-DO</span>
     </div>
@@ -287,7 +287,7 @@ export const Dashboard = () => {
         <div className='flex flex-col items-start gap-4'>{/* charts */}
         <span className='flex gap-2'><ClipBoardClick /> <span className='text-customColor'>Task status</span></span>  
 
-        <div className=''>
+        <div className=' w-full'>
       <TaskChart/>
         </div>
 

@@ -9,12 +9,21 @@ import {  useNavigate, useLocation } from 'react-router-dom';
 import { GoogleSignIn } from '../FirebaseFunctions/LoginUser';
 import Loader from '../components/Loader';
 import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
+import { auth } from '../firebase';
+import { handleRedirectResult } from '../FirebaseFunctions/LoginUser';
 
 
  const LoginPage = () => {
   const navigate = useNavigate()
   const location = useLocation();
   const [fade, setFade] = useState(false);
+ /*  useEffect(() => {
+    // Handle the redirect result when the page loads
+    const fetchRedirectResult = async () => {
+      await handleRedirectResult(navigate, setLoading);
+    };
+    fetchRedirectResult();
+  }, [navigate]); */
   useEffect(() => {
     // Trigger fade-in on route change
     setFade(false);
@@ -47,6 +56,8 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
     const handleGoogleSignIn = () => {
       setLoading(true)
       GoogleSignIn(navigate, setLoading)
+   
+
     }
     const handleFacebookSignIn = () => {
       FacebookSignIn()
@@ -119,9 +130,6 @@ import { FacebookSignIn } from '../FirebaseFunctions/LoginUser';
                             Don&apos;t have an account? <Link to="/signup-page" className='text-blue-500'>Create one</Link>
                             </Typography>
                          </div>
-  
-  
-  
         </form>
   
   

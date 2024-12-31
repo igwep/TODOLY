@@ -20,7 +20,7 @@ const AdditionalInfo = ({ user }) => {
       await setDoc(doc(db, 'users', user.uid), { userDetails: { userName } }, { merge: true });
       console.log('User data saved successfully!');
 
-      navigate('/Dashboard');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error saving additional info:', error);
     } finally {
@@ -29,7 +29,7 @@ const AdditionalInfo = ({ user }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <div className="flex items-center w-full justify-center min-h-screen ">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-lg w-80 md:w-2/5 lg:w-1/3"

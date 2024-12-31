@@ -6,12 +6,16 @@ import { getNotificationLog } from '../utils/Notify';
 import { clearNotifications } from '../utils/Notify';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
+import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { LoadingContext } from '../context/LoadingContext';
 import { useAuthContext } from '../context/UseAuth';
 import Loader from './Loader';
 
 const NavBar = () => {
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const dateNumber = moment().format('DD/MM/YYYY');
   const dayOfWeek = moment().format('dddd');
   const location = useLocation();
@@ -233,9 +237,28 @@ if (!userData || !userData.categories) {
               
 
               {/* Calendar Icon */}
-              <div className="bg-customColor p-3 rounded-lg tablet:flex hidden items-center cursor-pointer group">
-                <CalenderIcon className="transition-transform duration-200 group-hover:scale-90" />
+              <div className="flex gap-4 tablet:w-[13%]">
+          {/* Calendar Icon with Dropdown */}
+          <div
+            className="bg-customColor p-3 rounded-lg tablet:flex hidden items-center cursor-pointer group relative"
+            onClick={() => setIsCalendarVisible(!isCalendarVisible)}
+          >
+            <CalenderIcon className="transition-transform duration-200 group-hover:scale-90" />
+            
+            {isCalendarVisible && (
+              <div onClick={ (e) => e.stopPropagation()} className="absolute top-14 right-0 bg-white shadow-lg rounded-lg p-4 z-10">
+                <ReactDatePicker
+                  selected={selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                    setIsCalendarVisible(false);
+                  }}
+                  inline
+                />
               </div>
+            )}
+          </div>
+        </div>
             </div>
 
             <div className="text-sm hidden tablet:flex flex-col">

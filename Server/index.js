@@ -17,49 +17,20 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 });
 
-const ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN; // Store in .env
+/* const ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN; // Store in .env
 const FILE_PATH = '/todolist-8e390-firebase-adminsdk-xach1-ff5cb6075a.json';
 
-let database;
+let database; */
 
-// Fetch Firebase config from Dropbox
-async function fetchFirebaseConfig() {
-  try {
-    const dbx = new Dropbox({ accessToken: ACCESS_TOKEN, fetch });
+// Firebase Config
+const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
 
-    // Download the file from Dropbox
-    const response = await dbx.filesDownload({ path: FILE_PATH });
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseConfig),
+});
 
-    // Parse the file content
-    const fileContents = Buffer.from(response.result.fileBinary, 'binary').toString();
-    const serviceAccountJson = JSON.parse(fileContents);
-
-    console.log('Service Account:', serviceAccountJson);
-    return serviceAccountJson;
-  } catch (error) {
-    console.error('Error fetching file from Dropbox:', error);
-    throw error; // Stop server if configuration fails
-  }
-}
-
-// Initialize Firebase
-async function initializeFirebase() {
-  try {
-    const serviceAccount = await fetchFirebaseConfig();
-
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      databaseURL: 'https://todolist-8e390-default-rtdb.firebaseio.com/',
-    });
-
-    database = admin.database();
-    console.log('Firebase Initialized');
-  } catch (error) {
-    console.error('Failed to initialize Firebase:', error);
-    process.exit(1); // Exit process if Firebase fails to initialize
-  }
-}
-
+// Express App Setup
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -123,9 +94,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../Client/dist/index.html"));
 });
 
-// Start the server only after Firebase is initialized
-initializeFirebase().then(() => {
-  app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });

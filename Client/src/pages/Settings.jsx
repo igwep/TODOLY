@@ -35,8 +35,8 @@ const [activeTab, setActiveTab] = useState("Categories");
   };
 
   return (
-    <div className='tablet:pl-[25vw] pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
- <div className="bg-gray-100 text-gray-900 p-4 rounded-md">
+    <div className=' tablet:pl-[25vw] pt-32 py-8 h-screen bg-gray-100 px-8 w-[100%]'>
+ <div className="bg-gray-100 text-gray-900 border  h-full  border-gray-500 tablet:w-[70%] p-4 rounded-xl">
       <h1 className="text-2xl font-bold mb-4">Settings</h1>
 
       {/* Tabs Navigation */}

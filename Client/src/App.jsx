@@ -21,6 +21,7 @@ import { ToastContainer } from 'react-toastify';
 import ProfleSection from './components/ProfleSection';
 import SearchPage from './pages/SearchPage';
 import { LoadingContext } from './context/LoadingContext';
+import RedirectHandlerPage from './pages/RedirtectHandlerPage';
 
 
 
@@ -38,7 +39,7 @@ import { LoadingContext } from './context/LoadingContext';
     '/vital-task':null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
-  const noNavBars = ['/', '/signup-page', '/additional-info'];
+  const noNavBars = ['/', '/signup-page', '/additional-info', '/redirect-handler'];
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
 
   return (
@@ -50,6 +51,7 @@ import { LoadingContext } from './context/LoadingContext';
           <Routes location={location}>
             <Route path="/signup-page" element={<SignupPage />} />
             <Route path="/" element={<LoginPage />} />
+            <Route path="/redirect-handler" element={<RedirectHandlerPage  />} />
             <Route path="/additional-info" element={<AdditionalInfo user={user}  />} />
           </Routes>
         </SectionBackgroundImages>
