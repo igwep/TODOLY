@@ -22,6 +22,7 @@ import ProfleSection from './components/ProfleSection';
 import SearchPage from './pages/SearchPage';
 import { LoadingContext } from './context/LoadingContext';
 import RedirectHandlerPage from './pages/RedirtectHandlerPage';
+import LandingPage from './pages/LandingPage';
 
 
 
@@ -39,7 +40,7 @@ import RedirectHandlerPage from './pages/RedirtectHandlerPage';
     '/vital-task':null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
-  const noNavBars = ['/', '/signup-page', '/additional-info', '/redirect-handler'];
+  const noNavBars = ['/', '/signup-page', '/additional-info', '/redirect-handler', '/landing'];
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
 
   return (
@@ -51,7 +52,6 @@ import RedirectHandlerPage from './pages/RedirtectHandlerPage';
           <Routes location={location}>
             <Route path="/signup-page" element={<SignupPage />} />
             <Route path="/" element={<LoginPage />} />
-            <Route path="/redirect-handler" element={<RedirectHandlerPage  />} />
             <Route path="/additional-info" element={<AdditionalInfo user={user}  />} />
           </Routes>
         </SectionBackgroundImages>
@@ -63,12 +63,14 @@ import RedirectHandlerPage from './pages/RedirtectHandlerPage';
        
         {shouldHaveNavBars && (
           <>
-          <NavBar /><Sidebar/></>
+          <NavBar /><Sidebar /></>
         )} {/* Conditionally render NavBar */}
          
       {
         showSearchResult ? (<SearchPage/>) : (
           <Routes>
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/redirect-handler" element={<RedirectHandlerPage  />} />
           <Route path="/dashboard" element={<ProtectedRoute>
             <Dashboard  />
           </ProtectedRoute>} />
@@ -95,10 +97,7 @@ import RedirectHandlerPage from './pages/RedirtectHandlerPage';
       }
       </div>
     </div>
-   
-    
-    
- 
+     
   )
 };
 const App = () => {
