@@ -68,7 +68,7 @@ import LandingPage from './pages/LandingPage';
         showSearchResult ? (<SearchPage/>) : (
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            {/* <Route path="/redirect-handler" element={<RedirectHandlerPage  />} /> */}
+             <Route path="/redirect-handler" element={<RedirectHandlerPage  />} /> 
           <Route path="/dashboard" element={<ProtectedRoute>
             <Dashboard  />
           </ProtectedRoute>} />

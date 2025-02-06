@@ -12,12 +12,12 @@ const HeroSection = () => {
   <div className="bg-white bg-opacity-10 w-32 h-32 sm:w-56 sm:h-56 rotate-12 absolute bottom-24 sm:bottom-44 right-5 sm:right-10 rounded-sm floating-animation"></div>
   <div className="bg-white bg-opacity-10 w-40 h-40 sm:w-80 sm:h-80 rotate-12 absolute bottom-10 sm:bottom-16 left-5 sm:left-20 rounded-sm floating-animation"></div>
 </div>
-      <div className="    w-full flex flex-col-reverse md:flex-row items-center relative z-10">
+      <div className="w-full flex flex-col-reverse md:flex-row items-center relative z-10">
         {/* Left Content */}
         <div className="text-center md:text-left md:w-1/2 w-full space-y-6">
           <div className="bg-lighterCustomColor py-3 px-4 rounded-full w-[90%] mt-4 md:mt-0 sm:w-[70%] mx-auto md:mx-0">
             <span className="text-lg sm:text-xl bg-white p-2  rounded-full mr-2">News!</span>
-            <span className="text-white text-sm ">Update new features for active users🔥</span>
+            <span className="text-white text-sm">Update new features for active users🔥</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
             Simplify Your Day with <span className="text-customColor-dark">TODOLY</span>
@@ -38,7 +38,6 @@ const HeroSection = () => {
             </Link>
           </div>
         </div>
-
         {/* Right Image with Layering */}
         <div className="md:w-1/2 w-full flex justify-center md:justify-end relative mt-10 md:mt-0">
           {/* Background Image (Layer 1) */}
@@ -58,5 +57,4 @@ const HeroSection = () => {
     </section>
   );
 };
-
 export default HeroSection;
