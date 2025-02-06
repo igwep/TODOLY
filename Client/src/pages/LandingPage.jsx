@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import LandingNavbar from '../components/landingpage/LandingNavbar';
-import HeroSection from '../components/landingpage/landingPageHero';
+import HeroSection from '../components/landingpage/HeroSection';
 import Benefits from '../components/landingpage/Benefits';
 import { Addtask } from '../components/landingpage/Addtask';
 import Price from '../components/landingpage/Price';
