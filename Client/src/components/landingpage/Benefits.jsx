@@ -56,7 +56,7 @@ const Benefits = () => {
   ];
 
   return (
-    <div className="bg-gray-100 w-full flex flex-col items-center px-4 sm:px-8 md:px-20 space-y-12 py-12">
+    <div className="bg-gray-100 w-full md:h-screen h-auto justify-center  flex flex-col items-center px-4 sm:px-8 md:px-20 space-y-12 py-12">
       {/* Title Section */}
       <div className="w-full flex flex-col space-y-4 text-center md:text-left">
         <p className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-700 leading-tight max-w-[90%] md:max-w-[70%] mx-auto">

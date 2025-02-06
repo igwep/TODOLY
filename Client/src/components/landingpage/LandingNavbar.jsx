@@ -1,57 +1,71 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import { Link as ScrollLink } from "react-scroll"; // Importing Link from react-scroll
 import { Link } from "react-router-dom";
-
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-customColor   relative text-white w-full  p-4 px-14 z-30  md:px-20">
-      <div className=" w-full   flex justify-between items-center">
+    <nav className="bg-customColor relative text-white w-full p-4 px-14 z-30 md:px-20">
+      <div className="w-full flex justify-between items-center">
         {/* Logo */}
         <div className="text-2xl font-bold">
-          <Link to="/" className="hover:bg-white hover:text-customColor px-2 py-1 rounded transition">
+          <a href="/" className="hover:bg-white hover:text-customColor px-2 py-1 rounded transition">
             TODOLY
-          </Link>
+          </a>
         </div>
 
         {/* Center Links */}
         <div className="hidden md:flex gap-8">
-          <Link
-            to="/"
+          <ScrollLink
+            to="hero"  // Section ID to scroll to
+            smooth={true}
+            duration={500}
             className="text-lg font-medium hover:bg-white hover:text-customColor px-2 py-1 rounded transition"
           >
             Home
-          </Link>
-          <Link
-            to="/"
+          </ScrollLink>
+          <ScrollLink
+            to="benefits"  // Section ID to scroll to
+            smooth={true}
+            duration={500}
             className="text-lg font-medium hover:bg-white hover:text-customColor px-2 py-1 rounded transition"
           >
             Features
-          </Link>
-          <Link
-            to="/"
+          </ScrollLink>
+          <ScrollLink
+            to="addtask"  // Section ID to scroll to
+            smooth={true}
+            duration={500}
             className="text-lg font-medium hover:bg-white hover:text-customColor px-2 py-1 rounded transition"
           >
             About
-          </Link>
+          </ScrollLink>
+          <ScrollLink
+            to="price"  // Section ID to scroll to
+            smooth={true}
+            duration={500}
+            className="text-lg font-medium hover:bg-white hover:text-customColor px-2 py-1 rounded transition"
+          >
+            Pricing
+          </ScrollLink>
         </div>
 
         {/* Right Links */}
         <div className="hidden md:flex items-center space-x-6">
           <Link
-            to="/register"
+            to="/signup-page"
             className="hover:bg-white hover:text-customColor px-2 py-1 rounded transition"
           >
             Register
           </Link>
-          <Link
-            to="/"
-            className="bg-white text-customColor py-2 px-4 rounded   transition"
+          <a
+            href="/login-page"
+            className="bg-white text-customColor py-2 px-4 rounded transition"
           >
             Login
-          </Link>
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -79,41 +93,47 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-customColor border-t border-gray-200">
-          <Link
-            to="/"
+          <ScrollLink
+            to="home"  // Scroll to Home section
+            smooth={true}
+            duration={500}
             className="block px-4 py-2 hover:bg-white hover:text-customColor rounded transition"
             onClick={() => setMenuOpen(false)}
           >
             Home
-          </Link>
-          <Link
-            to="/"
+          </ScrollLink>
+          <ScrollLink
+            to="features"  // Scroll to Features section
+            smooth={true}
+            duration={500}
             className="block px-4 py-2 hover:bg-white hover:text-customColor rounded transition"
             onClick={() => setMenuOpen(false)}
           >
             Features
-          </Link>
-          <Link
-            to="/"
+          </ScrollLink>
+          <ScrollLink
+            to="about"  // Scroll to About section
+            smooth={true}
+            duration={500}
             className="block px-4 py-2 hover:bg-white hover:text-customColor rounded transition"
             onClick={() => setMenuOpen(false)}
           >
             About
-          </Link>
-          <Link
-            to="/register"
+          </ScrollLink>
+          <a
+            href="/register"
             className="block px-4 py-2 hover:bg-white hover:text-customColor rounded transition"
             onClick={() => setMenuOpen(false)}
           >
             Register
-          </Link>
-          <Link
-            to="/"
+          </a>
+          <a
+            href="/"
             className="block px-4 py-2 bg-white text-customColor text-center rounded-md mx-4 mt-2 hover:bg-customColor hover:text-white transition"
             onClick={() => setMenuOpen(false)}
           >
             Login
-          </Link>
+          </a>
         </div>
       )}
     </nav>

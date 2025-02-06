@@ -1,9 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
+// eslint-disable-next-line react/prop-types
 const LogoutModal = ({ open, handleClose }) => {
   const navigate = useNavigate();
 

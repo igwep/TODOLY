@@ -286,7 +286,7 @@ if (!formErrors.password && !formErrors.confirmPassword) {
                         </button>
                        <div className='block mt-4'>
                        <Typography variant="h9">
-                          Already have an account? <Link to="/" className='text-blue-500'>Sign in</Link>
+                          Already have an account? <Link to="login-page" className='text-blue-500'>Sign in</Link>
                           </Typography>
                        </div>
                         </form>

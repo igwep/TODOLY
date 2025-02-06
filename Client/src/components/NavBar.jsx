@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchIcon, NotificationIcon, CalenderIcon } from '../svgs';
@@ -21,7 +22,7 @@ const NavBar = () => {
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const { isSideOpen, setIsSideOpen, query, setQuery, filteredTasks, setFilteredTasks, showSearchResult, setShowSearchResult } = useContext(LoadingContext)
+  const { isSideOpen, setIsSideOpen, query, setQuery,  setFilteredTasks,  setShowSearchResult } = useContext(LoadingContext)
   const { userData } = useAuthContext();
    
   
@@ -131,7 +132,7 @@ if (!userData || !userData.categories) {
     setIsExpanded(!isExpanded);
   };
   
-  const width = window.innerWidth;
+  
 
   return (
     <>

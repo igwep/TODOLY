@@ -27,13 +27,10 @@ import { handleRedirectResult } from '../FirebaseFunctions/LoginUser';
   useEffect(() => {
     // Trigger fade-in on route change
     setFade(false);
-
     // Timeout to trigger fade-out when the component is about to unmount
     const timeout = setTimeout(() => setFade(true), 50); // Duration should match CSS transition
-
     return () => clearTimeout(timeout); // Clean up timeout on unmount
   }, [location]);
-
     const [formData, setFormData] = useState({
         email:'',
         password: ''
@@ -47,21 +44,15 @@ import { handleRedirectResult } from '../FirebaseFunctions/LoginUser';
     const handleSubmit = (e) => {
       e.preventDefault();
       setLoading(true);
-    
       LoginUser(formData.email, formData.password, navigate, setLoading)
-
-
       console.log(formData)
     }
     const handleGoogleSignIn = () => {
       setLoading(true)
       GoogleSignIn(navigate, setLoading)
-   
-
     }
     const handleFacebookSignIn = () => {
       FacebookSignIn()
-
     }
     
   return (
@@ -131,21 +122,12 @@ import { handleRedirectResult } from '../FirebaseFunctions/LoginUser';
                             </Typography>
                          </div>
         </form>
-  
-  
-  
-  
-  
           </div>
           <div className='w-[50%] md:flex justify-start hidden'>{/* lottie */}
             <LoginLottie />
-  
           </div>
-  
         </div>)
       }
-
-
     </section>
   )
 }

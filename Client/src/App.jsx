@@ -33,14 +33,15 @@ import LandingPage from './pages/LandingPage';
   const {showSearchResult, setShowSearchResult } = useContext(LoadingContext)
   
   const routeBackgrounds = {
-    '/': '/assets/images/Frame14.jpg',
+    
     '/signup-page': '/assets/images/Frame14.jpg',
+    '/login-page': '/assets/images/Frame14.jpg',
     '/additional-info': '/assets/images/Frame14.jpg',
     '/dashboard': null,
     '/vital-task':null
   };
   const backgroundImage = routeBackgrounds[location.pathname];
-  const noNavBars = ['/', '/signup-page', '/additional-info', '/redirect-handler', '/landing'];
+  const noNavBars = ['/', '/signup-page', '/additional-info', '/redirect-handler', '/landing', '/login-page'];
   const shouldHaveNavBars = !noNavBars.includes(location.pathname);
 
   return (
@@ -51,26 +52,23 @@ import LandingPage from './pages/LandingPage';
           src={backgroundImage}>
           <Routes location={location}>
             <Route path="/signup-page" element={<SignupPage />} />
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/login-page" element={<LoginPage />} />
             <Route path="/additional-info" element={<AdditionalInfo user={user}  />} />
           </Routes>
         </SectionBackgroundImages>
       )}
-
       <div className='font-Inter '>
         <ToastContainer />
         <AddTaskPopup />
-       
         {shouldHaveNavBars && (
           <>
           <NavBar /><Sidebar /></>
-        )} {/* Conditionally render NavBar */}
-         
+        )} {/* Conditionally render NavBar */}      
       {
         showSearchResult ? (<SearchPage/>) : (
           <Routes>
-            <Route path="/landing" element={<LandingPage />} />
-            <Route path="/redirect-handler" element={<RedirectHandlerPage  />} />
+            <Route path="/" element={<LandingPage />} />
+            {/* <Route path="/redirect-handler" element={<RedirectHandlerPage  />} /> */}
           <Route path="/dashboard" element={<ProtectedRoute>
             <Dashboard  />
           </ProtectedRoute>} />
