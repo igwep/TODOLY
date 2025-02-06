@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import LandingNavbar from '../components/landingpage/LandingNavbar.jsx';
-import HeroSection from '../components/landingpage/landingPageHero.jsx';
-import Benefits from '../components/landingpage/Benefits.jsx';
-import { Addtask } from '../components/landingpage/Addtask.jsx';
-import Price from '../components/landingpage/Price.jsx';
-import SubscribeSection from '../components/landingpage/SubscribeSection.jsx';
-import Footer from '../components/landingpage/Footer.jsx';
+import LandingNavbar from '../components/landingpage/LandingNavbar';
+import HeroSection from '../components/landingpage/landingPageHero';
+import Benefits from '../components/landingpage/Benefits';
+import { Addtask } from '../components/landingpage/Addtask';
+import Price from '../components/landingpage/Price';
+import SubscribeSection from '../components/landingpage/SubscribeSection';
+import Footer from '../components/landingpage/Footer';
 
 const LandingPage = () => {
   return (
