@@ -128,7 +128,7 @@ const Navbar = () => {
             Register
           </a>
           <a
-            href="/"
+            href="/login-page"
             className="block px-4 py-2 bg-white text-customColor text-center rounded-md mx-4 mt-2 hover:bg-customColor hover:text-white transition"
             onClick={() => setMenuOpen(false)}
           >
