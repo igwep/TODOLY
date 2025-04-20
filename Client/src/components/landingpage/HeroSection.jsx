@@ -6,7 +6,7 @@ const HeroSection = () => {
   return (
     <section className="bg-customColor text-gray-800 py-2  flex justify-center items-center px-8 w-full md:px-20  md:h-[80vh] h-auto relative">
       {/* Floating Background Elements (Hidden on Small Screens) */}
-      <div className="absolute inset-0 z-0">
+      <div className="md:absolute hidden  inset-0 z-0">
   <div className="bg-white bg-opacity-10 w-40 h-40 sm:w-80 sm:h-80 rotate-12 absolute top-20 sm:top-60 left-5 sm:left-20 rounded-sm floating-animation"></div>
   <div className="bg-white bg-opacity-10 w-40 h-40 sm:w-80 sm:h-80 rotate-12 absolute top-20 sm:top-60 right-5 sm:right-20 rounded-sm floating-animation"></div>
   <div className="bg-white bg-opacity-10 w-32 h-32 sm:w-56 sm:h-56 rotate-12 absolute bottom-24 sm:bottom-44 right-5 sm:right-10 rounded-sm floating-animation"></div>
