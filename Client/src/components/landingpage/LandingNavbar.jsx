@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="w-full flex justify-between items-center">
         {/* Logo */}
         <div className="text-2xl font-bold">
-          <a href="/" className="hover:bg-white hover:text-customColor px-2 py-1 rounded transition">
+          <a href="/" className="px-2 py-1 rounded transition">
             TODOLY
           </a>
         </div>
@@ -56,7 +56,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6">
           <Link
             to="/signup-page"
-            className="hover:bg-white hover:text-customColor px-2 py-1 rounded transition"
+            className="hover:bg-white hover:text-customColor px-4 py-2 rounded transition"
           >
             Register
           </Link>
@@ -121,7 +121,7 @@ const Navbar = () => {
             About
           </ScrollLink>
           <a
-            href="/register"
+            href="/signup-page"
             className="block px-4 py-2 hover:bg-white hover:text-customColor rounded transition"
             onClick={() => setMenuOpen(false)}
           >
@@ -129,7 +129,7 @@ const Navbar = () => {
           </a>
           <a
             href="/login-page"
-            className="block px-4 py-2 bg-white text-customColor text-center rounded-md mx-4 mt-2 hover:bg-customColor hover:text-white transition"
+            className="block px-4 py-2 bg-white text-customColor text-center rounded-md mx-4 mt-2  transition"
             onClick={() => setMenuOpen(false)}
           >
             Login
